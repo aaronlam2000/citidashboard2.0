@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import { HomePopoverComponent } from '../home-popover/home-popover.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { HomePage } from './home.page';
       }
     ])
   ],
-  declarations: [HomePage]
+  entryComponents: [HomePopoverComponent],
+  declarations: [HomePage, HomePopoverComponent]
 })
 export class HomePageModule {}

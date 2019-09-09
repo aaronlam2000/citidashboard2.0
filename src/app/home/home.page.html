@@ -1,14 +1,127 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      <ion-textarea class="ion-align-items-end" placeholder="Enter visitor here..."></ion-textarea>
+      <ion-buttons>
+        <ion-button slot="end" (click)="presentPopover($event)">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+<ion-grid>
+  <ion-row>
+    <ion-col *ngFor="let item of cardItems" col-12 col-md-4 col-lg-4 col-xl-4>
+
+        <ion-card class="stat-card">
+            <ion-card-header>
+                <ion-buttons>
+                    <ion-button>
+                        <ion-icon name="close"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+              <ion-card-title class="text-no-wrap">{{ item.title }}</ion-card-title>             
+            </ion-card-header>
+            <ion-card-content class="text-no-wrap stat-card">
+              <ion-textarea value="{{ item.text }}"></ion-textarea>
+            </ion-card-content>
+          </ion-card>
+
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col *ngFor="let item of bigCards" col-12 col-md-5 col-lg-4 col-xl-2>
+
+        <ion-card class="bigCard">
+            <ion-card-header>
+                <ion-buttons>
+                    <ion-button>
+                        <ion-icon name="close"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+              <ion-card-title class="text-no-wrap">{{ item.title }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              Insert chart here
+            </ion-card-content>
+          </ion-card>
+
+    </ion-col>
+  </ion-row>
+
+</ion-grid>
+
+
+    <!-- <ion-grid padding="true">
+        <ion-row align-items= center aria-setsize="12">
+          <ion-col aria-setsize="3">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Card Title</ion-card-title>
+              </ion-card-header>
+            
+              <ion-card-content class="stat-card">
+                1
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col aria-setsize="3">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Card Title</ion-card-title>
+              </ion-card-header>
+            
+              <ion-card-content class="stat-card">
+                2
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col aria-setsize="3">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Card Title</ion-card-title>
+              </ion-card-header>
+            
+              <ion-card-content class="stat-card">
+                3
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col aria-setsize="3">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Card Title</ion-card-title>
+              </ion-card-header>
+            
+              <ion-card-content class="stat-card">
+                4
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row align-items= center aria-setsize="12">
+          <ion-col aria-setsize="3">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Card Title</ion-card-title>
+              </ion-card-header>
+            
+              <ion-card-content class="">
+                <canvas #doughnutChart></canvas>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-grid> -->
 </ion-content>
