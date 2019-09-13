@@ -143,10 +143,10 @@
     </ion-button>
 
     <ion-row no-padding class="matrix">
-      <ion-col size="4" class="q1">
-        <div class="q-header">q1</div>
-        <ion-list dragula="bag" [(dragulaModel)]="q1" lines="none">
-          <ion-item *ngFor="let item of q1" [color]="item.color" expand="block" text-wrap>
+      <ion-col *ngFor="let q of lists" size="4" class="q1">
+        <div class="q-header">Header</div>
+        <ion-list dragula="bag" [(dragulaModel)]="q" lines="none">
+          <ion-item *ngFor="let item of q" [color]="item.color" expand="block" text-wrap>
             <ion-card>
               <ion-card-header>
                 <ion-card-title>Title</ion-card-title>
@@ -159,7 +159,7 @@
         </ion-list>
       </ion-col>
 
-      <ion-col size="4" class="q2">
+      <!-- <ion-col size="4" class="q2">
         <div class="q-header">q2</div>
         <ion-list dragula="bag" [(dragulaModel)]="q2" lines="none">
           <ion-item *ngFor="let item of q2" [color]="item.color" expand="block" text-wrap>
@@ -253,7 +253,7 @@
             </ion-card>
           </ion-item>
         </ion-list>
-      </ion-col>
+      </ion-col> -->
 
     </ion-row>
   </ion-grid>

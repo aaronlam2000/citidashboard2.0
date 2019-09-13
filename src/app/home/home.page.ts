@@ -53,23 +53,78 @@ export class HomePage {
 
 
   addTodo() {
-    switch (this.selectedQuadrant) {
-      case 'q1':
-        this.todo.color = 'primary';
-        break;
-      case 'q2':
-        this.todo.color = 'secondary';
-        break;
-      case 'q3':
-        this.todo.color = 'tertiary';
-        break;
-      case 'q4':
-        this.todo.color = 'warning';
-        break;
-    }
-    this[this.selectedQuadrant].push(this.todo);
-    this.todo = { value: '', color: '' };
+    // switch (this.selectedQuadrant) {
+    //   case 'q1':
+    //     this.todo.color = 'primary';
+    //     break;
+    //   case 'q2':
+    //     this.todo.color = 'secondary';
+    //     break;
+    //   case 'q3':
+    //     this.todo.color = 'tertiary';
+    //     break;
+    //   case 'q4':
+    //     this.todo.color = 'warning';
+    //     break;
+    // }
+    // this[this.selectedQuadrant].push(this.todo);
+    // this.todo = { value: '', color: '' };
+    this.lists.push([ { value: '9', color: 'warning' } ]);
   }
+
+  // addNewCard() {
+  //   this[this.lists.find().push({ value: '1', color: 'dark' });
+  // }
+
+  todo = { value: '', color: '' };
+  selectedQuadrant = 'q1';
+
+    // Drag and drop lists
+    q1 = [
+      { value: '1', color: 'dark' }
+    ];
+    q2 = [
+      { value: '2', color: 'dark' }
+    ];
+    q3 = [
+      { value: '3', color: 'dark' }
+    ];
+    q4 = [
+      { value: '4', color: 'light' }
+    ];
+  
+    q5 = [
+      { value: '5', color: 'primary' }
+    ];
+  
+    q6 = [
+      { value: '6', color: 'primary' }
+    ];
+  
+    q7 = [
+      { value: '7', color: 'primary' }
+    ];
+  
+    q8 = [
+      { value: '8', color: 'primary' }
+    ];
+  
+    q9 = [
+      { value: '9', color: 'primary' }
+    ];
+
+  // Array of (lists of arrays)  
+  lists = [
+    [ { value: '1', color: 'dark' } ],
+    [ { value: '2', color: 'dark' } ],
+    [ { value: '3', color: 'dark' } ],
+    [ { value: '4', color: 'light' } ],
+    [ { value: '5', color: 'primary' } ],
+    [ { value: '6', color: 'primary' } ],
+    [ { value: '7', color: 'primary' } ],
+    [ { value: '8', color: 'warning' } ],
+    [ { value: '9', color: 'warning' } ]
+  ]
 
 
   async presentPopover(event) {
@@ -132,43 +187,5 @@ export class HomePage {
       }
     });
   }
-
-  // Dragula Drag and Drop Test
-  q1 = [
-    { value: '1', color: 'dark' }
-  ];
-  q2 = [
-    { value: '2', color: 'dark' }
-  ];
-  q3 = [
-    { value: '3', color: 'dark' }
-  ];
-  q4 = [
-    { value: '4', color: 'light' }
-  ];
-
-  q5 = [
-    { value: '5', color: 'primary' }
-  ];
-
-  q6 = [
-    { value: '6', color: 'primary' }
-  ];
-
-  q7 = [
-    { value: '7', color: 'primary' }
-  ];
-
-  q8 = [
-    { value: '8', color: 'primary' }
-  ];
-
-  q9 = [
-    { value: '9', color: 'primary' }
-  ];
-
-  todo = { value: '', color: '' };
-  selectedQuadrant = 'q1';
-
 
 }
