@@ -1,5 +1,17 @@
 <ion-col size="12">
-    <ion-button (click)="addCard()" class="addBtn">Add New Card</ion-button>
+    <ion-item>
+      <ion-label>Choose Card Type:</ion-label>
+      <ion-select [(ngModel)]="selectedQuadrant">
+        <ion-select-option value="q1">Staff</ion-select-option>
+        <ion-select-option value="q2">Charts</ion-select-option>
+        <ion-select-option value="q3">Projects</ion-select-option>
+        <ion-select-option value="q4">Awards</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-col>
+
+<ion-col size="12">
+    <ion-button (click)="addNewCard()" class="addBtn">Add New Card</ion-button>
 </ion-col>
 
 <ion-col size="12">
