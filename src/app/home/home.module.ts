@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { HomePopoverComponent } from '../home-popover/home-popover.component';
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { HomePopoverComponent } from '../home-popover/home-popover.component';
         path: '',
         component: HomePage
       }
-    ])
+    ]),
+    DragulaModule
   ],
   entryComponents: [HomePopoverComponent],
   declarations: [HomePage, HomePopoverComponent]

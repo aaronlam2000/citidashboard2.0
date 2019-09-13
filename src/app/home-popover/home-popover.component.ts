@@ -27,4 +27,8 @@ export class HomePopoverComponent implements OnInit {
     window.home.createBigCard();
   }
 
+  addNewCard() {
+    window.home.addTodo();
+  }
+
 }
