@@ -144,7 +144,10 @@
 
     <ion-row no-padding class="matrix">
       <ion-col *ngFor="let q of lists" size="4" class="q1">
-        <div class="q-header">Header</div>
+        <div class="q-header">   
+            <ion-button sort="end" (click)="removeHeader(lists.indexOf(q))"><ion-icon name="trash"></ion-icon></ion-button>
+        </div>
+        <p>{{ lists.indexOf(q) }}</p>
         <ion-list dragula="bag" [(dragulaModel)]="q" lines="none">
           <ion-item *ngFor="let item of q" [color]="item.color" expand="block" text-wrap>
             <ion-card>

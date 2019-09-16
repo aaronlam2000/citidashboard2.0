@@ -98,9 +98,11 @@ ion-card {
 }
 
 .q-header {
-  background-color: var(--ion-color-light);
-  height: 20px;
-  text-align: center;
+  height: 50px;
+  text-align: right;
+  border-style: dashed;
+  border-color: #ccc;
+  
 }
 
 .delete-area {

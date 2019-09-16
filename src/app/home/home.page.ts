@@ -6,6 +6,7 @@ import { DragulaService } from 'ng2-dragula';
 import { ToastController } from '@ionic/angular';
 import { isNgTemplate } from '@angular/compiler';
 import { SourceListMap } from 'source-list-map';
+import { Storage } from '@ionic/storage';
 
 declare var window;
 
@@ -70,6 +71,10 @@ export class HomePage {
     // this[this.selectedQuadrant].push(this.todo);
     // this.todo = { value: '', color: '' };
     this.lists.push([ { value: '9', color: 'warning' } ]);
+  }
+
+  removeHeader(index) {
+    this.lists.splice(index, 1);
   }
 
   // addNewCard() {

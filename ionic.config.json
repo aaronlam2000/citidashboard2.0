@@ -1,5 +1,7 @@
 {
   "name": "responsivegrid",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
