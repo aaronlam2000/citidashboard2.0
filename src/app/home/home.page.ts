@@ -1,12 +1,13 @@
 import { Component , ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
-import { PopoverController, NavParams } from '@ionic/angular';
+import { PopoverController, NavParams, Platform } from '@ionic/angular';
 import { HomePopoverComponent } from '../home-popover/home-popover.component';
 import { DragulaService } from 'ng2-dragula';
 import { ToastController } from '@ionic/angular';
 import { isNgTemplate } from '@angular/compiler';
 import { SourceListMap } from 'source-list-map';
 import { Storage } from '@ionic/storage';
+import { StorageService, Item, Preset, Box, Card} from '../services/storage.service';
 
 declare var window;
 
@@ -19,9 +20,20 @@ export class HomePage {
 
   @ViewChild('doughnutChart', { static: true }) doughnutChart;
 
+  presetList: Preset[] = [];
+  newPreset: Preset = <Preset>{};
+  boxList: Box[] = [];
+  newBox: Box = <Box>{};
+  newCard: Card = { title: 'Title Test', color: 'primary',  value: '1' };
   bars:any;
   colorArray: any;
-  constructor(public popoverController: PopoverController, private dragulaService: DragulaService, private toastController: ToastController) {
+
+  constructor(public popoverController: PopoverController, private dragulaService: DragulaService, private toastController: ToastController, private storage: Storage, private storageService: StorageService, private plt: Platform) {
+
+    this.plt.ready().then(() => {
+      this.loadItems();
+      this.loadPresets();
+    })
 
     window.home = this;
 
@@ -52,8 +64,48 @@ export class HomePage {
     });  
   }
 
+  loadItems() {
+    this.storageService.getItems().then(Boxes => {
+      this.boxList = Boxes;
+    });
+  }
+
+  loadPresets() {
+    this.storageService.getPresets().then(Presets => {
+      this.presetList = Presets;
+    });
+  }
+
+  savePreset(boxList) {
+    this.newPreset.presetId = Date.now();
+    this.newPreset.presetBoxList = boxList;
+    
+    this.storageService.savePreset(boxList).then(box => {
+      this.newPreset = <Preset>{}; //clear newPreset
+      this.toastController.create({
+        message: 'Preset Saved',
+        duration: 2000
+      }).then(toast => toast.present());
+      this.loadPresets();
+      
+    });
+  }
 
   addTodo() {
+
+    this.newBox.boxId = Date.now();
+    this.newBox.cardList = [ this.newCard ]
+ 
+    this.storageService.addItem(this.newBox).then(box => {
+      this.newBox = <Box>{}; //clear newBox
+      this.toastController.create({
+        message: 'Box Added!',
+        duration: 2000
+      }).then(toast => toast.present());
+      this.loadItems(); // Or add it to the array directly
+      
+    });
+
     // switch (this.selectedQuadrant) {
     //   case 'q1':
     //     this.todo.color = 'primary';
@@ -70,11 +122,22 @@ export class HomePage {
     // }
     // this[this.selectedQuadrant].push(this.todo);
     // this.todo = { value: '', color: '' };
-    this.lists.push([ { value: '9', color: 'warning' } ]);
+    // this.lists.push([ { value: '9', color: 'warning' } ]);
   }
 
   removeHeader(index) {
-    this.lists.splice(index, 1);
+    this.boxList.splice(index, 1);
+  }
+
+   // DELETE
+   deleteItem(box: Box) {
+    this.storageService.deleteItem(box.boxId).then(box => {
+      this.toastController.create({
+        message: 'Box removed!',
+        duration: 2000
+      }).then(toast => toast.present());
+      this.loadItems(); // Or splice it from the array directly
+    });
   }
 
   // addNewCard() {
@@ -119,17 +182,17 @@ export class HomePage {
     ];
 
   // Array of (lists of arrays)  
-  lists = [
-    [ { value: '1', color: 'dark' } ],
-    [ { value: '2', color: 'dark' } ],
-    [ { value: '3', color: 'dark' } ],
-    [ { value: '4', color: 'light' } ],
-    [ { value: '5', color: 'primary' } ],
-    [ { value: '6', color: 'primary' } ],
-    [ { value: '7', color: 'primary' } ],
-    [ { value: '8', color: 'warning' } ],
-    [ { value: '9', color: 'warning' } ]
-  ]
+  // lists = [
+  //   [ { value: '1', color: 'dark' } ],
+  //   [ { value: '2', color: 'dark' } ],
+  //   [ { value: '3', color: 'dark' } ],
+  //   [ { value: '4', color: 'light' } ],
+  //   [ { value: '5', color: 'primary' } ],
+  //   [ { value: '6', color: 'primary' } ],
+  //   [ { value: '7', color: 'primary' } ],
+  //   [ { value: '8', color: 'warning' } ],
+  //   [ { value: '9', color: 'warning' } ]
+  // ]
 
 
   async presentPopover(event) {

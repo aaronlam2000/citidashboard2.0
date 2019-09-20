@@ -59,9 +59,9 @@
     </ion-col>
   </ion-row>
   
-
 </ion-grid> -->
 
+<!-- ................................................................................................................................ -->
 <!-- Drag and Drop TEST -->
 <!-- <ion-grid>
 
@@ -118,7 +118,7 @@
       <ion-col size="12">
         <ion-item>
           <ion-label position="fixed">Card title:</ion-label>
-          <ion-input placeholder="Enter title here..." [(ngModel)]="todo.value"></ion-input>
+          <ion-input placeholder="Enter title here..." [(ngModel)]="newBox.value"></ion-input>
         </ion-item>
 
       </ion-col>
@@ -137,130 +137,57 @@
 
     </ion-row>
 
+    <ion-button expand="block" fill="outline" (click)="savePreset(boxList)">Save Preset</ion-button>
     <ion-button expand="block" fill="outline" (click)="addTodo()">
       <ion-icon name="add" slot="start"></ion-icon>
       Add Card
     </ion-button>
 
     <ion-row no-padding class="matrix">
-      <ion-col *ngFor="let q of lists" size="4" class="q1">
+      <ion-col *ngFor="let b of boxList" size="4" class="q1">
         <div class="q-header">   
-            <ion-button sort="end" (click)="removeHeader(lists.indexOf(q))"><ion-icon name="trash"></ion-icon></ion-button>
+            <ion-button sort="end" (click)="deleteItem(b)"><ion-icon name="trash"></ion-icon></ion-button>
         </div>
-        <p>{{ lists.indexOf(q) }}</p>
-        <ion-list dragula="bag" [(dragulaModel)]="q" lines="none">
-          <ion-item *ngFor="let item of q" [color]="item.color" expand="block" text-wrap>
+        <!-- <p>{{ lists.indexOf(q) }}</p> -->
+        <ion-list dragula="bag" [(dragulaModel)]="b.cardList" lines="none">
+          <ion-item *ngFor="let card of b.cardList" [color]="card.color" expand="block" text-wrap>
             <ion-card>
               <ion-card-header>
-                <ion-card-title>Title</ion-card-title>
+                <ion-card-title>{{ card.title }}</ion-card-title>
               </ion-card-header>
               <ion-card-content class="stat-card">
-                {{ item.value }}
+                {{ card.value }}
               </ion-card-content>
             </ion-card>
           </ion-item>
         </ion-list>
       </ion-col>
-
-      <!-- <ion-col size="4" class="q2">
-        <div class="q-header">q2</div>
-        <ion-list dragula="bag" [(dragulaModel)]="q2" lines="none">
-          <ion-item *ngFor="let item of q2" [color]="item.color" expand="block" text-wrap>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-title>Title</ion-card-title>
-              </ion-card-header>
-              <ion-card-content class="stat-card">
-                {{ item.value }}
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-
-      <ion-col size="4" class="q3">
-        <div class="q-header">q3</div>
-        <ion-list dragula="bag" [(dragulaModel)]="q3" lines="none">
-          <ion-item *ngFor="let item of q3" [color]="item.color" expand="block" text-wrap>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-title>Title</ion-card-title>
-              </ion-card-header>
-              <ion-card-content class="stat-card">
-                {{ item.value }}
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-
-      <ion-col size="12" class="q4">
-        <div class="q-header">q4</div>
-        <ion-list dragula="bag" [(dragulaModel)]="q4" lines="none">
-          <ion-item *ngFor="let item of q4" [color]="item.color" expand="block" text-wrap>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-title>Title</ion-card-title>
-              </ion-card-header>
-              <ion-card-content class="stat-card">
-                {{ item.value }}
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-
-      <ion-col size="4" class="q4">
-        <div class="q-header">q5</div>
-        <ion-list dragula="bag" [(dragulaModel)]="q5" lines="none">
-          <ion-item *ngFor="let item of q5" [color]="item.color" expand="block" text-wrap>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-title>Title</ion-card-title>
-              </ion-card-header>
-              <ion-card-content class="stat-card">
-                {{ item.value }}
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-
-      <ion-col size="4" class="q4">
-        <div class="q-header">q6</div>
-        <ion-list dragula="bag" [(dragulaModel)]="q6" lines="none">
-          <ion-item *ngFor="let item of q6" [color]="item.color" expand="block" text-wrap>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-title>Title</ion-card-title>
-              </ion-card-header>
-              <ion-card-content class="stat-card">
-                {{ item.value }}
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-
-      <ion-col size="4" class="q4">
-        <div class="q-header">q7</div>
-        <ion-list dragula="bag" [(dragulaModel)]="q7" lines="none">
-          <ion-item *ngFor="let item of q7" [color]="item.color" expand="block" text-wrap>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-title>Title</ion-card-title>
-              </ion-card-header>
-              <ion-card-content class="stat-card">
-                {{ item.value }}
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ion-list>
-      </ion-col> -->
 
     </ion-row>
   </ion-grid>
       
+  <ion-list>
+ 
+    <ion-list-header>
+      <ion-label>My Items</ion-label>
+    </ion-list-header>
+ 
+    <ion-item-sliding *ngFor="let item of lists">
+ 
+      <ion-item>
+        <ion-label text-wrap>
+          <h3>{{ item.title }}</h3>
+          <ion-text color="secondary">
+            <p>{{ item.value }}</p>
+          </ion-text>
+          <p>{{ item.modified | date:'short'}}</p>
+        </ion-label>
+      </ion-item>
+ 
+      <ion-button (click)="deleteItem(item)">Delete</ion-button>
+    </ion-item-sliding>
+ 
+  </ion-list>
 
 
 
