@@ -8,6 +8,7 @@ import { isNgTemplate } from '@angular/compiler';
 import { SourceListMap } from 'source-list-map';
 import { Storage } from '@ionic/storage';
 import { StorageService, Item, Preset, Box, Card} from '../services/storage.service';
+import { MenuController } from '@ionic/angular';
 
 declare var window;
 
@@ -22,8 +23,10 @@ export class HomePage {
 
   presetList: Preset[] = [];
   newPreset: Preset = <Preset>{};
+
   boxList: Box[] = [];
   newBox: Box = <Box>{};
+
   newCard: Card = { title: 'Title Test', color: 'primary',  value: '1' };
   bars:any;
   colorArray: any;
@@ -76,11 +79,17 @@ export class HomePage {
     });
   }
 
+  loadSelectedPreset(boxList) {
+    this.boxList = boxList;
+    this.storageService.selectPreset(boxList);
+  }
+
+
   savePreset(boxList) {
-    this.newPreset.presetId = Date.now();
+    this.newPreset.presetId = 1;
     this.newPreset.presetBoxList = boxList;
     
-    this.storageService.savePreset(boxList).then(box => {
+    this.storageService.addPreset(this.newPreset).then(box => {
       this.newPreset = <Preset>{}; //clear newPreset
       this.toastController.create({
         message: 'Preset Saved',
@@ -89,6 +98,12 @@ export class HomePage {
       this.loadPresets();
       
     });
+  }
+
+  // Delete boxes
+  clearBoxes() {
+    this.storageService.deleteBoxes();
+    this.boxList = [];
   }
 
   addTodo() {
@@ -125,12 +140,8 @@ export class HomePage {
     // this.lists.push([ { value: '9', color: 'warning' } ]);
   }
 
-  removeHeader(index) {
-    this.boxList.splice(index, 1);
-  }
-
-   // DELETE
-   deleteItem(box: Box) {
+  // Delete Box
+  deleteItem(box: Box) {
     this.storageService.deleteItem(box.boxId).then(box => {
       this.toastController.create({
         message: 'Box removed!',
@@ -140,59 +151,9 @@ export class HomePage {
     });
   }
 
-  // addNewCard() {
-  //   this[this.lists.find().push({ value: '1', color: 'dark' });
-  // }
 
-  todo = { value: '', color: '' };
-  selectedQuadrant = 'q1';
-
-    // Drag and drop lists
-    q1 = [
-      { value: '1', color: 'dark' }
-    ];
-    q2 = [
-      { value: '2', color: 'dark' }
-    ];
-    q3 = [
-      { value: '3', color: 'dark' }
-    ];
-    q4 = [
-      { value: '4', color: 'light' }
-    ];
-  
-    q5 = [
-      { value: '5', color: 'primary' }
-    ];
-  
-    q6 = [
-      { value: '6', color: 'primary' }
-    ];
-  
-    q7 = [
-      { value: '7', color: 'primary' }
-    ];
-  
-    q8 = [
-      { value: '8', color: 'primary' }
-    ];
-  
-    q9 = [
-      { value: '9', color: 'primary' }
-    ];
-
-  // Array of (lists of arrays)  
-  // lists = [
-  //   [ { value: '1', color: 'dark' } ],
-  //   [ { value: '2', color: 'dark' } ],
-  //   [ { value: '3', color: 'dark' } ],
-  //   [ { value: '4', color: 'light' } ],
-  //   [ { value: '5', color: 'primary' } ],
-  //   [ { value: '6', color: 'primary' } ],
-  //   [ { value: '7', color: 'primary' } ],
-  //   [ { value: '8', color: 'warning' } ],
-  //   [ { value: '9', color: 'warning' } ]
-  // ]
+  // todo = { value: '', color: '' };
+  // selectedQuadrant = 'q1';
 
 
   async presentPopover(event) {
@@ -203,18 +164,6 @@ export class HomePage {
     });
     return await popover.present();
   }
-
-  cardItems = [];
-  bigCards = [];
-
-  createNewCard() {
-    this.cardItems.push({title: 'Card Title', text: '1'});
-  }
-
-  createBigCard() {
-    this.bigCards.push({title: 'Chart', text: '<here>'});
-  }
-
 
   ionViewDidEnter() {
     this.createDoughnutChart();

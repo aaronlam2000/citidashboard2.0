@@ -10,6 +10,7 @@ export interface Item {
 
 export interface Preset {
   presetId: number,
+  presetName: string,
   presetBoxList: [ Box ]
 }
 
@@ -26,7 +27,7 @@ export interface Card {
 
 
 const ITEMS_KEY = 'box-list';
-const PRESET_KEY = 'preset-list'
+const PRESET_KEY = 'preset-list';
 
 @Injectable({
   providedIn: 'root'
@@ -75,9 +76,14 @@ export class StorageService {
     });
   }
 
+// Delete boxes
+deleteBoxes() {
+  this.storage.set(ITEMS_KEY, []);
+}
+
 
   //Save Preset
-  savePreset(preset: Preset): Promise<any> {
+  addPreset(preset: Preset): Promise<any> {
     return this.storage.get(PRESET_KEY).then((presetList: Preset[]) => {
       if (presetList) {
         presetList.push(preset);
@@ -86,6 +92,10 @@ export class StorageService {
         return this.storage.set(PRESET_KEY, [preset]);
       }
     });
+  }
+
+  selectPreset(boxList) {
+    this.storage.set(ITEMS_KEY, boxList)
   }
 
 }

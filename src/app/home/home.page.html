@@ -136,12 +136,23 @@
       </ion-col>
 
     </ion-row>
+    
+    <ion-list *ngFor="let p of presetList">
+      <ion-row>
+        <ion-item (click)="loadSelectedPreset(p.presetBoxList)">
+            {{ p.presetName }}
+        </ion-item>
+      </ion-row> 
+    </ion-list>
 
+    <ion-label position="fixed">Preset Name:</ion-label>
+        <ion-input placeholder="Enter preset name here..." [(ngModel)]="newPreset.presetName"></ion-input>
     <ion-button expand="block" fill="outline" (click)="savePreset(boxList)">Save Preset</ion-button>
     <ion-button expand="block" fill="outline" (click)="addTodo()">
       <ion-icon name="add" slot="start"></ion-icon>
       Add Card
     </ion-button>
+    <ion-button expand="block" fill="outline" (click)="clearBoxes()">Clear Board</ion-button>
 
     <ion-row no-padding class="matrix">
       <ion-col *ngFor="let b of boxList" size="4" class="q1">
