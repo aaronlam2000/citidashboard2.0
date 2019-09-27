@@ -27,7 +27,10 @@ export class HomePage {
   boxList: Box[] = [];
   newBox: Box = <Box>{};
 
-  newCard: Card = { title: 'Title Test', color: 'primary',  value: '1' };
+  newCard: Card = <Card>{}
+  cardColor = "q1";
+  cardSize = "small";
+
   bars:any;
   colorArray: any;
 
@@ -58,7 +61,6 @@ export class HomePage {
     //Drop Model
     this.dragulaService.dropModel('bag')
       .subscribe(({ item }) => {
-        
       });
 
     // Create Group
@@ -108,6 +110,34 @@ export class HomePage {
 
   addTodo() {
 
+    switch (this.cardColor) {
+      case 'q1':
+        this.newCard.color = "primary";
+        break;
+      case 'q2':
+        this.newCard.color = 'warning';
+        break;
+      case 'q3':
+        this.newCard.color = 'danger';
+        break;
+      case 'q4':
+        this.newCard.color = 'dark';
+        break;       
+    }
+
+    switch (this.cardSize) {
+      case 'small':
+        this.newCard.size = "3";
+        break;
+      case 'medium':
+        this.newCard.size = '4';
+        break;
+      case 'large':
+        this.newCard.size = '6';
+        break;      
+    }
+    
+
     this.newBox.boxId = Date.now();
     this.newBox.cardList = [ this.newCard ]
  
@@ -121,20 +151,6 @@ export class HomePage {
       
     });
 
-    // switch (this.selectedQuadrant) {
-    //   case 'q1':
-    //     this.todo.color = 'primary';
-    //     break;
-    //   case 'q2':
-    //     this.todo.color = 'secondary';
-    //     break;
-    //   case 'q3':
-    //     this.todo.color = 'tertiary';
-    //     break;
-    //   case 'q4':
-    //     this.todo.color = 'warning';
-    //     break;
-    // }
     // this[this.selectedQuadrant].push(this.todo);
     // this.todo = { value: '', color: '' };
     // this.lists.push([ { value: '9', color: 'warning' } ]);

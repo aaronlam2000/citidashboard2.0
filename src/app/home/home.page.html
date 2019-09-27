@@ -1,7 +1,6 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      <ion-textarea class="ion-align-items-end" placeholder="Enter visitor here..."></ion-textarea>
       <ion-buttons>
         <ion-button slot="end" (click)="presentPopover($event)">
           <ion-icon name="add"></ion-icon>
@@ -113,58 +112,34 @@
   
   </ion-grid> -->
   <ion-grid>
-
-    <ion-row align-items-center>
-      <ion-col size="12">
-        <ion-item>
-          <ion-label position="fixed">Card title:</ion-label>
-          <ion-input placeholder="Enter title here..." [(ngModel)]="newBox.value"></ion-input>
-        </ion-item>
-
-      </ion-col>
-
-      <ion-col size="12">
-        <ion-item>
-          <ion-label>Choose Card Type:</ion-label>
-          <ion-select [(ngModel)]="selectedQuadrant">
-            <ion-select-option value="q1">Staff</ion-select-option>
-            <ion-select-option value="q2">Charts</ion-select-option>
-            <ion-select-option value="q3">Projects</ion-select-option>
-            <ion-select-option value="q4">Awards</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-
-    </ion-row>
-    
-    <ion-list *ngFor="let p of presetList">
-      <ion-row>
-        <ion-item (click)="loadSelectedPreset(p.presetBoxList)">
-            {{ p.presetName }}
-        </ion-item>
-      </ion-row> 
-    </ion-list>
-
-    <ion-label position="fixed">Preset Name:</ion-label>
-        <ion-input placeholder="Enter preset name here..." [(ngModel)]="newPreset.presetName"></ion-input>
-    <ion-button expand="block" fill="outline" (click)="savePreset(boxList)">Save Preset</ion-button>
-    <ion-button expand="block" fill="outline" (click)="addTodo()">
-      <ion-icon name="add" slot="start"></ion-icon>
-      Add Card
-    </ion-button>
-    <ion-button expand="block" fill="outline" (click)="clearBoxes()">Clear Board</ion-button>
+    <ion-split-pane>
+        <ion-list *ngFor="let p of presetList">          
+            <ion-row>
+                <ion-col>
+                  <ion-item (click)="loadSelectedPreset(p.presetBoxList)">
+                      {{ p.presetName }}
+                  </ion-item>
+                </ion-col>
+            </ion-row>            
+          </ion-list>
+    </ion-split-pane>
 
     <ion-row no-padding class="matrix">
       <ion-col *ngFor="let b of boxList" size="4" class="q1">
-        <div class="q-header">   
+        <!-- <div class="q-header">   
             <ion-button sort="end" (click)="deleteItem(b)"><ion-icon name="trash"></ion-icon></ion-button>
-        </div>
+        </div> -->
         <!-- <p>{{ lists.indexOf(q) }}</p> -->
         <ion-list dragula="bag" [(dragulaModel)]="b.cardList" lines="none">
-          <ion-item *ngFor="let card of b.cardList" [color]="card.color" expand="block" text-wrap>
-            <ion-card>
+          <ion-item *ngFor="let card of b.cardList" text-wrap>
+            <ion-card class="card-size-small" [color]="card.color">
+                <!-- <ion-button [color]="card.color" class="delete-btn" sort="end" (click)="deleteItem(b)"><ion-icon name="trash"></ion-icon></ion-button> -->       
+                <ion-card-subtitle>
+                    <ion-icon class="delete-icon-btn" (click)="deleteItem(b)" name="trash"></ion-icon>
+                </ion-card-subtitle>
               <ion-card-header>
                 <ion-card-title>{{ card.title }}</ion-card-title>
+                
               </ion-card-header>
               <ion-card-content class="stat-card">
                 {{ card.value }}
@@ -175,35 +150,71 @@
       </ion-col>
 
     </ion-row>
+    <ion-row align-items-center>
+      <ion-col size="12">
+        <ion-row>
+          <ion-col size="3">
+              <ion-item>
+                  <ion-label position="fixed">Card title:</ion-label>
+                  <ion-input placeholder="Title" [(ngModel)]="newCard.title"></ion-input>
+              </ion-item>
+          </ion-col>
+          <ion-col size="3">
+              <ion-item>
+                  <ion-label position="fixed">Card value:</ion-label>
+                  <ion-input placeholder="Value" [(ngModel)]="newCard.value"></ion-input>
+              </ion-item>
+          </ion-col>
+
+          <ion-col size="3">
+              <ion-item>
+                  <ion-label>Color</ion-label>
+                  <ion-select [(ngModel)]="cardColor">
+                    <ion-select-option value="q1">Blue</ion-select-option>
+                    <ion-select-option value="q2">Yellow</ion-select-option>
+                    <ion-select-option value="q3">Red</ion-select-option>
+                    <ion-select-option value="q4">Black</ion-select-option>
+                  </ion-select>
+              </ion-item>
+          </ion-col>
+
+          <ion-col size="3">
+              <ion-item>
+                  <ion-label>Size</ion-label>
+                  <ion-select [(ngModel)]="cardSize">
+                    <ion-select-option value="small">Small</ion-select-option>
+                    <ion-select-option value="medium">Medium</ion-select-option>
+                    <ion-select-option value="large">Large</ion-select-option>
+                  </ion-select>
+              </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+              <ion-button expand="block" fill="outline" (click)="addTodo()">
+                  <ion-icon name="add" slot="start"></ion-icon>
+                  Add Card
+              </ion-button>
+          </ion-col>
+                
+        </ion-row>
+        
+        
+          
+
+
+        <ion-item>
+          <ion-label position="fixed">Preset Name:</ion-label>
+          <ion-input placeholder="Enter preset name here..." [(ngModel)]="newPreset.presetName"></ion-input>
+        </ion-item>
+        
+        <ion-button expand="block" fill="outline" (click)="savePreset(boxList)">Save Preset</ion-button>
+    
+        <ion-button expand="block" fill="outline" (click)="clearBoxes()">Clear Board</ion-button>
+
+      </ion-col>
+
+    </ion-row>
   </ion-grid>
-      
-  <ion-list>
- 
-    <ion-list-header>
-      <ion-label>My Items</ion-label>
-    </ion-list-header>
- 
-    <ion-item-sliding *ngFor="let item of lists">
- 
-      <ion-item>
-        <ion-label text-wrap>
-          <h3>{{ item.title }}</h3>
-          <ion-text color="secondary">
-            <p>{{ item.value }}</p>
-          </ion-text>
-          <p>{{ item.modified | date:'short'}}</p>
-        </ion-label>
-      </ion-item>
- 
-      <ion-button (click)="deleteItem(item)">Delete</ion-button>
-    </ion-item-sliding>
- 
-  </ion-list>
-
-
-
-  
-
   
   <!-- <ion-row class="delete-area" align-items-center justify-content-center>
     <ion-icon name="trash" color="medium"></ion-icon>

@@ -16,13 +16,15 @@ export interface Preset {
 
 export interface Box {
   boxId: number,
-  cardList: [ Card ]
+  cardList: [ Card ],
+  boxSize: string
 }
 
 export interface Card {
   title: string,
   color: string,
-  value: string
+  value: string,
+  size: string
 }
 
 

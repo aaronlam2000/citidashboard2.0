@@ -12,12 +12,11 @@ ion-content {
 
 ion-grid {
   padding: 20px 20px 20px 20px;
-  
 }
 
 ion-card {
   padding: 20px 20px 20px 20px;
-  margin: 0;
+  margin: 0!important;
   width: 100%;
   align-items: center;
   text-align: center;
@@ -26,6 +25,22 @@ ion-card {
   flex-direction: column;
   
 }
+
+ion-item:hover {
+  --ion-background-color: lightgrey;
+}
+
+.delete-btn {
+  --box-shadow:none;
+  // bottom: 147px;
+  // left: 175px;
+}
+
+.delete-icon-btn {
+  font-size: 20px;
+  color: black;
+}
+
 
 .vertical-responsive {
   left: 50%;
@@ -36,19 +51,31 @@ ion-card {
 }
 
 .stat-card {
-  font-size: 100px;
+  font-size: 50px;
   font-style: normal;
   color: black;
 }
 
-.text-no-wrap {
-  white-space: nowrap;
+.card-size-small{
+
 }
 
-.big-card {
-  padding: 20px 20px 20px 20px;
-  margin: 0;
-  width: 120%;
+.card-size-med {
+  font-size: 150px;
+  color: black;
+}
+
+.card-size-big {
+  font-size: 250px;
+  color: black;
+}
+
+.preset-menu {
+  --ion-background-color: blue;
+}
+
+.text-no-wrap {
+  white-space: nowrap;
 }
 
 
