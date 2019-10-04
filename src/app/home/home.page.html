@@ -2,15 +2,23 @@
   <ion-toolbar>
     <ion-title>
       <ion-buttons>
-        <ion-button slot="end" (click)="presentPopover($event)">
-          <ion-icon name="add"></ion-icon>
+        <!-- <ion-button slot="end" (click)="presentPopover($event)">
+          <ion-icon name="add"></ion-icon>       
+        </ion-button> -->
+
+        <ion-button [hidden]="exitViewMode" slot="end" (click)="exitView()">
+          <ion-icon name="close"></ion-icon>
         </ion-button>
+
       </ion-buttons>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content force-overscroll="false">
+    
+    
+      
 
     <!-- <ion-grid>
   <ion-row class="matrix">
@@ -112,11 +120,11 @@
   
   </ion-grid> -->
   <ion-grid>
-    <ion-split-pane>
+    <ion-split-pane [hidden]="enterViewMode">
         <ion-list *ngFor="let p of presetList">          
             <ion-row>
                 <ion-col>
-                  <ion-item (click)="loadSelectedPreset(p.presetBoxList)">
+                  <ion-item (click)="loadSelectedPreset(p.presetBoxList)" *appHasRole="['edit-dashboard', 'admin']">
                       {{ p.presetName }}
                   </ion-item>
                 </ion-col>
@@ -124,35 +132,52 @@
           </ion-list>
     </ion-split-pane>
 
-    <ion-row no-padding class="matrix">
-      <ion-col *ngFor="let b of boxList" size="4" class="q1">
-        <!-- <div class="q-header">   
-            <ion-button sort="end" (click)="deleteItem(b)"><ion-icon name="trash"></ion-icon></ion-button>
-        </div> -->
-        <!-- <p>{{ lists.indexOf(q) }}</p> -->
-        <ion-list dragula="bag" [(dragulaModel)]="b.cardList" lines="none">
-          <ion-item *ngFor="let card of b.cardList" text-wrap>
-            <ion-card class="card-size-small" [color]="card.color">
-                <!-- <ion-button [color]="card.color" class="delete-btn" sort="end" (click)="deleteItem(b)"><ion-icon name="trash"></ion-icon></ion-button> -->       
-                <ion-card-subtitle>
-                    <ion-icon class="delete-icon-btn" (click)="deleteItem(b)" name="trash"></ion-icon>
-                </ion-card-subtitle>
-              <ion-card-header>
-                <ion-card-title>{{ card.title }}</ion-card-title>
-                
-              </ion-card-header>
-              <ion-card-content class="stat-card">
-                {{ card.value }}
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ion-list>
+
+    <ion-row no-padding class="matrix" *appHasRole="['dashboard-content']">
+        <ion-col size="12">
+            <ion-item class="welcome-banner">
+                <ion-card>
+                    <ion-card-content class="welcome-banner-content">
+                      Welcome to Nanyang Polytechnic!
+                    </ion-card-content>
+                  </ion-card>
+            </ion-item>
+        </ion-col>
+            
+      <ion-col *ngFor="let b of boxList" size="4">
+          <ion-col>
+              <div class="q-header">   
+                  <ion-button sort="end" (click)="deleteItem(b)"><ion-icon name="trash"></ion-icon></ion-button>
+                  <!-- <ion-button (click)="addNewCard(b)"><ion-icon name="add"></ion-icon></ion-button> -->
+              </div>
+              <!-- <p>{{ lists.indexOf(q) }}</p> -->
+              <ion-reorder-group>
+                  <ion-list dragula="bag" [(dragulaModel)]="b.cardList" lines="none" direction="x">
+                      <ion-item *ngFor="let card of b.cardList" text-wrap>
+                        <ion-card class="card-size-small" [color]="card.color">     
+                            <ion-card-subtitle *appHasRole="['edit-dashboard', 'admin']">
+                                <ion-icon class="delete-icon-btn" (click)="deleteItem(b)" name="trash"></ion-icon>
+                            </ion-card-subtitle>
+                          <ion-card-header>
+                            <ion-card-title>{{ card.title }}</ion-card-title>
+                            
+                          </ion-card-header>
+                          <ion-card-content class="stat-card">
+                            {{ card.value }}
+                          </ion-card-content>
+                        </ion-card>
+                      </ion-item>
+                    </ion-list>
+              </ion-reorder-group>
+              
+            </ion-col>
       </ion-col>
 
     </ion-row>
-    <ion-row align-items-center>
+
+    <ion-row [hidden]="enterViewMode" align-items-center>
       <ion-col size="12">
-        <ion-row>
+        <ion-row *appHasRole="['edit-dashboard', 'admin']"> 
           <ion-col size="3">
               <ion-item>
                   <ion-label position="fixed">Card title:</ion-label>
@@ -173,44 +198,61 @@
                     <ion-select-option value="q1">Blue</ion-select-option>
                     <ion-select-option value="q2">Yellow</ion-select-option>
                     <ion-select-option value="q3">Red</ion-select-option>
-                    <ion-select-option value="q4">Black</ion-select-option>
+                    <ion-select-option value="q4">Green</ion-select-option>
+                    <ion-select-option value="q5">Black</ion-select-option>
                   </ion-select>
               </ion-item>
           </ion-col>
 
           <ion-col size="3">
               <ion-item>
-                  <ion-label>Size</ion-label>
+                  <ion-item>
+                      <ion-label position="fixed">Box Name:</ion-label>
+                      <ion-input placeholder="Box Name" [(ngModel)]="newBox.boxName"></ion-input>
+                  </ion-item>
+                  <!-- <ion-label>Size</ion-label>
                   <ion-select [(ngModel)]="cardSize">
                     <ion-select-option value="small">Small</ion-select-option>
                     <ion-select-option value="medium">Medium</ion-select-option>
                     <ion-select-option value="large">Large</ion-select-option>
-                  </ion-select>
+                  </ion-select> -->
               </ion-item>
           </ion-col>
 
           <ion-col size="12">
-              <ion-button expand="block" fill="outline" (click)="addTodo()">
+              <ion-button expand="block" fill="outline" (click)="addNewBox()">
                   <ion-icon name="add" slot="start"></ion-icon>
-                  Add Card
+                  Add New Box
               </ion-button>
           </ion-col>
                 
         </ion-row>
-        
-        
-          
 
-
-        <ion-item>
+        <ion-item *appHasRole="['edit-dashboard', 'admin']"> 
           <ion-label position="fixed">Preset Name:</ion-label>
           <ion-input placeholder="Enter preset name here..." [(ngModel)]="newPreset.presetName"></ion-input>
         </ion-item>
         
-        <ion-button expand="block" fill="outline" (click)="savePreset(boxList)">Save Preset</ion-button>
+        <ion-button expand="block" fill="outline" (click)="savePreset(boxList)" *appHasRole="['dashboard-content','edit-dashboard', 'admin']">Save Preset</ion-button>
     
-        <ion-button expand="block" fill="outline" (click)="clearBoxes()">Clear Board</ion-button>
+        <ion-button expand="block" fill="outline" (click)="clearBoxes()" *appHasRole="['edit-dashboard', 'admin']">Clear Board</ion-button>
 
+        <ion-list *ngIf="!authenticated">
+          <ion-item>
+            <ion-label>Username</ion-label>
+            <ion-input type="text" [(ngModel)]="user.name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+              <ion-label>Password</ion-label>
+            <ion-input type="Password" [(ngModel)]="user.pw"></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <ion-button expand="block" (click)="loginAccount()" *ngIf="!authenticated">Login</ion-button>
+        <ion-button expand="block" (click)="logout()" *ngIf="authenticated">Logout</ion-button>
+        <ion-button [hidden]="enterViewMode" expand="block" (click)="enterView()" *ngIf="authenticated">View mode</ion-button>
+        
       </ion-col>
 
     </ion-row>
@@ -219,6 +261,8 @@
   <!-- <ion-row class="delete-area" align-items-center justify-content-center>
     <ion-icon name="trash" color="medium"></ion-icon>
   </ion-row> -->
+
+  
 
   
 </ion-content>

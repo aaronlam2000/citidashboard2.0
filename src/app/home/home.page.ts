@@ -1,6 +1,6 @@
-import { Component , ViewChild } from '@angular/core';
+import { Component , ViewChild, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
-import { PopoverController, NavParams, Platform } from '@ionic/angular';
+import { PopoverController, NavParams, Platform, NavController, AlertController} from '@ionic/angular';
 import { HomePopoverComponent } from '../home-popover/home-popover.component';
 import { DragulaService } from 'ng2-dragula';
 import { ToastController } from '@ionic/angular';
@@ -9,6 +9,7 @@ import { SourceListMap } from 'source-list-map';
 import { Storage } from '@ionic/storage';
 import { StorageService, Item, Preset, Box, Card} from '../services/storage.service';
 import { MenuController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
 
 declare var window;
 
@@ -17,9 +18,14 @@ declare var window;
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
+
 
   @ViewChild('doughnutChart', { static: true }) doughnutChart;
+
+  authenticated = false;
+  enterViewMode = false;
+  exitViewMode = true;
 
   presetList: Preset[] = [];
   newPreset: Preset = <Preset>{};
@@ -34,7 +40,12 @@ export class HomePage {
   bars:any;
   colorArray: any;
 
-  constructor(public popoverController: PopoverController, private dragulaService: DragulaService, private toastController: ToastController, private storage: Storage, private storageService: StorageService, private plt: Platform) {
+  user = {
+    name: 'admin',
+    pw: 'admin'
+  };
+
+  constructor( public alertCtrl: AlertController, public navCtrl: NavController, public popoverController: PopoverController, private dragulaService: DragulaService, private toastController: ToastController, private storage: Storage, private storageService: StorageService, private plt: Platform, private authService: AuthService) {
 
     this.plt.ready().then(() => {
       this.loadItems();
@@ -68,6 +79,51 @@ export class HomePage {
       removeOnSpill: true
     });  
   }
+
+  ngOnInit() {
+    this.authService.getUserSubject().subscribe(authState => {
+      this.authenticated = authState ? true : false;
+    });
+  }
+
+
+  // loginAdmin(name, pw) {
+  //   this.authService.login(name, pw);
+  // }
+
+  loginAdmin(name) {
+    this.authService.loginTest('admin', 'admin');
+  }
+
+  loginAccount() {
+    try {
+      this.authService.loginTest(this.user.name, this.user.pw);
+      // this.isHidden = true;
+    }
+    catch {
+      
+    }
+    
+  }
+
+  loginUser() {
+    this.authService.login('user');
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  enterView() {
+    this.enterViewMode = true;
+    this.exitViewMode = false;
+  }
+
+  exitView() {
+    this.enterViewMode = false;
+    this.exitViewMode = true;
+  }
+
 
   loadItems() {
     this.storageService.getItems().then(Boxes => {
@@ -108,6 +164,28 @@ export class HomePage {
     this.boxList = [];
   }
 
+
+  addNewBox() {
+    this.newBox.boxId = Date.now();
+
+    this.storageService.addBox(this.newBox).then(box => {
+      this.newBox = <Box>{}; //clear newBox
+      this.toastController.create({
+        message: 'Box Added!',
+        duration: 2000
+      }).then(toast => toast.present());
+      this.loadItems(); // Or add it to the array directly
+      
+    });
+  }
+
+  addNewCard(box: Box) {
+    this.newCard.color = "success";
+    
+    box.cardList.push(this.newCard);
+
+  }
+
   addTodo() {
 
     switch (this.cardColor) {
@@ -121,8 +199,11 @@ export class HomePage {
         this.newCard.color = 'danger';
         break;
       case 'q4':
-        this.newCard.color = 'dark';
+        this.newCard.color = 'success';
         break;       
+      case 'q5':
+      this.newCard.color = 'dark';
+      break;   
     }
 
     switch (this.cardSize) {
@@ -139,9 +220,9 @@ export class HomePage {
     
 
     this.newBox.boxId = Date.now();
-    this.newBox.cardList = [ this.newCard ]
+    this.newBox.cardList = [ this.newCard ];
  
-    this.storageService.addItem(this.newBox).then(box => {
+    this.storageService.addBox(this.newBox).then(box => {
       this.newBox = <Box>{}; //clear newBox
       this.toastController.create({
         message: 'Box Added!',

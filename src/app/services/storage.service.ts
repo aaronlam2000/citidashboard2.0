@@ -16,18 +16,20 @@ export interface Preset {
 
 export interface Box {
   boxId: number,
+  boxName: string,
   cardList: [ Card ],
   boxSize: string
 }
 
 export interface Card {
+  cardId: string,
   title: string,
   color: string,
   value: string,
   size: string
 }
 
-
+const CARDS_KEY = 'card-list';
 const ITEMS_KEY = 'box-list';
 const PRESET_KEY = 'preset-list';
 
@@ -49,7 +51,7 @@ export class StorageService {
   }
 
   // CREATE
-  addItem(box: Box): Promise<any> {
+  addBox(box: Box): Promise<any> {
     return this.storage.get(ITEMS_KEY).then((boxList: Box[]) => {
       if (boxList) {
         boxList.push(box);
@@ -59,6 +61,28 @@ export class StorageService {
       }
     });
   }
+
+  // DELETE
+ addNewCard(box: Box): Promise<any> {
+  return this.storage.get(ITEMS_KEY).then((boxes: Box[]) => {
+      if (!boxes || boxes.length === 0) {
+        return null;
+      }
+
+      let newCards: Box[] = [];
+
+      for (let b of boxes) {
+        if (b.boxId === box.boxId) {
+          newCards.push(box);
+        } else {
+          newCards.push(b);
+        }
+      }
+
+      return this.storage.set(ITEMS_KEY, newCards);
+    });
+  }
+
 
  // DELETE
  deleteItem(boxId: number): Promise<Box> {
@@ -77,6 +101,7 @@ export class StorageService {
       return this.storage.set(ITEMS_KEY, toKeep);
     });
   }
+
 
 // Delete boxes
 deleteBoxes() {

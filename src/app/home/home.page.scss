@@ -7,6 +7,7 @@
 ion-content {
   // --overflow: hidden;
   // max-height: max-content;
+  // --ion-background-color: lightblue!important;
   
 }
 
@@ -22,6 +23,7 @@ ion-card {
   text-align: center;
   white-space: nowrap;
   display: flex;
+  // flex-direction: row;
   flex-direction: column;
   
 }
@@ -29,6 +31,7 @@ ion-card {
 ion-item:hover {
   --ion-background-color: lightgrey;
 }
+
 
 .delete-btn {
   --box-shadow:none;
@@ -41,6 +44,26 @@ ion-item:hover {
   color: black;
 }
 
+.horizontal-list {
+  float: left!important;
+}
+
+div[scrollx=true], div[scrolly=true] {
+  position: relative;
+  overflow: hidden;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+div[scrollx=true] {
+  overflow-x: auto;
+}
+
+div[scrolly=true] {
+  overflow-y: auto;
+}
 
 .vertical-responsive {
   left: 50%;
@@ -54,6 +77,16 @@ ion-item:hover {
   font-size: 50px;
   font-style: normal;
   color: black;
+}
+
+.welcome-banner {
+  --ion-background-color:#864cbf!important;
+}
+
+.welcome-banner-content {
+  font-size: 35px;
+  color: white;
+  font-style: comic;
 }
 
 .card-size-small{
@@ -99,13 +132,6 @@ ion-item:hover {
   position: relative;
 }
 
-
-
-// Drag and Drop CSS
-.q1, .q2, .q3, .q4 {
-  border: 4px solid #fff;
-}
-
 .matrix {
   margin-top: 30px;
 
@@ -120,16 +146,16 @@ ion-item:hover {
   }
 
   ion-item {
-      margin-bottom: 2px;
+      margin-bottom: 15px;
   }
 }
 
 .q-header {
   height: 50px;
-  text-align: right;
+  text-align: center;
   border-style: dashed;
   border-color: #ccc;
-  
+  margin: 10px;
 }
 
 .delete-area {
