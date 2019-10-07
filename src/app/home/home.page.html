@@ -148,15 +148,16 @@
           <ion-col>
               <div class="q-header">   
                   <ion-button sort="end" (click)="deleteItem(b)"><ion-icon name="trash"></ion-icon></ion-button>
-                  <!-- <ion-button (click)="addNewCard(b)"><ion-icon name="add"></ion-icon></ion-button> -->
+                  <ion-button (click)="addNewCard(b)"><ion-icon name="add"></ion-icon></ion-button>
               </div>
               <!-- <p>{{ lists.indexOf(q) }}</p> -->
               <ion-reorder-group>
-                  <ion-list dragula="bag" [(dragulaModel)]="b.cardList" lines="none" direction="x">
+                  <ion-list dragula="bag" [(dragulaModel)]="b.cardList" lines="none">
+
                       <ion-item *ngFor="let card of b.cardList" text-wrap>
                         <ion-card class="card-size-small" [color]="card.color">     
                             <ion-card-subtitle *appHasRole="['edit-dashboard', 'admin']">
-                                <ion-icon class="delete-icon-btn" (click)="deleteItem(b)" name="trash"></ion-icon>
+                                <ion-icon class="delete-icon-btn" (click)="deleteCard(b, card)" name="trash"></ion-icon>
                             </ion-card-subtitle>
                           <ion-card-header>
                             <ion-card-title>{{ card.title }}</ion-card-title>

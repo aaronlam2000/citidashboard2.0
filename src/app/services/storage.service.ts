@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { ReturnStatement } from '@angular/compiler';
 
 export interface Item {
   id: number,
@@ -50,6 +51,10 @@ export class StorageService {
     return this.storage.get(PRESET_KEY);
   }
 
+  getCards(): Promise<Card[]> {
+    return this.storage.get(CARDS_KEY);
+  }
+
   // CREATE
   addBox(box: Box): Promise<any> {
     return this.storage.get(ITEMS_KEY).then((boxList: Box[]) => {
@@ -62,27 +67,34 @@ export class StorageService {
     });
   }
 
-  // DELETE
- addNewCard(box: Box): Promise<any> {
+  // Add Card
+ updateBox(box: Box): Promise<any> {
   return this.storage.get(ITEMS_KEY).then((boxes: Box[]) => {
       if (!boxes || boxes.length === 0) {
         return null;
       }
 
-      let newCards: Box[] = [];
+      let updatedBoxList: Box[] = [];
 
       for (let b of boxes) {
         if (b.boxId === box.boxId) {
-          newCards.push(box);
+          updatedBoxList.push(box);
         } else {
-          newCards.push(b);
+          updatedBoxList.push(b); 
         }
       }
 
-      return this.storage.set(ITEMS_KEY, newCards);
+      return this.storage.set(ITEMS_KEY, updatedBoxList);
     });
   }
 
+  setCardList(updatedCardList: Card[]): Promise<any> {
+    return this.storage.get(CARDS_KEY).then((cardList: Card[]) => {
+      if (cardList) {
+        return this.storage.set(CARDS_KEY, updatedCardList);
+      } 
+    });
+  }
 
  // DELETE
  deleteItem(boxId: number): Promise<Box> {

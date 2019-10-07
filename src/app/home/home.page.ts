@@ -33,6 +33,7 @@ export class HomePage implements OnInit {
   boxList: Box[] = [];
   newBox: Box = <Box>{};
 
+  cardList: Card[] = [];
   newCard: Card = <Card>{}
   cardColor = "q1";
   cardSize = "small";
@@ -124,6 +125,11 @@ export class HomePage implements OnInit {
     this.exitViewMode = true;
   }
 
+  loadCards() {
+    this.storageService.getCards().then(Cards => {
+      this.cardList = Cards;
+    });
+  }
 
   loadItems() {
     this.storageService.getItems().then(Boxes => {
@@ -141,6 +147,7 @@ export class HomePage implements OnInit {
     this.boxList = boxList;
     this.storageService.selectPreset(boxList);
   }
+
 
 
   savePreset(boxList) {
@@ -167,6 +174,24 @@ export class HomePage implements OnInit {
 
   addNewBox() {
     this.newBox.boxId = Date.now();
+    switch (this.cardColor) {
+      case 'q1':
+        this.newCard.color = "primary";
+        break;
+      case 'q2':
+        this.newCard.color = 'warning';
+        break;
+      case 'q3':
+        this.newCard.color = 'danger';
+        break;
+      case 'q4':
+        this.newCard.color = 'success';
+        break;       
+      case 'q5':
+      this.newCard.color = 'dark';
+      break;   
+    }
+    this.newBox.cardList = [ this.newCard ];
 
     this.storageService.addBox(this.newBox).then(box => {
       this.newBox = <Box>{}; //clear newBox
@@ -180,10 +205,48 @@ export class HomePage implements OnInit {
   }
 
   addNewCard(box: Box) {
-    this.newCard.color = "success";
+    switch (this.cardColor) {
+      case 'q1':
+        this.newCard.color = "primary";
+        break;
+      case 'q2':
+        this.newCard.color = 'warning';
+        break;
+      case 'q3':
+        this.newCard.color = 'danger';
+        break;
+      case 'q4':
+        this.newCard.color = 'success';
+        break;       
+      case 'q5':
+      this.newCard.color = 'dark';
+      break;   
+    }
+    box.cardList.push(this.newCard);  
     
-    box.cardList.push(this.newCard);
+    this.storageService.updateBox(box).then(box => {
+      this.toastController.create({
+        message: 'Card Added!',
+        duration: 2000
+      }).then(toast => toast.present());
+      this.loadItems();
+    });
+  }
 
+  deleteCard(box: Box, card: Card) {
+    const index = box.cardList.indexOf(card);
+
+    if (index != 1) {
+      box.cardList.splice(index, 1)
+    }
+
+    this.storageService.updateBox(box).then(box => {
+      this.toastController.create({
+        message: box.boxName + 'Deleted!',
+        duration: 2000
+      }).then(toast => toast.present());
+      this.loadItems();
+    });
   }
 
   addTodo() {
