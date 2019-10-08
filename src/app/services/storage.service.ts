@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { ReturnStatement } from '@angular/compiler';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 export interface Item {
   id: number,
@@ -23,11 +26,21 @@ export interface Box {
 }
 
 export interface Card {
-  cardId: string,
+  cardId: number,
   title: string,
   color: string,
   value: string,
   size: string
+}
+
+export interface VisitSum {
+  visitsSum: string
+}
+export interface AwardSum {
+  awardsSum: string
+}
+export interface ProjectSum {
+  projectsSum: string
 }
 
 const CARDS_KEY = 'card-list';
@@ -39,7 +52,7 @@ const PRESET_KEY = 'preset-list';
 })
 export class StorageService {
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage, private http: HttpClient) { }
 
 
   // READ
@@ -135,6 +148,35 @@ deleteBoxes() {
 
   selectPreset(boxList) {
     this.storage.set(ITEMS_KEY, boxList)
+  }
+
+  visitSumUrl = 'http://172.20.129.215:8088/api/GetSum/VisitsSum';
+  awardSumUrl = 'http://172.20.129.215:8088/api/GetSum/AwardsSum';
+  projectSumUrl = 'http://172.20.129.215:8088/api/GetSum/ProjectsSum';
+
+  visitSum: Observable<any>;
+  awardSum: Observable<any>;
+  projectSum: Observable<any>;
+
+  getVisitsSum(): Observable<any> {
+
+    this.visitSum = this.http.get(`${this.visitSumUrl}`);
+    
+    return this.visitSum;
+  }
+
+  getAwardsSum(): Observable<any> {
+
+    this.awardSum = this.http.get(`${this.awardSumUrl}`);
+    
+    return this.awardSum;
+  }
+
+  getProjectsSum(): Observable<any> {
+
+    this.projectSum = this.http.get(`${this.projectSumUrl}`);
+    
+    return this.projectSum;
   }
 
 }

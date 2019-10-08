@@ -7,9 +7,10 @@ import { ToastController } from '@ionic/angular';
 import { isNgTemplate } from '@angular/compiler';
 import { SourceListMap } from 'source-list-map';
 import { Storage } from '@ionic/storage';
-import { StorageService, Item, Preset, Box, Card} from '../services/storage.service';
+import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum} from '../services/storage.service';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
+import { Observable } from 'rxjs';
 
 declare var window;
 
@@ -36,10 +37,15 @@ export class HomePage implements OnInit {
   cardList: Card[] = [];
   newCard: Card = <Card>{}
   cardColor = "q1";
+  cardValue = "visits";
   cardSize = "small";
 
   bars:any;
   colorArray: any;
+
+  visitResults: VisitSum = <VisitSum>{}
+  awardResults: AwardSum = <AwardSum>{}
+  projectResults: ProjectSum = <ProjectSum>{}
 
   user = {
     name: 'admin',
@@ -77,14 +83,29 @@ export class HomePage implements OnInit {
 
     // Create Group
     this.dragulaService.createGroup('bag', {
-      removeOnSpill: true
+      removeOnSpill: false
     });  
   }
 
   ngOnInit() {
     this.authService.getUserSubject().subscribe(authState => {
       this.authenticated = authState ? true : false;
+
+      this.storageService.getVisitsSum()
+      .subscribe(visits => this.visitResults = visits);
+
+      this.storageService.getAwardsSum()
+      .subscribe(awards => this.awardResults = awards);
+
+      this.storageService.getProjectsSum()
+      .subscribe(projects => this.projectResults = projects);
+
     });
+  }
+
+  displayVisitSum() {
+    this.storageService.getVisitsSum()
+      .subscribe(visits => this.visitResults = visits);  
   }
 
 
@@ -174,6 +195,22 @@ export class HomePage implements OnInit {
 
   addNewBox() {
     this.newBox.boxId = Date.now();
+
+    switch (this.cardValue) {
+      case 'visits':
+        this.newCard.value = this.visitResults.visitsSum;
+        this.newCard.title = 'Visits';
+        break;
+      case 'awards':
+        this.newCard.value = this.awardResults.awardsSum;
+        this.newCard.title = 'Awards';
+        break;
+      case 'projects':
+        this.newCard.value = this.projectResults.projectsSum;
+        this.newCard.title = 'Projects';
+        break; 
+    }
+
     switch (this.cardColor) {
       case 'q1':
         this.newCard.color = "primary";
@@ -205,9 +242,26 @@ export class HomePage implements OnInit {
   }
 
   addNewCard(box: Box) {
+    this.newCard.cardId = Date.now();
+
+    switch (this.cardValue) {
+      case 'visits':
+        this.newCard.value = this.visitResults.visitsSum;
+        this.newCard.title = 'Visits';
+        break;
+      case 'awards':
+        this.newCard.value = this.awardResults.awardsSum;
+        this.newCard.title = 'Awards';
+        break;
+      case 'projects':
+        this.newCard.value = this.projectResults.projectsSum;
+        this.newCard.title = 'Projects';
+        break; 
+    }
+
     switch (this.cardColor) {
       case 'q1':
-        this.newCard.color = "primary";
+        this.newCard.color = 'primary';
         break;
       case 'q2':
         this.newCard.color = 'warning';
@@ -222,6 +276,7 @@ export class HomePage implements OnInit {
       this.newCard.color = 'dark';
       break;   
     }
+
     box.cardList.push(this.newCard);  
     
     this.storageService.updateBox(box).then(box => {
@@ -236,17 +291,25 @@ export class HomePage implements OnInit {
   deleteCard(box: Box, card: Card) {
     const index = box.cardList.indexOf(card);
 
-    if (index != 1) {
+    if (index != -1) {
       box.cardList.splice(index, 1)
+
+      this.storageService.updateBox(box).then(box => {
+        this.toastController.create({
+          message: card.title + ' Deleted!',
+          duration: 3000
+        }).then(toast => toast.present());
+        this.loadItems();
+      });
+    }
+    else {
+      this.toastController.create({
+        message: card.title + ' could not be deleted Index: ' + index.toString(),
+        duration: 5000
+      }).then(toast => toast.present());
     }
 
-    this.storageService.updateBox(box).then(box => {
-      this.toastController.create({
-        message: box.boxName + 'Deleted!',
-        duration: 2000
-      }).then(toast => toast.present());
-      this.loadItems();
-    });
+    
   }
 
   addTodo() {

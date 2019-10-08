@@ -44,6 +44,12 @@ ion-item:hover {
   color: black;
 }
 
+.dd-icons {
+  font-size: 20px;
+  color: gray;
+
+}
+
 .horizontal-list {
   float: left!important;
 }
@@ -151,11 +157,12 @@ div[scrolly=true] {
 }
 
 .q-header {
-  height: 50px;
+  height: 30px;
   text-align: center;
   border-style: dashed;
-  border-color: #ccc;
-  margin: 10px;
+  border-color: rgb(214, 214, 214);
+  border-width: 1.5px;
+  margin: 14px;
 }
 
 .delete-area {
