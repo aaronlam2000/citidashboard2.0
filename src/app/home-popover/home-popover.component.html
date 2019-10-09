@@ -1,4 +1,4 @@
-<ion-col size="12">
+<!-- <ion-col size="12">
     <ion-item>
       <ion-label>Choose Card Type:</ion-label>
       <ion-select [(ngModel)]="selectedQuadrant">
@@ -20,4 +20,51 @@
 
 <ion-col size="12">
     <ion-button color="danger" (click)="close()">Cancel</ion-button>
-</ion-col>
+</ion-col> -->
+
+<ion-content>
+  <ion-header [hidden] = "closeVisits">
+      <ion-toolbar color="primary">
+        <ion-title>Visits</ion-title>
+      </ion-toolbar>
+  </ion-header>
+
+  <ion-list [hidden] = "closeVisits">
+      <ion-item *ngFor="let item of visitDetails">
+        <ion-label text-wrap>
+          <h3 class="project-text">{{ item.companyName }}</h3>
+        </ion-label>
+      </ion-item>
+  </ion-list>
+
+
+  <ion-header [hidden] = "closeAwards">
+      <ion-toolbar color="primary">
+        <ion-title>Awards</ion-title>
+      </ion-toolbar>
+  </ion-header>
+
+  <ion-list [hidden] = "closeAwards">
+      <ion-item *ngFor="let item of awardDetails">
+        <ion-label text-wrap>
+          <h3 class="project-text">{{ item.awardName }}</h3>
+        </ion-label>
+      </ion-item>
+  </ion-list>
+
+  <ion-header [hidden] = "closeProjects">
+    <ion-toolbar color="primary">
+      <ion-title>Projects</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+  <ion-list [hidden] = "closeProjects">
+      <ion-item *ngFor="let item of projectDetails">
+        <ion-label text-wrap>
+          <h3 class="project-text">{{ item.projectName }}</h3>
+        </ion-label>
+      </ion-item>
+</ion-list>
+
+
+</ion-content>

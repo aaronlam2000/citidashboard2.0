@@ -7,10 +7,50 @@ import { ToastController } from '@ionic/angular';
 import { isNgTemplate } from '@angular/compiler';
 import { SourceListMap } from 'source-list-map';
 import { Storage } from '@ionic/storage';
-import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum} from '../services/storage.service';
+import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects} from '../services/storage.service';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
+import { ThemeService } from '../services/theme.service';
+
+const themes = {
+  default: {
+
+  },
+  
+  autumn: {
+    primary: '#F78154',
+    secondary: '#4D9078',
+    tertiary: '#B4436C',
+    light: '#FDE8DF',
+    medium: '#FCD0A2',
+    dark: '#B89876'
+   },
+   night: {
+    primary: '#8CBA80',
+    secondary: '#FCFF6C',
+    tertiary: '#FE5F55',
+    medium: '#BCC2C7',
+    dark: '#F7F7FF',
+    light: '#495867'
+   },
+   neon: {
+    primary: '#39BFBD',
+    secondary: '#4CE0B3',
+    tertiary: '#FF5E79',
+    light: '#F4EDF2',
+    medium: '#B682A5',
+    dark: '#34162A',
+   },
+   day: {
+     primary: '#f7f70c',
+     secondary: '#dede16',
+     tertiary: '#1ec924',
+     light: '#05f50d',
+     medium: '#33a137',
+     dark: '#3a873d'
+   }
+  };
 
 declare var window;
 
@@ -28,6 +68,10 @@ export class HomePage implements OnInit {
   enterViewMode = false;
   exitViewMode = true;
 
+  hideVisits = true;
+  hideAwards = true;
+  hideProjects = true;
+
   presetList: Preset[] = [];
   newPreset: Preset = <Preset>{};
 
@@ -40,19 +84,29 @@ export class HomePage implements OnInit {
   cardValue = "visits";
   cardSize = "small";
 
+  valueType = "sum";
+
   bars:any;
   colorArray: any;
 
-  visitResults: VisitSum = <VisitSum>{}
-  awardResults: AwardSum = <AwardSum>{}
-  projectResults: ProjectSum = <ProjectSum>{}
+  visitResults: VisitSum = <VisitSum>{};
+  awardResults: AwardSum = <AwardSum>{};
+  projectResults: ProjectSum = <ProjectSum>{};
+
+  visitDetails: Visits = <Visits>{};
+  awardDetails: Awards = <Awards>{};
+  projectDetails: Projects = <Projects>{};
+
+  visitsList: string;
+  awardsList: string;
+  projectsList: string;
 
   user = {
     name: 'admin',
     pw: 'admin'
   };
 
-  constructor( public alertCtrl: AlertController, public navCtrl: NavController, public popoverController: PopoverController, private dragulaService: DragulaService, private toastController: ToastController, private storage: Storage, private storageService: StorageService, private plt: Platform, private authService: AuthService) {
+  constructor( public alertCtrl: AlertController, public navCtrl: NavController, public popoverController: PopoverController, private dragulaService: DragulaService, private toastController: ToastController, private storage: Storage, private storageService: StorageService, private plt: Platform, private authService: AuthService, private themeService: ThemeService) {
 
     this.plt.ready().then(() => {
       this.loadItems();
@@ -99,6 +153,16 @@ export class HomePage implements OnInit {
 
       this.storageService.getProjectsSum()
       .subscribe(projects => this.projectResults = projects);
+
+
+      this.storageService.getVisitsList()
+      .subscribe(visitdetails => this.visitDetails = visitdetails);
+
+      this.storageService.getAwardsList()
+      .subscribe(awarddetails => this.awardDetails = awarddetails);
+
+      this.storageService.getProjectsList()
+      .subscribe(projectdetails => this.projectDetails = projectdetails);
 
     });
   }
@@ -209,6 +273,21 @@ export class HomePage implements OnInit {
         this.newCard.value = this.projectResults.projectsSum;
         this.newCard.title = 'Projects';
         break; 
+
+      case 'visitdetails':
+        this.newCard.value = "visitDetails";
+        this.newCard.title = 'Visits';
+        break; 
+
+      case 'awarddetails':
+        this.newCard.value = "awardDetails";
+        this.newCard.title = 'Awards';
+        break; 
+
+      case 'projectdetails':
+        this.newCard.value = "projectDetails";
+        this.newCard.title = 'Projects';
+        break; 
     }
 
     switch (this.cardColor) {
@@ -257,6 +336,21 @@ export class HomePage implements OnInit {
         this.newCard.value = this.projectResults.projectsSum;
         this.newCard.title = 'Projects';
         break; 
+
+      case 'visitdetails':
+        this.newCard.value = "visitDetails";
+        this.newCard.title = 'Visits';
+        break; 
+
+      case 'awarddetails':
+        this.newCard.value = "awardDetails";
+        this.newCard.title = 'Awards';
+        break; 
+
+      case 'projectdetails':
+        this.newCard.value = this.newCard.value = "projectDetails";
+        this.newCard.title = 'Projects';
+        break; 
     }
 
     switch (this.cardColor) {
@@ -286,6 +380,42 @@ export class HomePage implements OnInit {
       }).then(toast => toast.present());
       this.loadItems();
     });
+  }
+
+  updateSumData(box: Box, card:Card) {
+    const index = box.cardList.indexOf(card);
+
+    if (index != -1) {
+      if (card.title == 'Awards') {
+        card.value = this.awardResults.awardsSum;
+        this.hideVisits = true;
+        this.hideAwards = false;
+        this.hideProjects = true;
+      }
+      else if (card.title == 'Visits') {
+        card.value = this.visitResults.visitsSum;
+        this.hideVisits = false;
+        this.hideAwards = true;
+        this.hideProjects = true;
+      }
+      else if (card.title == 'Projects') {
+        card.value = this.projectResults.projectsSum;
+        this.hideVisits = true;
+        this.hideAwards = true;
+        this.hideProjects = false;
+      }
+      
+      this.storageService.updateBox(box).then(box => {
+        this.toastController.create({
+          message: card.title + ' Refreshed!',
+          duration: 3000
+        }).then(toast => toast.present());
+        this.loadItems();
+      });
+
+      
+    }
+    
   }
 
   deleteCard(box: Box, card: Card) {
@@ -379,7 +509,23 @@ export class HomePage implements OnInit {
   // selectedQuadrant = 'q1';
 
 
-  async presentPopover(event) {
+  async presentPopover(card) {
+    if (card.title == 'Awards') {
+      this.hideVisits = true;
+      this.hideAwards = false;
+      this.hideProjects = true;
+    }
+    else if (card.title == 'Visits') {
+      this.hideAwards == true;
+      this.hideVisits = false;
+      this.hideProjects = true;
+    }
+    else if (card.title = 'Projects') {
+      this.hideProjects = false;
+      this.hideVisits = true;
+      this.hideAwards = true;
+    }
+
     const popover = await this.popoverController.create({
       component: HomePopoverComponent,
       componentProps: {homeref:this}
@@ -426,6 +572,10 @@ export class HomePage implements OnInit {
         }
       }
     });
+  }
+
+  changeTheme(name) {
+    this.themeService.setTheme(themes[name]);
   }
 
 }

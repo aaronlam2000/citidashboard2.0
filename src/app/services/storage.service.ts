@@ -14,6 +14,9 @@ export interface Item {
 
 export interface Preset {
   presetId: number,
+  dateCreated: Date,
+  themeId: number,
+  visitId: number,
   presetName: string,
   presetBoxList: [ Box ]
 }
@@ -32,6 +35,42 @@ export interface Card {
   value: string,
   size: string
 }
+
+export interface Visits {
+  visitId: number,
+  companyName: string,
+  companyTypeId: number,
+  noOfPax: number,
+  visitDate: Date,
+  visitTypeId: number,
+  dateCreated: Date
+}
+
+export interface Awards {
+  awardId: number,
+  awardName: string,
+  awardLevel: string,
+  noOfRecipients: number,
+  awardType: string,
+  dateCreated: string
+}
+
+export interface Projects {
+  projectId: number,
+  projectName: string,
+  projectState: string,
+  noOfStudents: number,
+  dateCreated: Date
+}
+
+export interface Themes {
+  themeId: number,
+  dateCreated: string,
+  backgroundColor: string,
+  fontStyle: string,
+  themeName: string
+}
+
 
 export interface VisitSum {
   visitsSum: string
@@ -150,6 +189,7 @@ deleteBoxes() {
     this.storage.set(ITEMS_KEY, boxList)
   }
 
+  // GET SUM
   visitSumUrl = 'http://172.20.129.215:8088/api/GetSum/VisitsSum';
   awardSumUrl = 'http://172.20.129.215:8088/api/GetSum/AwardsSum';
   projectSumUrl = 'http://172.20.129.215:8088/api/GetSum/ProjectsSum';
@@ -177,6 +217,36 @@ deleteBoxes() {
     this.projectSum = this.http.get(`${this.projectSumUrl}`);
     
     return this.projectSum;
+  }
+
+  // GET LIST
+  visitListUrl = 'http://172.20.129.215:8088/api/Visits';
+  awardListUrl = 'http://172.20.129.215:8088/api/Awards';
+  projectListUrl = 'http://172.20.129.215:8088/api/Projects';
+
+  visitList: Observable<any>;
+  awardList: Observable<any>;
+  projectList: Observable<any>;
+
+  getVisitsList(): Observable<any> {
+
+    this.visitList = this.http.get(`${this.visitListUrl}`);
+    
+    return this.visitList;
+  }
+
+  getAwardsList(): Observable<any> {
+
+    this.awardList = this.http.get(`${this.awardListUrl}`);
+    
+    return this.awardList;
+  }
+
+  getProjectsList(): Observable<any> {
+
+    this.projectList = this.http.get(`${this.projectListUrl}`);
+    
+    return this.projectList;
   }
 
 }

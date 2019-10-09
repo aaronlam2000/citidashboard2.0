@@ -134,6 +134,14 @@
 
 
     <ion-row no-padding class="matrix" *appHasRole="['dashboard-content']">
+        <ion-row>
+            <ion-button (click)="changeTheme('default')">Default</ion-button>
+            <ion-button (click)="changeTheme('autumn')">Autumn</ion-button>
+            <ion-button (click)="changeTheme('night')">Dark</ion-button>
+            <ion-button (click)="changeTheme('neon')">Neon</ion-button>
+            <ion-button (click)="changeTheme('day')">Day</ion-button>
+          </ion-row>
+
         <ion-col size="12">
             <ion-item class="welcome-banner">
                 <ion-card>
@@ -160,14 +168,21 @@
                         <ion-card class="card-size-small" [color]="card.color">     
                             <ion-card-subtitle *appHasRole="['edit-dashboard', 'admin']">
                                 <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteCard(b, card)" name="trash"></ion-icon>
+                                <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="updateSumData(b, card)" name="refresh-circle"></ion-icon>
                             </ion-card-subtitle>
                           <ion-card-header>
-                            <ion-card-title>{{ card.title }}</ion-card-title>
+                            <ion-card-title (click)="presentPopover(card)">{{ card.title }}</ion-card-title>
                             
                           </ion-card-header>
                           <ion-card-content class="stat-card">
                             {{ card.value }}
                           </ion-card-content>
+
+                          <!-- <ion-list>
+                            <ion-item *ngFor="let v of visitDetails">
+                              {{v.companyName}}
+                            </ion-item>
+                          </ion-list> -->
                         </ion-card>
                       </ion-item>
                     </ion-list>
@@ -195,6 +210,9 @@
                     <ion-select-option value="visits">Visits</ion-select-option>
                     <ion-select-option value="awards">Awards</ion-select-option>
                     <ion-select-option value="projects">Projects</ion-select-option>
+                    <!-- <ion-select-option value="visitdetails">Visits List</ion-select-option>
+                    <ion-select-option value="awarddetails">Awards List</ion-select-option>
+                    <ion-select-option value="projectdetails">Projects List</ion-select-option> -->
                   </ion-select>
               </ion-item>
           </ion-col>
