@@ -11,6 +11,7 @@
         </ion-button>
 
       </ion-buttons>
+      <h1>CITI DASHBOARD 2.0</h1>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -134,7 +135,7 @@
 
 
     <ion-row no-padding class="matrix" *appHasRole="['dashboard-content']">
-        <ion-row>
+        <ion-row *appHasRole="['edit-dashboard', 'admin']" [hidden]="enterViewMode">
             <ion-button (click)="changeTheme('default')">Default</ion-button>
             <ion-button (click)="changeTheme('autumn')">Autumn</ion-button>
             <ion-button (click)="changeTheme('night')">Dark</ion-button>
