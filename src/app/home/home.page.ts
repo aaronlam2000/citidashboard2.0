@@ -264,35 +264,41 @@ export class HomePage implements OnInit {
       case 'visits':
         this.newCard.value = this.visitResults.visitsSum;
         this.newCard.title = 'Visits';
+        this.newCard.icon = 'person';
         break;
       case 'awards':
         this.newCard.value = this.awardResults.awardsSum;
         this.newCard.title = 'Awards';
+        this.newCard.icon = 'trophy';
         break;
       case 'projects':
         this.newCard.value = this.projectResults.projectsSum;
         this.newCard.title = 'Projects';
+        this.newCard.icon = 'book';
         break; 
 
       case 'visitdetails':
         this.newCard.value = "visitDetails";
         this.newCard.title = 'Visits';
+        this.newCard.icon = 'person';
         break; 
 
       case 'awarddetails':
         this.newCard.value = "awardDetails";
         this.newCard.title = 'Awards';
+        this.newCard.icon = 'trophy';
         break; 
 
       case 'projectdetails':
         this.newCard.value = "projectDetails";
         this.newCard.title = 'Projects';
+        this.newCard.icon = 'book';
         break; 
     }
 
     switch (this.cardColor) {
       case 'q1':
-        this.newCard.color = "primary";
+        this.newCard.color = 'primary';
         break;
       case 'q2':
         this.newCard.color = 'warning';
@@ -327,29 +333,35 @@ export class HomePage implements OnInit {
       case 'visits':
         this.newCard.value = this.visitResults.visitsSum;
         this.newCard.title = 'Visits';
+        this.newCard.icon = 'person';
         break;
       case 'awards':
         this.newCard.value = this.awardResults.awardsSum;
         this.newCard.title = 'Awards';
+        this.newCard.icon = 'trophy';
         break;
       case 'projects':
         this.newCard.value = this.projectResults.projectsSum;
         this.newCard.title = 'Projects';
+        this.newCard.icon = 'book';
         break; 
 
       case 'visitdetails':
         this.newCard.value = "visitDetails";
         this.newCard.title = 'Visits';
+        this.newCard.icon = 'person';
         break; 
 
       case 'awarddetails':
         this.newCard.value = "awardDetails";
         this.newCard.title = 'Awards';
+        this.newCard.icon = 'trophy';
         break; 
 
       case 'projectdetails':
         this.newCard.value = this.newCard.value = "projectDetails";
         this.newCard.title = 'Projects';
+        this.newCard.icon = 'book';
         break; 
     }
 

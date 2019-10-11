@@ -18,14 +18,14 @@ export interface Preset {
   themeId: number,
   visitId: number,
   presetName: string,
-  presetBoxList: [ Box ]
+  presetBoxList: [ Box ];
 }
 
 export interface Box {
   boxId: number,
   boxName: string,
   cardList: [ Card ],
-  boxSize: string
+  boxSize: string;
 }
 
 export interface Card {
@@ -33,7 +33,8 @@ export interface Card {
   title: string,
   color: string,
   value: string,
-  size: string
+  size: string,
+  icon: string;
 }
 
 export interface Visits {
@@ -43,7 +44,7 @@ export interface Visits {
   noOfPax: number,
   visitDate: Date,
   visitTypeId: number,
-  dateCreated: Date
+  dateCreated: Date;
 }
 
 export interface Awards {
@@ -52,7 +53,7 @@ export interface Awards {
   awardLevel: string,
   noOfRecipients: number,
   awardType: string,
-  dateCreated: string
+  dateCreated: string;
 }
 
 export interface Projects {
@@ -60,7 +61,7 @@ export interface Projects {
   projectName: string,
   projectState: string,
   noOfStudents: number,
-  dateCreated: Date
+  dateCreated: Date;
 }
 
 export interface Themes {
@@ -68,18 +69,18 @@ export interface Themes {
   dateCreated: string,
   backgroundColor: string,
   fontStyle: string,
-  themeName: string
+  themeName: string;
 }
 
 
 export interface VisitSum {
-  visitsSum: string
+  visitsSum: string;
 }
 export interface AwardSum {
-  awardsSum: string
+  awardsSum: string;
 }
 export interface ProjectSum {
-  projectsSum: string
+  projectsSum: string;
 }
 
 const CARDS_KEY = 'card-list';

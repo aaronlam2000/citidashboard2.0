@@ -166,18 +166,19 @@
                   <ion-list dragula="bag" [(dragulaModel)]="b.cardList" lines="none">
 
                       <ion-item *ngFor="let card of b.cardList" text-wrap>
-                        <ion-card class="card-size-small" [color]="card.color">     
+                        <ion-card [color]="card.color">     
                             <ion-card-subtitle *appHasRole="['edit-dashboard', 'admin']">
                                 <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteCard(b, card)" name="trash"></ion-icon>
                                 <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="updateSumData(b, card)" name="refresh-circle"></ion-icon>
                             </ion-card-subtitle>
                           <ion-card-header>
-                            <ion-card-title (click)="presentPopover(card)">{{ card.title }}</ion-card-title>
                             
                           </ion-card-header>
                           <ion-card-content class="stat-card">
-                            {{ card.value }}
+                          <ion-icon class="card-icon" [name]="card.icon"></ion-icon>
+                          <p class="card-content">{{ card.value }}</p>
                           </ion-card-content>
+                          <ion-card-title class="card-title" (click)="presentPopover(card)">{{ card.title }}</ion-card-title>
 
                           <!-- <ion-list>
                             <ion-item *ngFor="let v of visitDetails">
@@ -284,7 +285,7 @@
 
         <ion-button expand="block" (click)="loginAccount()" *ngIf="!authenticated">Login</ion-button>
         <ion-button expand="block" (click)="logout()" *ngIf="authenticated">Logout</ion-button>
-        <ion-button [hidden]="enterViewMode" expand="block" (click)="enterView()" *ngIf="authenticated">View mode</ion-button>
+        <ion-button [hidden]="enterViewMode" expand="block" (click)="enterView()" *ngIf="authenticated">Preview</ion-button>
         
       </ion-col>
 
