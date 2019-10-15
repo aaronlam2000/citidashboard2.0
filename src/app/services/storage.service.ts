@@ -4,6 +4,8 @@ import { ReturnStatement } from '@angular/compiler';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { HTTP } from '@ionic-native/http/ngx';
+
 
 export interface Item {
   id: number,
@@ -86,6 +88,13 @@ export interface ProjectSum {
 const CARDS_KEY = 'card-list';
 const ITEMS_KEY = 'box-list';
 const PRESET_KEY = 'preset-list';
+
+let config = {
+  headers: {
+    "Content-Type": "application/json",
+    'Access-Control-Allow-Origin': '*',
+    }
+  }
 
 @Injectable({
   providedIn: 'root'
@@ -248,6 +257,28 @@ deleteBoxes() {
     this.projectList = this.http.get(`${this.projectListUrl}`);
     
     return this.projectList;
+  }
+
+  createAward(award: Awards) {
+    
+    this.http.post(`${this.awardListUrl}`, award, config).subscribe(Response => {
+      console.log(Response)
+      console.log(award)
+    })
+
+    // this.nativeHttp.post(this.awardListUrl, award, {})
+    // .then
+    // (data => {
+    //   console.log(data.status);
+    //   console.log(data.data); // data received by server
+    //   console.log(data.headers);
+
+    // })
+    // .catch(error => {
+    //   console.log(error.status);
+    //   console.log(error.error); // error message as string
+    //  console.log(error.headers);
+    // });
   }
 
 }

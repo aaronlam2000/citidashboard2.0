@@ -268,6 +268,7 @@
         </ion-item>
         
         <ion-button expand="block" fill="outline" (click)="savePreset(boxList)" *appHasRole="['dashboard-content','edit-dashboard', 'admin']">Save Preset</ion-button>
+        <ion-button expand="block" (click)="addAward()" *appHasRole="['dashboard-content','edit-dashboard', 'admin']">Add New Award</ion-button>
     
         <ion-button expand="block" fill="outline" (click)="clearBoxes()" *appHasRole="['edit-dashboard', 'admin']">Clear Board</ion-button>
 

@@ -12,6 +12,7 @@ import { MenuController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { ThemeService } from '../services/theme.service';
+import { HttpClientModule } from '@angular/common/http';
 
 const themes = {
   default: {
@@ -101,12 +102,22 @@ export class HomePage implements OnInit {
   awardsList: string;
   projectsList: string;
 
+  newAward: Awards = <Awards>{}
+
   user = {
     name: 'admin',
     pw: 'admin'
   };
 
-  constructor( public alertCtrl: AlertController, public navCtrl: NavController, public popoverController: PopoverController, private dragulaService: DragulaService, private toastController: ToastController, private storage: Storage, private storageService: StorageService, private plt: Platform, private authService: AuthService, private themeService: ThemeService) {
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public popoverController: PopoverController, 
+    private dragulaService: DragulaService, 
+    private toastController: ToastController, 
+    private storage: Storage, 
+    private storageService: StorageService, 
+    private plt: Platform, 
+    private authService: AuthService, 
+    private themeService: ThemeService,
+    private httpClientModule: HttpClientModule) {
 
     this.plt.ready().then(() => {
       this.loadItems();
@@ -618,6 +629,20 @@ export class HomePage implements OnInit {
 
   changeTheme(name) {
     this.themeService.setTheme(themes[name]);
+  }
+
+  addAward() {
+    this.newAward.awardLevel = "First";
+    this.newAward.awardName = "Test Aaron's Award";
+    this.newAward.awardType = "Academic";
+    this.newAward.noOfRecipients = 5;
+
+    this.storageService.createAward(this.newAward);
+
+    this.toastController.create({
+      message: 'Award added',
+      duration: 3000
+    }).then(toast => toast.present());
   }
 
 }
