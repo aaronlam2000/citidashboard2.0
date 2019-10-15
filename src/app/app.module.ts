@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { DragulaModule } from 'ng2-dragula';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP } from '@ionic-native/http/ngx';
 
 @NgModule({
   declarations: [AppComponent],

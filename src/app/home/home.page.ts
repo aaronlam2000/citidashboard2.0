@@ -236,7 +236,6 @@ export class HomePage implements OnInit {
 
 
   savePreset(boxList) {
-    this.newPreset.presetId = 1;
     this.newPreset.presetBoxList = boxList;
     
     this.storageService.addPreset(this.newPreset).then(box => {
@@ -522,25 +521,56 @@ export class HomePage implements OnInit {
 
 
   async presentPopover(card) {
-    if (card.title == 'Awards') {
-      this.hideVisits = true;
-      this.hideAwards = false;
-      this.hideProjects = true;
-    }
-    else if (card.title == 'Visits') {
-      this.hideAwards == true;
-      this.hideVisits = false;
-      this.hideProjects = true;
-    }
-    else if (card.title = 'Projects') {
-      this.hideProjects = false;
+
+    switch (card.title) {
+      case 'Visits':
+        this.hideVisits = false;
+        this.hideAwards = true;
+        this.hideProjects = true;        
+        break;
+
+      case 'Awards':
+        this.hideVisits = true;
+        this.hideAwards = false;
+        this.hideProjects = true;        
+        break;
+
+      case 'Projects':
       this.hideVisits = true;
       this.hideAwards = true;
+      this.hideProjects = false;        
+      break;
     }
+    // if (card.title == 'Awards') {
+    //   this.hideVisits = true;
+    //   this.hideAwards = false;
+    //   this.hideProjects = true;
+    // }
+    // else if (card.title == 'Visits') {
+    //   this.hideAwards == true;
+    //   this.hideVisits = false;
+    //   this.hideProjects = true;
+    // }
+    // else if (card.title = 'Projects') {
+    //   this.hideProjects = false;
+    //   this.hideVisits = true;
+    //   this.hideAwards = true;
+    // }
+    // else {
+    //   this.hideProjects = true;
+    //   this.hideVisits = true;
+    //   this.hideAwards = true;
+    // }
 
     const popover = await this.popoverController.create({
       component: HomePopoverComponent,
-      componentProps: {homeref:this}
+      componentProps: {
+        homeref:this,
+        card_title: card.title,
+        hiddenVisits: this.hideVisits,
+        hiddenAwards: this.hideAwards,
+        hiddenProjects: this.hideProjects
+      }
       
     });
     return await popover.present();

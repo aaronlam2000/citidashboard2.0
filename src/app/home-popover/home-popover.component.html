@@ -23,11 +23,13 @@
 </ion-col> -->
 
 <ion-content>
+    <h1>{{ passedCardTitle }}</h1>
   <ion-header [hidden] = "closeVisits">
       <ion-toolbar color="primary">
         <ion-title>Visits</ion-title>
       </ion-toolbar>
   </ion-header>
+
 
   <ion-list [hidden] = "closeVisits">
       <ion-item *ngFor="let item of visitDetails">

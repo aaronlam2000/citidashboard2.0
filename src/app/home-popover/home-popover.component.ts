@@ -11,15 +11,18 @@ declare var window;
 })
 export class HomePopoverComponent implements OnInit {
 
-  constructor(public popoverController: PopoverController, private storageService: StorageService) { }
+  constructor(public popoverController: PopoverController, private storageService: StorageService, private navParams: NavParams) { }
 
-  closeVisits = window.home.hideVisits;
-  closeAwards = window.home.hideAwards;
-  closeProjects = window.home.hideProjects;
+  closeVisits = null;
+  closeAwards = null;
+  closeProjects = null;
 
   visitDetails: Visits = <Visits>{};
   awardDetails: Awards = <Awards>{};
   projectDetails: Projects = <Projects>{};
+
+
+  passedCardTitle = null;
 
   ngOnInit() {
       this.storageService.getVisitsList()
@@ -30,6 +33,11 @@ export class HomePopoverComponent implements OnInit {
 
       this.storageService.getProjectsList()
       .subscribe(projectdetails => this.projectDetails = projectdetails);
+
+      this.passedCardTitle = this.navParams.get('card_title')
+      this.closeVisits = this.navParams.get('hiddenVisits')
+      this.closeAwards = this.navParams.get('hiddenAwards')
+      this.closeProjects = this.navParams.get('hiddenProjects')
   }
 
 
