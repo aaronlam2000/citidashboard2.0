@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { ThemeService } from '../services/theme.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AddOptionsPopoverComponent } from '../add-options-popover/add-options-popover.component';
 
 const themes = {
   default: {
@@ -82,7 +83,7 @@ export class HomePage implements OnInit {
   cardList: Card[] = [];
   newCard: Card = <Card>{}
   cardColor = "q1";
-  cardValue = "visits";
+  cardValue = "awards";
   cardSize = "small";
 
   valueType = "sum";
@@ -219,6 +220,7 @@ export class HomePage implements OnInit {
   exitView() {
     this.enterViewMode = false;
     this.exitViewMode = true;
+
   }
 
   loadCards() {
@@ -270,68 +272,52 @@ export class HomePage implements OnInit {
   addNewBox() {
     this.newBox.boxId = Date.now();
 
-    switch (this.cardValue) {
-      case 'visits':
-        this.newCard.value = this.visitResults.visitsSum;
-        this.newCard.title = 'Visits';
-        this.newCard.icon = 'person';
-        break;
-      case 'awards':
-        this.newCard.value = this.awardResults.awardsSum;
-        this.newCard.title = 'Awards';
-        this.newCard.icon = 'trophy';
-        break;
-      case 'projects':
-        this.newCard.value = this.projectResults.projectsSum;
-        this.newCard.title = 'Projects';
-        this.newCard.icon = 'book';
-        break; 
+    // switch (this.cardValue) {
+    //   case 'visits':
+    //     this.newCard.value = this.visitResults.visitsSum;
+    //     this.newCard.title = 'Visits';
+    //     this.newCard.icon = 'person';
+    //     break;
+    //   case 'awards':
+    //     this.newCard.value = this.awardResults.awardsSum;
+    //     this.newCard.title = 'Awards';
+    //     this.newCard.icon = 'trophy';
+    //     break;
+    //   case 'projects':
+    //     this.newCard.value = this.projectResults.projectsSum;
+    //     this.newCard.title = 'Projects';
+    //     this.newCard.icon = 'book';
+    //     break; 
+    // }
 
-      case 'visitdetails':
-        this.newCard.value = "visitDetails";
-        this.newCard.title = 'Visits';
-        this.newCard.icon = 'person';
-        break; 
-
-      case 'awarddetails':
-        this.newCard.value = "awardDetails";
-        this.newCard.title = 'Awards';
-        this.newCard.icon = 'trophy';
-        break; 
-
-      case 'projectdetails':
-        this.newCard.value = "projectDetails";
-        this.newCard.title = 'Projects';
-        this.newCard.icon = 'book';
-        break; 
-    }
-
-    switch (this.cardColor) {
-      case 'q1':
-        this.newCard.color = 'primary';
-        break;
-      case 'q2':
-        this.newCard.color = 'warning';
-        break;
-      case 'q3':
-        this.newCard.color = 'danger';
-        break;
-      case 'q4':
-        this.newCard.color = 'success';
-        break;       
-      case 'q5':
-      this.newCard.color = 'dark';
-      break;   
-    }
+    // switch (this.cardColor) {
+    //   case 'q1':
+    //     this.newCard.color = 'primary';
+    //     break;
+    //   case 'q2':
+    //     this.newCard.color = 'warning';
+    //     break;
+    //   case 'q3':
+    //     this.newCard.color = 'danger';
+    //     break;
+    //   case 'q4':
+    //     this.newCard.color = 'success';
+    //     break;       
+    //   case 'q5':
+    //   this.newCard.color = 'dark';
+    //   break;   
+    // }
     this.newBox.cardList = [ this.newCard ];
 
     this.storageService.addBox(this.newBox).then(box => {
       this.newBox = <Box>{}; //clear newBox
+      this.newCard = <Card>{};
       this.toastController.create({
         message: 'Box Added!',
         duration: 2000
       }).then(toast => toast.present());
       this.loadItems(); // Or add it to the array directly
+      console.log('Card VALUE: ' + this.cardValue);
       
     });
   }
@@ -460,59 +446,7 @@ export class HomePage implements OnInit {
         duration: 5000
       }).then(toast => toast.present());
     }
-
     
-  }
-
-  addTodo() {
-
-    switch (this.cardColor) {
-      case 'q1':
-        this.newCard.color = "primary";
-        break;
-      case 'q2':
-        this.newCard.color = 'warning';
-        break;
-      case 'q3':
-        this.newCard.color = 'danger';
-        break;
-      case 'q4':
-        this.newCard.color = 'success';
-        break;       
-      case 'q5':
-      this.newCard.color = 'dark';
-      break;   
-    }
-
-    switch (this.cardSize) {
-      case 'small':
-        this.newCard.size = "3";
-        break;
-      case 'medium':
-        this.newCard.size = '4';
-        break;
-      case 'large':
-        this.newCard.size = '6';
-        break;      
-    }
-    
-
-    this.newBox.boxId = Date.now();
-    this.newBox.cardList = [ this.newCard ];
- 
-    this.storageService.addBox(this.newBox).then(box => {
-      this.newBox = <Box>{}; //clear newBox
-      this.toastController.create({
-        message: 'Box Added!',
-        duration: 2000
-      }).then(toast => toast.present());
-      this.loadItems(); // Or add it to the array directly
-      
-    });
-
-    // this[this.selectedQuadrant].push(this.todo);
-    // this.todo = { value: '', color: '' };
-    // this.lists.push([ { value: '9', color: 'warning' } ]);
   }
 
   // Delete Box
@@ -581,6 +515,18 @@ export class HomePage implements OnInit {
         hiddenVisits: this.hideVisits,
         hiddenAwards: this.hideAwards,
         hiddenProjects: this.hideProjects
+      }
+      
+    });
+    return await popover.present();
+  }
+
+  async presentOptions() {
+    
+    const popover = await this.popoverController.create({
+      component: AddOptionsPopoverComponent,
+      componentProps: {
+        homeref:this
       }
       
     });

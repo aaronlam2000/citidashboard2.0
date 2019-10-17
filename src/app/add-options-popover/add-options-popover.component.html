@@ -1,0 +1,43 @@
+<ion-content class="ion-padding">
+  
+    <!-- Content Selection -->
+    <ion-col>
+      <ion-item>
+          <ion-label>Value</ion-label>
+          <ion-select [(ngModel)]="valueOption">
+            <ion-select-option value="visits">Visits</ion-select-option>
+            <ion-select-option value="awards">Awards</ion-select-option>
+            <ion-select-option value="projects">Projects</ion-select-option>
+          </ion-select>
+      </ion-item>
+    </ion-col> 
+  
+    <!-- Color Selection -->
+    <ion-col>
+      <ion-item>
+          <ion-label>Color</ion-label>
+          <ion-select [(ngModel)]="colorOption">
+            <ion-select-option value="blue">Blue</ion-select-option>
+            <ion-select-option value="yellow">Yellow</ion-select-option>
+            <ion-select-option value="red">Red</ion-select-option>
+            <ion-select-option value="green">Green</ion-select-option>
+            <ion-select-option value="black">Black</ion-select-option>
+          </ion-select>
+      </ion-item>
+    </ion-col> 
+
+    <ion-col size="12">
+        <ion-button expand="block" fill="outline" color="dark" (click)=" addBox()">
+            <ion-icon name="add" slot="start"></ion-icon>
+            Add
+        </ion-button>
+    </ion-col>
+
+    <ion-col>
+      <ion-button color="danger" (click)="closePopover()">Close</ion-button>
+    </ion-col>
+    
+  
+  
+  </ion-content>
+  

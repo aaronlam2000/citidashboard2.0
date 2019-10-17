@@ -8,6 +8,7 @@ import { HomePage } from './home.page';
 import { HomePopoverComponent } from '../home-popover/home-popover.component';
 import { DragulaModule } from 'ng2-dragula';
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
+import { AddOptionsPopoverComponent } from '../add-options-popover/add-options-popover.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import { SharedDirectivesModule } from '../directives/shared-directives.module';
     ]),
     DragulaModule
   ],
-  entryComponents: [HomePopoverComponent],
-  declarations: [HomePage, HomePopoverComponent]
+  entryComponents: [HomePopoverComponent, AddOptionsPopoverComponent],
+  declarations: [HomePage, HomePopoverComponent, AddOptionsPopoverComponent]
 })
 export class HomePageModule {}

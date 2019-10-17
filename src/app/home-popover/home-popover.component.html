@@ -1,32 +1,7 @@
-<!-- <ion-col size="12">
-    <ion-item>
-      <ion-label>Choose Card Type:</ion-label>
-      <ion-select [(ngModel)]="selectedQuadrant">
-        <ion-select-option value="q1">Staff</ion-select-option>
-        <ion-select-option value="q2">Charts</ion-select-option>
-        <ion-select-option value="q3">Projects</ion-select-option>
-        <ion-select-option value="q4">Awards</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-col>
-
-<ion-col size="12">
-    <ion-button (click)="addNewCard()" class="addBtn">Add New Card</ion-button>
-</ion-col>
-
-<ion-col size="12">
-    <ion-button (click)="addChart()" class="addBigBtn">Add Chart</ion-button>
-</ion-col>
-
-<ion-col size="12">
-    <ion-button color="danger" (click)="close()">Cancel</ion-button>
-</ion-col> -->
-
 <ion-content>
-    <h1>{{ passedCardTitle }}</h1>
   <ion-header [hidden] = "closeVisits">
       <ion-toolbar color="primary">
-        <ion-title>Visits</ion-title>
+        <ion-title>{{ passedCardTitle }}</ion-title>
       </ion-toolbar>
   </ion-header>
 
@@ -42,7 +17,7 @@
 
   <ion-header [hidden] = "closeAwards">
       <ion-toolbar color="primary">
-        <ion-title>Awards</ion-title>
+        <ion-title>{{ passedCardTitle }}</ion-title>
       </ion-toolbar>
   </ion-header>
 
@@ -56,7 +31,7 @@
 
   <ion-header [hidden] = "closeProjects">
     <ion-toolbar color="primary">
-      <ion-title>Projects</ion-title>
+      <ion-title>{{ passedCardTitle }}</ion-title>
     </ion-toolbar>
 </ion-header>
 
