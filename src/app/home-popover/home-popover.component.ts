@@ -41,21 +41,21 @@ export class HomePopoverComponent implements OnInit {
   }
 
 
-  close() {
-    this.popoverController.dismiss();
-  }
+  // close() {
+  //   this.popoverController.dismiss();
+  // }
 
-  addCard() {
-    window.home.createNewCard();
-  }
+  // addCard() {
+  //   window.home.createNewCard();
+  // }
 
-  addChart() {
-    window.home.createBigCard();
-  }
+  // addChart() {
+  //   window.home.createBigCard();
+  // }
 
-  addNewCard() {
-    window.home.addTodo();
-  }
+  // addNewCard() {
+  //   window.home.addTodo();
+  // }
 
 
 

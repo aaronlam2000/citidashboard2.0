@@ -17,7 +17,6 @@ import { AddOptionsPopoverComponent } from '../add-options-popover/add-options-p
 
 const themes = {
   default: {
-
   },
   
   autumn: {
@@ -38,6 +37,7 @@ const themes = {
    },
    neon: {
     primary: '#39BFBD',
+    success: '#000000',
     secondary: '#4CE0B3',
     tertiary: '#FF5E79',
     light: '#F4EDF2',
@@ -317,67 +317,12 @@ export class HomePage implements OnInit {
         duration: 2000
       }).then(toast => toast.present());
       this.loadItems(); // Or add it to the array directly
-      console.log('Card VALUE: ' + this.cardValue);
       
     });
   }
 
   addNewCard(box: Box) {
     this.newCard.cardId = Date.now();
-
-    switch (this.cardValue) {
-      case 'visits':
-        this.newCard.value = this.visitResults.visitsSum;
-        this.newCard.title = 'Visits';
-        this.newCard.icon = 'person';
-        break;
-      case 'awards':
-        this.newCard.value = this.awardResults.awardsSum;
-        this.newCard.title = 'Awards';
-        this.newCard.icon = 'trophy';
-        break;
-      case 'projects':
-        this.newCard.value = this.projectResults.projectsSum;
-        this.newCard.title = 'Projects';
-        this.newCard.icon = 'book';
-        break; 
-
-      case 'visitdetails':
-        this.newCard.value = "visitDetails";
-        this.newCard.title = 'Visits';
-        this.newCard.icon = 'person';
-        break; 
-
-      case 'awarddetails':
-        this.newCard.value = "awardDetails";
-        this.newCard.title = 'Awards';
-        this.newCard.icon = 'trophy';
-        break; 
-
-      case 'projectdetails':
-        this.newCard.value = this.newCard.value = "projectDetails";
-        this.newCard.title = 'Projects';
-        this.newCard.icon = 'book';
-        break; 
-    }
-
-    switch (this.cardColor) {
-      case 'q1':
-        this.newCard.color = 'primary';
-        break;
-      case 'q2':
-        this.newCard.color = 'warning';
-        break;
-      case 'q3':
-        this.newCard.color = 'danger';
-        break;
-      case 'q4':
-        this.newCard.color = 'success';
-        break;       
-      case 'q5':
-      this.newCard.color = 'dark';
-      break;   
-    }
 
     box.cardList.push(this.newCard);  
     
@@ -526,7 +471,24 @@ export class HomePage implements OnInit {
     const popover = await this.popoverController.create({
       component: AddOptionsPopoverComponent,
       componentProps: {
-        homeref:this
+        homeref:this,
+        hiddenAddCard: true,
+        hiddenAddBox: false
+      }
+      
+    });
+    return await popover.present();
+  }
+
+  async presentCardOptions(box: Box) {
+    
+    const popover = await this.popoverController.create({
+      component: AddOptionsPopoverComponent,
+      componentProps: {
+        homeref:this,
+        selectedBox: box,
+        hiddenAddCard: false,
+        hiddenAddBox: true
       }
       
     });

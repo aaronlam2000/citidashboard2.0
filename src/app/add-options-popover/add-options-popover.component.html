@@ -26,10 +26,16 @@
       </ion-item>
     </ion-col> 
 
-    <ion-col size="12">
+    <ion-col size="12" [hidden]="hideAddBox">
         <ion-button expand="block" fill="outline" color="dark" (click)=" addBox()">
             <ion-icon name="add" slot="start"></ion-icon>
-            Add
+            Add Box
+        </ion-button>
+    </ion-col>
+    <ion-col size="12" [hidden]="hideAddCard">
+        <ion-button expand="block" fill="outline" color="dark" (click)=" addCard()">
+            <ion-icon name="add" slot="start"></ion-icon>
+            Add Card
         </ion-button>
     </ion-col>
 

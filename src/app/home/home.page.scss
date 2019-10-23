@@ -25,7 +25,16 @@ ion-card {
   display: flex;
   // flex-direction: row;
   flex-direction: column;
-  
+}
+
+ion-list {
+  height:100%;
+}
+
+.row-flex {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 ion-item:hover {
@@ -222,5 +231,18 @@ div[scrolly=true] {
     position: absolute;
     bottom: 0;
     right: 0;
+  }
+
+  div[scrollx=true],div[scrolly=true] {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  div[scrollx=true] {
+    overflow-x: auto;
+  }
+  
+  div[scrolly=true] {
+    overflow-y: auto;
   }
 }
