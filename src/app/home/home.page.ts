@@ -7,7 +7,7 @@ import { ToastController } from '@ionic/angular';
 import { isNgTemplate } from '@angular/compiler';
 import { SourceListMap } from 'source-list-map';
 import { Storage } from '@ionic/storage';
-import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects} from '../services/storage.service';
+import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects, KeyValue} from '../services/storage.service';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
@@ -28,12 +28,21 @@ const themes = {
     dark: '#B89876'
    },
    night: {
-    primary: '#8CBA80',
-    secondary: '#FCFF6C',
-    tertiary: '#FE5F55',
-    medium: '#BCC2C7',
-    dark: '#F7F7FF',
-    light: '#495867'
+    // primary: '#8CBA80',
+    // secondary: '#FCFF6C',
+    // tertiary: '#FE5F55',
+    // medium: '#BCC2C7',
+    // dark: '#F7F7FF',
+    // light: '#495867'
+    primary: '#091935',
+    secondary: '#091935',
+    tertiary: '#091935',
+    success: '#091935',
+    warning: '#091935',
+    danger: '#091935',
+    dark: '#091935',
+    medium: '#091935',
+    light: '#091935'
    },
    neon: {
     primary: '#39BFBD',
@@ -104,6 +113,7 @@ export class HomePage implements OnInit {
   projectsList: string;
 
   newAward: Awards = <Awards>{}
+  keyValue: KeyValue = <KeyValue>{};
 
   user = {
     name: 'admin',
@@ -148,33 +158,49 @@ export class HomePage implements OnInit {
       });
 
     // Create Group
-    this.dragulaService.createGroup('bag', {
-      removeOnSpill: false
-    });  
+    // this.dragulaService.createGroup('bag', {
+    //   removeOnSpill: false
+    // });  
+
+    this.dragulaService.createGroup("bag", {
+      moves: (el, container, handle) => {
+        return handle.className === 'handle';
+      }
+    });
   }
 
   ngOnInit() {
     this.authService.getUserSubject().subscribe(authState => {
       this.authenticated = authState ? true : false;
 
+      this.storageService.getKeyString();
       this.storageService.getVisitsSum()
       .subscribe(visits => this.visitResults = visits);
 
+      this.storageService.getKeyString();
       this.storageService.getAwardsSum()
       .subscribe(awards => this.awardResults = awards);
 
+      this.storageService.getKeyString();
       this.storageService.getProjectsSum()
       .subscribe(projects => this.projectResults = projects);
 
 
+      this.storageService.getKeyString();
       this.storageService.getVisitsList()
       .subscribe(visitdetails => this.visitDetails = visitdetails);
 
+      this.storageService.getKeyString();
       this.storageService.getAwardsList()
       .subscribe(awarddetails => this.awardDetails = awarddetails);
 
+      this.storageService.getKeyString();
       this.storageService.getProjectsList()
       .subscribe(projectdetails => this.projectDetails = projectdetails);
+
+      this.storageService.getKeyString();
+      this.storageService.getKey()
+      .subscribe(key => this.keyValue = key);
 
     });
   }

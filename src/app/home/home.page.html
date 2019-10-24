@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
+    <ion-title class="welcome-toolbar">
       <ion-buttons>
-        <ion-button slot="end" (click)="presentOptions()">
+        <ion-button [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']" slot="end" (click)="presentOptions()">
           <ion-icon name="add"></ion-icon>       
         </ion-button>
 
@@ -11,12 +11,12 @@
         </ion-button>
 
       </ion-buttons>
-      <h1>CITI DASHBOARD 2.0</h1>
+      <h1 class="dashboard-title">CITI DASHBOARD 2.0</h1>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content forceOverscroll="false">
+<ion-content forceOverscroll="false" [color]="primary">
     
     
       
@@ -161,14 +161,20 @@
                   <ion-button (click)="addNewCard(b)"><ion-icon name="add"></ion-icon></ion-button>
               </div> -->
               <!-- <p>{{ lists.indexOf(q) }}</p> -->
-              <ion-icon class="dd-icons" (click)="presentCardOptions(b)" name="add"></ion-icon> 
-              <ion-icon class="dd-icons" (click)="deleteItem(b)" name="trash"></ion-icon> 
-                  <ion-row class="row-flex" style="border:solid 8px grey;" dragula="bag" [(dragulaModel)]="b.cardList">
+              <div [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
+                  <ion-icon class="dd-icons" (click)="presentCardOptions(b)" name="add"></ion-icon> 
+                  <ion-icon class="dd-icons" (click)="deleteItem(b)" name="trash"></ion-icon>
+              </div>
+               
+                  <ion-row class="row-flex" dragula="bag" [(dragulaModel)]="b.cardList">
                     
                 
-                      <ion-col style="border:solid 5px green;" *ngFor="let card of b.cardList">
+                      <ion-col style="border:solid 3px white;" *ngFor="let card of b.cardList">
                           <ion-item class="ion-text-wrap">
-                              <ion-card [color]="card.color">     
+                              <ion-card [color]="card.color">   
+                                  <span class="handle" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
+                                      +
+                                  </span>  
                                   <ion-card-subtitle *appHasRole="['edit-dashboard', 'admin']">
                                       <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteCard(b, card)" name="trash"></ion-icon>
                                       <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="updateSumData(b, card)" name="refresh-circle"></ion-icon>
@@ -251,12 +257,12 @@
         <ion-button expand="block" fill="outline" (click)="clearBoxes()" *appHasRole="['edit-dashboard', 'admin']">Clear Board</ion-button>
 
         <ion-list *ngIf="!authenticated">
-          <ion-item>
+          <ion-item class="white-font">
             <ion-label>Username</ion-label>
             <ion-input type="text" [(ngModel)]="user.name"></ion-input>
           </ion-item>
 
-          <ion-item>
+          <ion-item class="white-font">
               <ion-label>Password</ion-label>
             <ion-input type="Password" [(ngModel)]="user.pw"></ion-input>
           </ion-item>

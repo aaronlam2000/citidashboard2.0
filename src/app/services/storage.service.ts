@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { HTTP } from '@ionic-native/http/ngx';
+import { headersToString } from 'selenium-webdriver/http';
 
 
 export interface Item {
@@ -74,7 +75,6 @@ export interface Themes {
   themeName: string;
 }
 
-
 export interface VisitSum {
   visitsSum: string;
 }
@@ -85,17 +85,34 @@ export interface ProjectSum {
   projectsSum: string;
 }
 
+export interface KeyCredentials {
+  username: string,
+  password: string;
+}
+
+export interface KeyValue {
+  key: string; 
+}
+
 const CARDS_KEY = 'card-list';
 const ITEMS_KEY = 'box-list';
 const PRESET_KEY = 'preset-list';
 
+let get_key_config = {
+  headers: {
+    "Content-Type": "application/json",
+    'Access-Control-Allow-Origin': '*',
+    "action": "GetKey"
+    }
+  }
 let config = {
   headers: {
     "Content-Type": "application/json",
     'Access-Control-Allow-Origin': '*',
+    "Key": ''
     }
   }
-
+  
 @Injectable({
   providedIn: 'root'
 })
@@ -103,6 +120,30 @@ export class StorageService {
 
   constructor(private storage: Storage, private http: HttpClient) { }
 
+  //GET KEY
+  getKeyUrl = "http://172.20.129.215:8088/api/GetKey";
+  getKeyValue: Observable<any>;
+  keyValue: KeyValue = <KeyValue>{};
+  keyString = this.getKeyString();
+
+  credentials: KeyCredentials = {
+    username: "admin",
+    password: "Sun123!"
+  }
+
+
+  getKey(): Observable<any> {
+
+    this.getKeyValue = this.http.post(`${this.getKeyUrl}`, this.credentials , get_key_config);
+    // this.getKeyValue.subscribe(key => this.keyValue = key);
+    return this.getKeyValue;
+    
+  }
+
+  getKeyString(){
+    this.getKey().subscribe(key => this.keyValue = key);
+    config.headers.Key = this.keyValue.key;
+  }
 
   // READ
   getItems(): Promise<Box[]> {
@@ -210,21 +251,21 @@ deleteBoxes() {
 
   getVisitsSum(): Observable<any> {
 
-    this.visitSum = this.http.get(`${this.visitSumUrl}`);
+    this.visitSum = this.http.get(`${this.visitSumUrl}`, config);
     
     return this.visitSum;
   }
 
   getAwardsSum(): Observable<any> {
 
-    this.awardSum = this.http.get(`${this.awardSumUrl}`);
+    this.awardSum = this.http.get(`${this.awardSumUrl}`, config);
     
     return this.awardSum;
   }
 
   getProjectsSum(): Observable<any> {
 
-    this.projectSum = this.http.get(`${this.projectSumUrl}`);
+    this.projectSum = this.http.get(`${this.projectSumUrl}`, config);
     
     return this.projectSum;
   }
@@ -240,21 +281,21 @@ deleteBoxes() {
 
   getVisitsList(): Observable<any> {
 
-    this.visitList = this.http.get(`${this.visitListUrl}`);
+    this.visitList = this.http.get(`${this.visitListUrl}`, config);
     
     return this.visitList;
   }
 
   getAwardsList(): Observable<any> {
 
-    this.awardList = this.http.get(`${this.awardListUrl}`);
+    this.awardList = this.http.get(`${this.awardListUrl}`, config);
     
     return this.awardList;
   }
 
   getProjectsList(): Observable<any> {
 
-    this.projectList = this.http.get(`${this.projectListUrl}`);
+    this.projectList = this.http.get(`${this.projectListUrl}`, config);
     
     return this.projectList;
   }

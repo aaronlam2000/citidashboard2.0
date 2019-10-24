@@ -7,8 +7,7 @@
 ion-content {
   // --overflow: hidden;
   // max-height: max-content;
-  // --ion-background-color: lightblue!important;
-  
+  // --ion-background-color:#091935!important;
 }
 
 ion-grid {
@@ -31,10 +30,33 @@ ion-list {
   height:100%;
 }
 
+.white-font {
+  color: white;
+}
+
+.welcome-toolbar{
+  background-color: #0E4193;
+  color: white;
+}
+
+.dashboard-title {
+  text-align: center;
+  font-size: 3.5vw;
+}
+
 .row-flex {
   display: flex;
   flex-direction: row;
   width: 100%;
+  width: 95vw;
+}
+
+.handle {
+  padding: 0 5px;
+  margin: 8px;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: grab;
+  text-align: left;
 }
 
 ion-item:hover {
@@ -96,25 +118,27 @@ div[scrolly=true] {
 
 .card-content {
   font-size: 6vw!important;
-  color: black;
+  color: #03F6FF;
+  font-weight: bold;
 }
 
 .card-title {
   font-size: 3.5vw;
   font-style: normal;
-  color: black;
+  color: white;
 }
 
 .card-icon {
   font-size: 10vw;
+  color: white;
 }
 
 .welcome-banner {
-  --ion-background-color:#864cbf!important;
+  --ion-background-color:#0E4193!important;
 }
 
 .welcome-banner-content {
-  font-size: 35px;
+  font-size: 5vw;
   color: white;
   font-style: comic;
 }

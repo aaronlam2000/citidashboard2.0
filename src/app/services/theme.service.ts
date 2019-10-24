@@ -104,6 +104,13 @@ export class ThemeService {
       --ion-color-warning-contrast-rgb: 255,255,255;
       --ion-color-warning-shade: ${Color(warning).darken(shadeRatio)};
       --ion-color-warning-tint: ${Color(warning).lighten(tintRatio)};
+
+      --ion-color-danger: ${danger};
+      --ion-color-danger-rgb: 255,206,0;
+      --ion-color-danger-contrast: ${contrast(danger)};
+      --ion-color-danger-contrast-rgb: 255,255,255;
+      --ion-color-danger-shade: ${Color(danger).darken(shadeRatio)};
+      --ion-color-danger-tint: ${Color(danger).lighten(tintRatio)};
   
       --ion-color-dark: ${dark};
       --ion-color-dark-rgb: 34,34,34;
