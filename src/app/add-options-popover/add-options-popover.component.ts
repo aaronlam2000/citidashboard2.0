@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, NavParams } from '@ionic/angular';
-import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects} from '../services/storage.service';
+import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects, Everything} from '../services/storage.service';
 
 declare var window;
 
@@ -18,6 +18,7 @@ export class AddOptionsPopoverComponent implements OnInit {
   passedBox = null;
   hideAddCard = null;
   hideAddBox = null;
+  optionsAllData: Everything = <Everything>{};
 
   constructor(public popoverController: PopoverController, 
     private storageService: StorageService, 
@@ -27,22 +28,24 @@ export class AddOptionsPopoverComponent implements OnInit {
     this.passedBox = this.navParams.get('selectedBox');
     this.hideAddCard = this.navParams.get('hiddenAddCard');
     this.hideAddBox = this.navParams.get('hiddenAddBox');
+    this.optionsAllData = this.storageService.getAllData();
   }
 
   addBox() {
+    this.optionsAllData = this.storageService.getAllData();
     switch (this.valueOption) {
       case 'visits':
-        window.home.newCard.value = window.home.visitResults.visitsSum;
+        window.home.newCard.value = this.optionsAllData.sum.visitsSum;
         window.home.newCard.title = 'Visits';
         window.home.newCard.icon = 'person';
         break;
       case 'awards':
-        window.home.newCard.value = window.home.awardResults.awardsSum;
+        window.home.newCard.value = this.optionsAllData.sum.awardsSum;
         window.home.newCard.title = 'Awards';
         window.home.newCard.icon = 'trophy';
         break;
       case 'projects':
-        window.home.newCard.value = window.home.projectResults.projectsSum;
+        window.home.newCard.value = this.optionsAllData.sum.projectsSum;
         window.home.newCard.title = 'Projects';
         window.home.newCard.icon = 'book';
         break; 
@@ -70,19 +73,20 @@ export class AddOptionsPopoverComponent implements OnInit {
   }
 
   addCard() {
+    this.optionsAllData = this.storageService.getAllData();
     switch (this.valueOption) {
       case 'visits':
-        window.home.newCard.value = window.home.visitResults.visitsSum;
+        window.home.newCard.value = this.optionsAllData.sum.visitsSum;
         window.home.newCard.title = 'Visits';
         window.home.newCard.icon = 'person';
         break;
       case 'awards':
-        window.home.newCard.value = window.home.awardResults.awardsSum;
+        window.home.newCard.value = this.optionsAllData.sum.awardsSum;
         window.home.newCard.title = 'Awards';
         window.home.newCard.icon = 'trophy';
         break;
       case 'projects':
-        window.home.newCard.value = window.home.projectResults.projectsSum;
+        window.home.newCard.value = this.optionsAllData.sum.projectsSum;
         window.home.newCard.title = 'Projects';
         window.home.newCard.icon = 'book';
         break; 
@@ -105,8 +109,8 @@ export class AddOptionsPopoverComponent implements OnInit {
         window.home.newCard.color = 'dark';
       break;   
     }
-    console.log(this.passedBox)
-    console.log(this.newCard)
+    // console.log(this.passedBox)
+    // console.log(this.newCard)
     window.home.addNewCard(this.passedBox);
     this.popoverController.dismiss();
   }

@@ -7,7 +7,7 @@ import { ToastController } from '@ionic/angular';
 import { isNgTemplate } from '@angular/compiler';
 import { SourceListMap } from 'source-list-map';
 import { Storage } from '@ionic/storage';
-import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects, KeyValue} from '../services/storage.service';
+import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects, KeyValue, Everything} from '../services/storage.service';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
@@ -100,6 +100,7 @@ export class HomePage implements OnInit {
   bars:any;
   colorArray: any;
 
+  allData: Everything = <Everything>{};
   visitResults: VisitSum = <VisitSum>{};
   awardResults: AwardSum = <AwardSum>{};
   projectResults: ProjectSum = <ProjectSum>{};
@@ -107,6 +108,10 @@ export class HomePage implements OnInit {
   visitDetails: Visits = <Visits>{};
   awardDetails: Awards = <Awards>{};
   projectDetails: Projects = <Projects>{};
+
+  visitsSum: string;
+  awardsSum: string;
+  projectsSum: string;
 
   visitsList: string;
   awardsList: string;
@@ -173,37 +178,57 @@ export class HomePage implements OnInit {
     this.authService.getUserSubject().subscribe(authState => {
       this.authenticated = authState ? true : false;
 
-      this.storageService.getKeyString();
-      this.storageService.getVisitsSum()
-      .subscribe(visits => this.visitResults = visits);
 
-      this.storageService.getKeyString();
-      this.storageService.getAwardsSum()
-      .subscribe(awards => this.awardResults = awards);
+      this.storageService.getKey(); 
+     
 
-      this.storageService.getKeyString();
-      this.storageService.getProjectsSum()
-      .subscribe(projects => this.projectResults = projects);
+      // var promise=this.storageService.getKeyString();
+      // promise.then(function(greeting){this.storageService.getVisitsSum()
+      //   .subscribe(visits => this.visitResults = visits);},function(resson){this.storageService.getVisitsSum()
+      //     .subscribe(visits => this.visitResults = visits);},function(update){this.storageService.getVisitsSum()
+      //       .subscribe(visits => this.visitResults = visits);})
+
+      // this.storageService.getKey();
+      // this.storageService.getVisitsSum()
+      // .subscribe(visits => this.visitResults = visits);
+
+      // this.storageService.getKey();
+      // this.storageService.getAwardsSum()
+      // .subscribe(awards => this.awardResults = awards);
+
+      // this.storageService.getKey();
+      // this.storageService.getProjectsSum()
+      // .subscribe(projects => this.projectResults = projects);
 
 
-      this.storageService.getKeyString();
-      this.storageService.getVisitsList()
-      .subscribe(visitdetails => this.visitDetails = visitdetails);
+      // this.storageService.getKey();
+      // this.storageService.getVisitsList()
+      // .subscribe(visitdetails => this.visitDetails = visitdetails);
 
-      this.storageService.getKeyString();
-      this.storageService.getAwardsList()
-      .subscribe(awarddetails => this.awardDetails = awarddetails);
+      // this.storageService.getKey();
+      // this.storageService.getAwardsList()
+      // .subscribe(awarddetails => this.awardDetails = awarddetails);
 
-      this.storageService.getKeyString();
-      this.storageService.getProjectsList()
-      .subscribe(projectdetails => this.projectDetails = projectdetails);
-
-      this.storageService.getKeyString();
-      this.storageService.getKey()
-      .subscribe(key => this.keyValue = key);
+      // this.storageService.getKey();
+      // this.storageService.getProjectsList()
+      // .subscribe(projectdetails => this.projectDetails = projectdetails);
 
     });
   }
+
+  logger: string;
+
+  // refreshAllData() {
+  //   // this.storageService.getAllData()
+  //   //   .subscribe(allData => this.allData = allData.sum);
+  //   //   console.log("Sums: " + this.logger);
+
+  //   this.allData = this.storageService.getAllData();
+  //   this.visitsSum = this.allData.sum.visitsSum;
+  //   this.awardsSum = this.allData.sum.awardsSum;
+  //   this.projectsSum = this.allData.sum.projectsSum;
+  //   console.log(this.allData.sum.awardsSum);
+  // }
 
   displayVisitSum() {
     this.storageService.getVisitsSum()
@@ -225,7 +250,10 @@ export class HomePage implements OnInit {
       // this.isHidden = true;
     }
     catch {
-      
+      console.log("Error: Login Failed");
+    }
+    finally {
+      // this.allData = this.storageService.getAllData();
     }
     
   }
@@ -438,11 +466,13 @@ export class HomePage implements OnInit {
 
   async presentPopover(card) {
 
+    this.storageService.getKey();  
+
     switch (card.title) {
       case 'Visits':
         this.hideVisits = false;
         this.hideAwards = true;
-        this.hideProjects = true;        
+        this.hideProjects = true;    
         break;
 
       case 'Awards':
@@ -521,9 +551,9 @@ export class HomePage implements OnInit {
     return await popover.present();
   }
 
-  ionViewDidEnter() {
-    this.createDoughnutChart();
-  }
+  // ionViewDidEnter() {
+  //   this.createDoughnutChart();
+  // }
   
   generateColorArray(num) {
     this.colorArray = [];
@@ -532,34 +562,34 @@ export class HomePage implements OnInit {
     }
   }
 
-  createDoughnutChart() {
-    var colorArray = [];
-    for (let i = 0; i < 5; i++) {
-      colorArray.push('#' + Math.floor(Math.random() * 16777215).toString(16));
-    }
-    this.bars = new Chart(this.doughnutChart.nativeElement, {
-      type: 'doughnut',
-      data: {
-        labels: ['Retail/Shop', 'Food', 'Transport', 'Withdrawals', 'Transfers'],
-        datasets: [{
-          label: 'Money Spent ($)',
-          data: [100, 200, 50, 150, 65],
-          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"], // array should have same number of elements as number of dataset
-          borderColor: '#FFFFFF',// array should have same number of elements as number of dataset
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    });
-  }
+  // createDoughnutChart() {
+  //   var colorArray = [];
+  //   for (let i = 0; i < 5; i++) {
+  //     colorArray.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+  //   }
+  //   this.bars = new Chart(this.doughnutChart.nativeElement, {
+  //     type: 'doughnut',
+  //     data: {
+  //       labels: ['Retail/Shop', 'Food', 'Transport', 'Withdrawals', 'Transfers'],
+  //       datasets: [{
+  //         label: 'Money Spent ($)',
+  //         data: [100, 200, 50, 150, 65],
+  //         backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"], // array should have same number of elements as number of dataset
+  //         borderColor: '#FFFFFF',// array should have same number of elements as number of dataset
+  //         borderWidth: 1
+  //       }]
+  //     },
+  //     options: {
+  //       scales: {
+  //         yAxes: [{
+  //           ticks: {
+  //             beginAtZero: true
+  //           }
+  //         }]
+  //       }
+  //     }
+  //   });
+  // }
 
   changeTheme(name) {
     this.themeService.setTheme(themes[name]);

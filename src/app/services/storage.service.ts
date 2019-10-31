@@ -12,7 +12,14 @@ export interface Item {
   id: number,
   title: [ [{ value: string, color: string }] ],
   date: string,
-  modified: number
+  modified: number;
+}
+
+export interface Everything {
+  awards: [ Awards ], 
+  visits: [ Visits ],
+  projects: [ Projects ],
+  sum: AllSum;
 }
 
 export interface Preset {
@@ -85,6 +92,13 @@ export interface ProjectSum {
   projectsSum: string;
 }
 
+export interface AllSum {
+  visitsSum: string,
+  projectsSum: string,
+  shortCoursesSum: string,
+  awardsSum: string;
+}
+
 export interface KeyCredentials {
   username: string,
   password: string;
@@ -124,26 +138,31 @@ export class StorageService {
   getKeyUrl = "http://172.20.129.215:8088/api/GetKey";
   getKeyValue: Observable<any>;
   keyValue: KeyValue = <KeyValue>{};
-  keyString = this.getKeyString();
 
   credentials: KeyCredentials = {
     username: "admin",
     password: "Sun123!"
   }
 
-
-  getKey(): Observable<any> {
+  getKey(){
 
     this.getKeyValue = this.http.post(`${this.getKeyUrl}`, this.credentials , get_key_config);
-    // this.getKeyValue.subscribe(key => this.keyValue = key);
-    return this.getKeyValue;
+    if(this.getKeyValue!=null){
+      this.getKeyValue.subscribe(key => config.headers.Key = key.key);
+      console.log("KEY: " + config.headers.Key);
+    } else {
+
+      console.log("ERROR: No Key" );
+    }
     
+    
+ 
   }
 
-  getKeyString(){
-    this.getKey().subscribe(key => this.keyValue = key);
-    config.headers.Key = this.keyValue.key;
-  }
+  //  getKeyString(){
+  //   this.getKey().subscribe(key => this.keyValue = key);
+  //   config.headers.Key = this.keyValue.key;
+  // }
 
   // READ
   getItems(): Promise<Box[]> {
@@ -271,13 +290,27 @@ deleteBoxes() {
   }
 
   // GET LIST
+  getAllUrl = 'http://172.20.129.215:8088/api/GetAll';
+
   visitListUrl = 'http://172.20.129.215:8088/api/Visits';
   awardListUrl = 'http://172.20.129.215:8088/api/Awards';
   projectListUrl = 'http://172.20.129.215:8088/api/Projects';
 
+  allDataStorage: Everything = <Everything>{};
   visitList: Observable<any>;
   awardList: Observable<any>;
   projectList: Observable<any>;
+  allDataList: Observable<any>;
+  test: string;
+
+  getAllData(){
+    this.allDataList = this.http.get(`${this.getAllUrl}`, config);
+    
+    this.allDataList.subscribe(allData => this.allDataStorage = allData);
+    // console.log("getAllDataStorage: " +JSON.stringify(this.allDataStorage));
+
+    return this.allDataStorage;
+  }
 
   getVisitsList(): Observable<any> {
 

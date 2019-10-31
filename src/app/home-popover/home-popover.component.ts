@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, NavParams } from '@ionic/angular';
-import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects} from '../services/storage.service';
+import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects, Everything} from '../services/storage.service';
 
 declare var window;
 
@@ -17,22 +17,37 @@ export class HomePopoverComponent implements OnInit {
   closeAwards = null;
   closeProjects = null;
 
-  visitDetails: Visits = <Visits>{};
-  awardDetails: Awards = <Awards>{};
-  projectDetails: Projects = <Projects>{};
+  allData: Everything = <Everything>{};
+  visitDetails: [Visits];
+  awardDetails: [Awards];
+  projectDetails: [Projects];
+
+  popoverAllData: Everything = <Everything>{};
 
 
   passedCardTitle = null;
 
   ngOnInit() {
-      this.storageService.getVisitsList()
-      .subscribe(visitdetails => this.visitDetails = visitdetails);
 
-      this.storageService.getAwardsList()
-      .subscribe(awarddetails => this.awardDetails = awarddetails);
+      this.storageService.getKey();
+      // this.storageService.getAllData()
+      // .subscribe(allData => this.allData = allData);
 
-      this.storageService.getProjectsList()
-      .subscribe(projectdetails => this.projectDetails = projectdetails);
+      // this.storageService.getVisitsList()
+      // .subscribe(visitdetails => this.visitDetails = visitdetails);
+
+      // this.storageService.getAwardsList()
+      // .subscribe(awarddetails => this.awardDetails = awarddetails);
+
+      // this.storageService.getProjectsList()
+      // .subscribe(projectdetails => this.projectDetails = projectdetails);
+
+      this.popoverAllData = this.storageService.getAllData();
+
+      this.visitDetails = this.popoverAllData.visits;
+      this.awardDetails = this.popoverAllData.awards;
+      this.projectDetails = this.popoverAllData.projects;
+      console.log("POPOVER DATA HERE: " + JSON.stringify(this.popoverAllData.visits));
 
       this.passedCardTitle = this.navParams.get('card_title')
       this.closeVisits = this.navParams.get('hiddenVisits')
