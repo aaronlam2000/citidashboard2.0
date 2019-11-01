@@ -48,11 +48,13 @@ export interface Card {
 
 export interface Visits {
   visitId: number,
-  companyName: string,
-  companyTypeId: number,
-  noOfPax: number,
-  visitDate: Date,
-  visitTypeId: number,
+  startDate: Date,
+  endDate: Date,
+  name: string,
+  pax: number,
+  sic: string,
+  host: string,
+  foreignVisit: Boolean,
   dateCreated: Date;
 }
 

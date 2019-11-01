@@ -113,6 +113,7 @@ export class HomePage implements OnInit {
   visitsSum: string;
   awardsSum: string;
   projectsSum: string;
+  shortCoursesSum: string;
 
   visitsList: string;
   awardsList: string;
@@ -181,6 +182,7 @@ export class HomePage implements OnInit {
 
 
       this.storageService.getKey(); 
+      
      
 
       // var promise=this.storageService.getKeyString();
@@ -219,17 +221,18 @@ export class HomePage implements OnInit {
 
   logger: string;
 
-  // refreshAllData() {
-  //   // this.storageService.getAllData()
-  //   //   .subscribe(allData => this.allData = allData.sum);
-  //   //   console.log("Sums: " + this.logger);
+  refreshAllData() {
+    // this.storageService.getAllData()
+    //   .subscribe(allData => this.allData = allData.sum);
+    //   console.log("Sums: " + this.logger);
 
-  //   this.allData = this.storageService.getAllData();
-  //   this.visitsSum = this.allData.sum.visitsSum;
-  //   this.awardsSum = this.allData.sum.awardsSum;
-  //   this.projectsSum = this.allData.sum.projectsSum;
-  //   console.log(this.allData.sum.awardsSum);
-  // }
+    this.allData = this.storageService.getAllData();
+    console.log("Refreshed Sums: " + JSON.stringify(this.allData.sum));
+    this.visitsSum = this.allData.sum.visitsSum;
+    this.awardsSum = this.allData.sum.awardsSum;
+    this.projectsSum = this.allData.sum.projectsSum;
+    this.shortCoursesSum = this.allData.sum.shortCoursesSum;
+  }
 
   displayVisitSum() {
     this.storageService.getVisitsSum()
@@ -248,6 +251,7 @@ export class HomePage implements OnInit {
   loginAccount() {
     try {
       this.authService.loginTest(this.user.name, this.user.pw);
+      this.allData = this.storageService.getAllData();
       // this.isHidden = true;
     }
     catch {

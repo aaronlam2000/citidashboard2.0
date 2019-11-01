@@ -9,6 +9,9 @@
         <ion-button [hidden]="exitViewMode" slot="end" (click)="exitView()">
           <ion-icon name="close"></ion-icon>
         </ion-button>
+        <ion-button slot="end" (click)="refreshAllData()">
+          <ion-icon name="refresh"></ion-icon>
+        </ion-button>
 
       </ion-buttons>
       <h1 class="dashboard-title">CITI DASHBOARD 2.0</h1>
@@ -184,7 +187,10 @@
                                 </ion-card-header>
                                 <ion-card-content class="stat-card">
                                 <ion-icon class="card-icon" [name]="card.icon"></ion-icon>
-                                <p class="card-content">{{ card.value }}</p>
+                                <p *ngIf="card.title =='Visits'" class="card-content">{{ visitsSum }}</p>
+                                <p *ngIf="card.title =='Awards'" class="card-content">{{ awardsSum }}</p>
+                                <p *ngIf="card.title =='Projects'" class="card-content">{{ projectsSum }}</p>
+                                <p *ngIf="card.title =='Short Courses'" class="card-content">{{ shortCoursesSum }}</p>
                                 </ion-card-content>
                                 <ion-card-title class="card-title" (click)="presentPopover(card)">{{ card.title }}</ion-card-title>
       
