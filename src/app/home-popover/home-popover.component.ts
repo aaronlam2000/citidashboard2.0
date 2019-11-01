@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, NavParams } from '@ionic/angular';
-import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects, Everything} from '../services/storage.service';
+import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects, Everything, ShortCourses} from '../services/storage.service';
 
 declare var window;
 
@@ -16,11 +16,13 @@ export class HomePopoverComponent implements OnInit {
   closeVisits = null;
   closeAwards = null;
   closeProjects = null;
+  closeShortCourses = null;
 
   allData: Everything = <Everything>{};
   visitDetails: [Visits];
   awardDetails: [Awards];
   projectDetails: [Projects];
+  shortCoursesDetails: [ShortCourses];
 
   popoverAllData: Everything = <Everything>{};
 
@@ -47,12 +49,14 @@ export class HomePopoverComponent implements OnInit {
       this.visitDetails = this.popoverAllData.visits;
       this.awardDetails = this.popoverAllData.awards;
       this.projectDetails = this.popoverAllData.projects;
-      console.log("POPOVER DATA HERE: " + JSON.stringify(this.popoverAllData.visits));
+      this.shortCoursesDetails = this.popoverAllData.shortCourses;
+      // console.log("POPOVER DATA HERE: " + JSON.stringify(this.popoverAllData.visits));
 
       this.passedCardTitle = this.navParams.get('card_title')
       this.closeVisits = this.navParams.get('hiddenVisits')
       this.closeAwards = this.navParams.get('hiddenAwards')
       this.closeProjects = this.navParams.get('hiddenProjects')
+      this.closeShortCourses = this.navParams.get('hiddenShortCourses')
   }
 
 

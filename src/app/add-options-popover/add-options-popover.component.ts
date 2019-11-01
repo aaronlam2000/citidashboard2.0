@@ -47,6 +47,11 @@ export class AddOptionsPopoverComponent implements OnInit {
       case 'projects':
         window.home.newCard.value = this.optionsAllData.sum.projectsSum;
         window.home.newCard.title = 'Projects';
+        window.home.newCard.icon = 'laptop';
+        break; 
+      case 'shortcourses':
+        window.home.newCard.value = this.optionsAllData.sum.shortCoursesSum;
+        window.home.newCard.title = 'Short Courses';
         window.home.newCard.icon = 'book';
         break; 
     }
@@ -88,8 +93,13 @@ export class AddOptionsPopoverComponent implements OnInit {
       case 'projects':
         window.home.newCard.value = this.optionsAllData.sum.projectsSum;
         window.home.newCard.title = 'Projects';
-        window.home.newCard.icon = 'book';
+        window.home.newCard.icon = 'laptop';
         break; 
+      case 'shortcourses':
+      window.home.newCard.value = this.optionsAllData.sum.shortCoursesSum;
+      window.home.newCard.title = 'Short Courses';
+      window.home.newCard.icon = 'book';
+      break; 
     }
 
     switch (this.colorOption) {

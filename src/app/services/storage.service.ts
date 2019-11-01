@@ -19,7 +19,9 @@ export interface Everything {
   awards: [ Awards ], 
   visits: [ Visits ],
   projects: [ Projects ],
-  sum: AllSum;
+  shortCourses: [ ShortCourses ],
+  sum: AllSum,
+  presets: [ Preset ];
 }
 
 export interface Preset {
@@ -33,9 +35,7 @@ export interface Preset {
 
 export interface Box {
   boxId: number,
-  boxName: string,
-  cardList: [ Card ],
-  boxSize: string;
+  cardList: [ Card ];
 }
 
 export interface Card {
@@ -43,7 +43,6 @@ export interface Card {
   title: string,
   color: string,
   value: string,
-  size: string,
   icon: string;
 }
 
@@ -72,6 +71,15 @@ export interface Projects {
   projectState: string,
   noOfStudents: number,
   dateCreated: Date;
+}
+
+export interface ShortCourses {
+  courseId: number,
+  courseName: string,
+  courseSubject: string,
+  courseInstructor: string,
+  courseVenue: string,
+  dataCreated: Date;
 }
 
 export interface Themes {

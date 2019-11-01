@@ -82,6 +82,7 @@ export class HomePage implements OnInit {
   hideVisits = true;
   hideAwards = true;
   hideProjects = true;
+  hiddenShortCourses = true;
 
   presetList: Preset[] = [];
   newPreset: Preset = <Preset>{};
@@ -252,9 +253,6 @@ export class HomePage implements OnInit {
     catch {
       console.log("Error: Login Failed");
     }
-    finally {
-      // this.allData = this.storageService.getAllData();
-    }
     
   }
 
@@ -326,41 +324,6 @@ export class HomePage implements OnInit {
   addNewBox() {
     this.newBox.boxId = Date.now();
 
-    // switch (this.cardValue) {
-    //   case 'visits':
-    //     this.newCard.value = this.visitResults.visitsSum;
-    //     this.newCard.title = 'Visits';
-    //     this.newCard.icon = 'person';
-    //     break;
-    //   case 'awards':
-    //     this.newCard.value = this.awardResults.awardsSum;
-    //     this.newCard.title = 'Awards';
-    //     this.newCard.icon = 'trophy';
-    //     break;
-    //   case 'projects':
-    //     this.newCard.value = this.projectResults.projectsSum;
-    //     this.newCard.title = 'Projects';
-    //     this.newCard.icon = 'book';
-    //     break; 
-    // }
-
-    // switch (this.cardColor) {
-    //   case 'q1':
-    //     this.newCard.color = 'primary';
-    //     break;
-    //   case 'q2':
-    //     this.newCard.color = 'warning';
-    //     break;
-    //   case 'q3':
-    //     this.newCard.color = 'danger';
-    //     break;
-    //   case 'q4':
-    //     this.newCard.color = 'success';
-    //     break;       
-    //   case 'q5':
-    //   this.newCard.color = 'dark';
-    //   break;   
-    // }
     this.newBox.cardList = [ this.newCard ];
 
     this.storageService.addBox(this.newBox).then(box => {
@@ -473,40 +436,30 @@ export class HomePage implements OnInit {
         this.hideVisits = false;
         this.hideAwards = true;
         this.hideProjects = true;    
+        this.hiddenShortCourses = true;
         break;
 
       case 'Awards':
         this.hideVisits = true;
         this.hideAwards = false;
-        this.hideProjects = true;        
+        this.hideProjects = true;    
+        this.hiddenShortCourses = true;    
         break;
 
       case 'Projects':
       this.hideVisits = true;
       this.hideAwards = true;
-      this.hideProjects = false;        
+      this.hideProjects = false;   
+      this.hiddenShortCourses = true;     
+      break;
+
+      case 'Short Courses':
+      this.hideVisits = true;
+      this.hideAwards = true;
+      this.hideProjects = true;     
+      this.hiddenShortCourses = false;   
       break;
     }
-    // if (card.title == 'Awards') {
-    //   this.hideVisits = true;
-    //   this.hideAwards = false;
-    //   this.hideProjects = true;
-    // }
-    // else if (card.title == 'Visits') {
-    //   this.hideAwards == true;
-    //   this.hideVisits = false;
-    //   this.hideProjects = true;
-    // }
-    // else if (card.title = 'Projects') {
-    //   this.hideProjects = false;
-    //   this.hideVisits = true;
-    //   this.hideAwards = true;
-    // }
-    // else {
-    //   this.hideProjects = true;
-    //   this.hideVisits = true;
-    //   this.hideAwards = true;
-    // }
 
     const popover = await this.popoverController.create({
       component: HomePopoverComponent,
@@ -515,7 +468,8 @@ export class HomePage implements OnInit {
         card_title: card.title,
         hiddenVisits: this.hideVisits,
         hiddenAwards: this.hideAwards,
-        hiddenProjects: this.hideProjects
+        hiddenProjects: this.hideProjects,
+        hiddenShortCourses: this.hiddenShortCourses
       }
       
     });

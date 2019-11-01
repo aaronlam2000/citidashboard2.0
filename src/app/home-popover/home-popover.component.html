@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-header [hidden] = "closeVisits">
+  <ion-header>
       <ion-toolbar color="primary">
         <ion-title>{{ passedCardTitle }}</ion-title>
       </ion-toolbar>
@@ -14,13 +14,7 @@
       </ion-item>
   </ion-list>
 
-
-  <ion-header [hidden] = "closeAwards">
-      <ion-toolbar color="primary">
-        <ion-title>{{ passedCardTitle }}</ion-title>
-      </ion-toolbar>
-  </ion-header>
-
+  
   <ion-list [hidden] = "closeAwards">
       <ion-item *ngFor="let item of awardDetails">
         <ion-label text-wrap>
@@ -29,11 +23,6 @@
       </ion-item>
   </ion-list>
 
-  <ion-header [hidden] = "closeProjects">
-    <ion-toolbar color="primary">
-      <ion-title>{{ passedCardTitle }}</ion-title>
-    </ion-toolbar>
-</ion-header>
 
   <ion-list [hidden] = "closeProjects">
       <ion-item *ngFor="let item of projectDetails">
@@ -41,6 +30,15 @@
           <h3 class="project-text">{{ item.projectName }}</h3>
         </ion-label>
       </ion-item>
+</ion-list>
+
+
+<ion-list [hidden] = "closeShortCourses">
+  <ion-item *ngFor="let item of shortCoursesDetails">
+    <ion-label text-wrap>
+      <h3 class="project-text">{{ item.courseName }}</h3>
+    </ion-label>
+  </ion-item>
 </ion-list>
 
 
