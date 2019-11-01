@@ -86,10 +86,10 @@ export interface ShortCourses {
 
 export interface Themes {
   themeId: number,
-  dateCreated: string,
   backgroundColor: string,
   fontStyle: string,
-  themeName: string;
+  themeName: string,
+  dateCreated: string;
 }
 
 export interface VisitSum {
@@ -344,6 +344,7 @@ deleteBoxes() {
   }
 
   createAward(award: Awards) {
+    console.log("Create award Key: " + config.headers.Key);
     
     this.http.post(`${this.awardListUrl}`, award, config).subscribe(Response => {
       console.log(Response)

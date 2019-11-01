@@ -1,0 +1,12 @@
+<ion-content padding>
+  <ion-item> 
+    <ion-input placeholder="Enter preset name here..." [(ngModel)]="savePresetName"></ion-input>
+  </ion-item>
+
+  <ion-col size="12">
+      <ion-button expand="block" fill="outline" color="dark" (click)=" savePreset()">
+          <ion-icon name="add" slot="start"></ion-icon>
+          Save Preset
+      </ion-button>
+  </ion-col>
+</ion-content>

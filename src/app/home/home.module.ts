@@ -9,6 +9,7 @@ import { HomePopoverComponent } from '../home-popover/home-popover.component';
 import { DragulaModule } from 'ng2-dragula';
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
 import { AddOptionsPopoverComponent } from '../add-options-popover/add-options-popover.component';
+import { SavePresetPopoverComponent } from '../save-preset-popover/save-preset-popover.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { AddOptionsPopoverComponent } from '../add-options-popover/add-options-p
     ]),
     DragulaModule
   ],
-  entryComponents: [HomePopoverComponent, AddOptionsPopoverComponent],
-  declarations: [HomePage, HomePopoverComponent, AddOptionsPopoverComponent]
+  entryComponents: [HomePopoverComponent, AddOptionsPopoverComponent, SavePresetPopoverComponent],
+  declarations: [HomePage, HomePopoverComponent, AddOptionsPopoverComponent, SavePresetPopoverComponent]
 })
 export class HomePageModule {}

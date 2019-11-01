@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { ThemeService } from '../services/theme.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AddOptionsPopoverComponent } from '../add-options-popover/add-options-popover.component';
+import { SavePresetPopoverComponent } from '../save-preset-popover/save-preset-popover.component';
 
 const themes = {
   default: {
@@ -494,6 +495,19 @@ export class HomePage implements OnInit {
     return await popover.present();
   }
 
+  async presentSavePresetPopover(boxList) {
+    
+    const popover = await this.popoverController.create({
+      component: SavePresetPopoverComponent,
+      componentProps: {
+        homeref:this,
+        currentBoxList: boxList
+      }
+      
+    });
+    return await popover.present();
+  }
+
   async presentCardOptions(box: Box) {
     
     const popover = await this.popoverController.create({
@@ -554,10 +568,11 @@ export class HomePage implements OnInit {
   }
 
   addAward() {
+    this.storageService.getKey();  
     this.newAward.awardLevel = "First";
-    this.newAward.awardName = "Test Aaron's Award";
-    this.newAward.awardType = "Academic";
-    this.newAward.noOfRecipients = 5;
+    this.newAward.awardName = "Eagles Award???";
+    this.newAward.awardType = "Character";
+    this.newAward.noOfRecipients = 2;
 
     this.storageService.createAward(this.newAward);
 

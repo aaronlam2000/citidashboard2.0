@@ -12,6 +12,9 @@
         <ion-button slot="end" (click)="refreshAllData()">
           <ion-icon name="refresh"></ion-icon>
         </ion-button>
+        <ion-button slot="end" (click)="presentSavePresetPopover(boxList)">
+          Save Preset
+        </ion-button>
 
       </ion-buttons>
       <h1 class="dashboard-title">CITI DASHBOARD 2.0</h1>
@@ -252,12 +255,12 @@
                 
         </ion-row>
 
-        <ion-item *appHasRole="['edit-dashboard', 'admin']"> 
+        <!-- <ion-item *appHasRole="['edit-dashboard', 'admin']"> 
           <ion-label position="fixed">Preset Name:</ion-label>
           <ion-input placeholder="Enter preset name here..." [(ngModel)]="newPreset.presetName"></ion-input>
         </ion-item>
         
-        <ion-button expand="block" fill="outline" (click)="savePreset(boxList)" *appHasRole="['dashboard-content','edit-dashboard', 'admin']">Save Preset</ion-button>
+        <ion-button expand="block" fill="outline" (click)="savePreset(boxList)" *appHasRole="['dashboard-content','edit-dashboard', 'admin']">Save Preset</ion-button> -->
         <ion-button expand="block" (click)="addAward()" *appHasRole="['dashboard-content','edit-dashboard', 'admin']">Add New Award</ion-button>
     
         <ion-button expand="block" fill="outline" (click)="clearBoxes()" *appHasRole="['edit-dashboard', 'admin']">Clear Board</ion-button>
