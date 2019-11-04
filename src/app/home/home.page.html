@@ -153,7 +153,12 @@
             <ion-item class="welcome-banner">
                 <ion-card>
                     <ion-card-content class="welcome-banner-content">
-                      Welcome to Nanyang Polytechnic!
+                      Welcome to the School of IT
+                      <div *ngFor="let visit of checkVisitDetails">
+                        <div *ngIf="visit.startDate == '01 Oct 2019,10:00'">
+                          {{ visit.name }} !
+                        </div>
+                      </div>
                     </ion-card-content>
                   </ion-card>
             </ion-item>
@@ -177,25 +182,27 @@
                 
                       <ion-col style="border:solid 3px white;" *ngFor="let card of b.cardList">
                           <ion-item class="ion-text-wrap">
-                              <ion-card [color]="card.color">   
+                              <ion-card [color]="card.color" (click)="presentPopover(card)" class="stat-card">   
                                   <span class="handle" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
                                       +
                                   </span>  
                                   <ion-card-subtitle *appHasRole="['edit-dashboard', 'admin']">
                                       <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteCard(b, card)" name="trash"></ion-icon>
-                                      <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="updateSumData(b, card)" name="refresh-circle"></ion-icon>
+                                      <!-- <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="updateSumData(b, card)" name="refresh-circle"></ion-icon> -->
                                   </ion-card-subtitle>
                                 <ion-card-header>
                                   
                                 </ion-card-header>
-                                <ion-card-content class="stat-card">
-                                <ion-icon class="card-icon" [name]="card.icon"></ion-icon>
-                                <p *ngIf="card.title =='Visits'" class="card-content">{{ visitsSum }}</p>
-                                <p *ngIf="card.title =='Awards'" class="card-content">{{ awardsSum }}</p>
-                                <p *ngIf="card.title =='Projects'" class="card-content">{{ projectsSum }}</p>
-                                <p *ngIf="card.title =='Short Courses'" class="card-content">{{ shortCoursesSum }}</p>
-                                </ion-card-content>
-                                <ion-card-title class="card-title" (click)="presentPopover(card)">{{ card.title }}</ion-card-title>
+
+                                <ion-card-content class="card-content">
+                                  <ion-icon class="card-icon" [name]="card.icon"></ion-icon>
+                                  <p *ngIf="card.title =='Visits'" class="card-value">{{ visitsSum }}</p>
+                                  <p *ngIf="card.title =='Awards'" class="card-value">{{ awardsSum }}</p>
+                                  <p *ngIf="card.title =='Projects'" class="card-value">{{ projectsSum }}</p>
+                                  <p *ngIf="card.title =='Short Courses'" class="card-value">{{ shortCoursesSum }}</p>
+                                  </ion-card-content>
+                                  <ion-card-title class="card-title">{{ card.title }}</ion-card-title>
+                              
       
                                 <!-- <ion-list>
                                   <ion-item *ngFor="let v of visitDetails">

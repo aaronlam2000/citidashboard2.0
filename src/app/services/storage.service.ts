@@ -26,11 +26,11 @@ export interface Everything {
 
 export interface Preset {
   presetId: number,
-  dateCreated: Date,
   themeId: number,
   visitId: number,
   presetName: string,
-  presetBoxList: [ Box ];
+  presetBoxList: [ Box ],
+  dateCreated: Date;
 }
 
 export interface Box {
@@ -305,6 +305,7 @@ deleteBoxes() {
   visitListUrl = 'http://172.20.129.215:8088/api/Visits';
   awardListUrl = 'http://172.20.129.215:8088/api/Awards';
   projectListUrl = 'http://172.20.129.215:8088/api/Projects';
+  presetListUrl = 'http://172.20.129.215:8088/api/Presets';
 
   allDataStorage: Everything = <Everything>{};
   visitList: Observable<any>;
@@ -344,13 +345,14 @@ deleteBoxes() {
   }
 
   createAward(award: Awards) {
+    this.getKey();
     console.log("Create award Key: " + config.headers.Key);
     
     this.http.post(`${this.awardListUrl}`, award, config).subscribe(Response => {
-      console.log(Response)
-      console.log(award)
+      console.log(Response);
+      console.log(award);
     })
-
+    
     // this.nativeHttp.post(this.awardListUrl, award, {})
     // .then
     // (data => {
@@ -364,6 +366,16 @@ deleteBoxes() {
     //   console.log(error.error); // error message as string
     //  console.log(error.headers);
     // });
+  }
+
+  createPreset(preset: Preset) {
+    this.getKey();
+    console.log("Create preset Key: " + config.headers.Key);
+    
+    this.http.post(`${this.presetListUrl}`, preset, config).subscribe(Response => {
+      console.log(Response);
+      console.log(preset);
+    })
   }
 
 }

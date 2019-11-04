@@ -29,6 +29,7 @@ ion-card {
   display: flex;
   // flex-direction: row;
   flex-direction: column;
+  font-size: 15vmax!important;
 }
 
 ion-list {
@@ -69,6 +70,7 @@ ion-list {
   background-color: rgba(0, 0, 0, 0.4);
   cursor: grab;
   text-align: left;
+  font-size: 2vmax;
 }
 
 ion-item:hover {
@@ -83,7 +85,7 @@ ion-item:hover {
 }
 
 .delete-icon-btn {
-  font-size: 20px;
+  font-size: 3vmax;
   color: black;
 }
 
@@ -123,25 +125,31 @@ div[scrolly=true] {
 }
 
 .stat-card {
-  font-size: 6vw;
-  font-style: normal;
+  // font-size: 10vmax!important;
+  // font-style: normal;
   color: black;
 }
 
 .card-content {
-  font-size: 6vw!important;
+  color: #03F6FF!important;
+  font-size: 10vmax;
+  
+}
+
+.card-value {
   color: #03F6FF;
   font-weight: bold;
+  font-size: 7vmax;
 }
 
 .card-title {
-  font-size: 3.5vw;
+  font-size: 3.5vmax;
   font-style: normal;
   color: white;
 }
 
 .card-icon {
-  font-size: 10vw;
+  font-size: 10vmax;
   color: white;
 }
 

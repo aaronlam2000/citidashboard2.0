@@ -23,6 +23,7 @@ export class SavePresetPopoverComponent implements OnInit {
   }
 
   savePreset() {
+    this.storageService.getKey();  
     window.home.newPreset.presetName = this.savePresetName;
 
     window.home.savePreset(this.passedBoxList);

@@ -102,6 +102,8 @@ export class HomePage implements OnInit {
   bars:any;
   colorArray: any;
 
+  dateToday: string;
+
   allData: Everything = <Everything>{};
   visitResults: VisitSum = <VisitSum>{};
   awardResults: AwardSum = <AwardSum>{};
@@ -119,6 +121,9 @@ export class HomePage implements OnInit {
   visitsList: string;
   awardsList: string;
   projectsList: string;
+
+  currentVisit: string;
+  checkVisitDetails: [Visits];
 
   newAward: Awards = <Awards>{}
   keyValue: KeyValue = <KeyValue>{};
@@ -184,7 +189,9 @@ export class HomePage implements OnInit {
 
       this.storageService.getKey(); 
       
-     
+      this.dateToday = Date.now().toString();
+      
+      console.log("Today's Date - " + this.dateToday.toString());
 
       // var promise=this.storageService.getKeyString();
       // promise.then(function(greeting){this.storageService.getVisitsSum()
@@ -228,11 +235,19 @@ export class HomePage implements OnInit {
     //   console.log("Sums: " + this.logger);
 
     this.allData = this.storageService.getAllData();
-    console.log("Refreshed Sums: " + JSON.stringify(this.allData.sum));
+    // console.log("Refreshed Sums: " + JSON.stringify(this.allData.sum));
+
     this.visitsSum = this.allData.sum.visitsSum;
     this.awardsSum = this.allData.sum.awardsSum;
     this.projectsSum = this.allData.sum.projectsSum;
     this.shortCoursesSum = this.allData.sum.shortCoursesSum;
+
+    this.checkVisitDetails = this.allData.visits;
+
+    this.toastController.create({
+      message: 'Data Refreshed',
+      duration: 3000
+    }).then(toast => toast.present());
   }
 
   displayVisitSum() {
@@ -306,7 +321,12 @@ export class HomePage implements OnInit {
 
 
   savePreset(boxList) {
+    this.storageService.getKey();  
     this.newPreset.presetBoxList = boxList;
+    this.newPreset.themeId = 1;
+    this.newPreset.visitId = 2;
+
+    this.storageService.createPreset(this.newPreset);
     
     this.storageService.addPreset(this.newPreset).then(box => {
       this.newPreset = <Preset>{}; //clear newPreset
@@ -496,6 +516,8 @@ export class HomePage implements OnInit {
   }
 
   async presentSavePresetPopover(boxList) {
+
+    this.storageService.getKey();  
     
     const popover = await this.popoverController.create({
       component: SavePresetPopoverComponent,
@@ -569,10 +591,10 @@ export class HomePage implements OnInit {
 
   addAward() {
     this.storageService.getKey();  
-    this.newAward.awardLevel = "First";
-    this.newAward.awardName = "Eagles Award???";
-    this.newAward.awardType = "Character";
-    this.newAward.noOfRecipients = 2;
+    this.newAward.awardLevel = "High level";
+    this.newAward.awardName = "Just anothe test";
+    this.newAward.awardType = "Academic";
+    this.newAward.noOfRecipients = 6;
 
     this.storageService.createAward(this.newAward);
 
