@@ -68,7 +68,7 @@ export class ThemeService {
       --ion-background-color: ${light};
       --ion-text-color: ${dark};
       --ion-toolbar-background-color: ${contrast(light, 0.1)};
-      --ion-toolbar-text-color: ${contrast(dark, 0.1)};;
+      --ion-toolbar-text-color: ${contrast(dark, 0.1)};
   
       --ion-color-primary: ${primary};
       --ion-color-primary-rgb: 56,128,255;

@@ -6,37 +6,38 @@
   </ion-header>
 
 
-  <ion-list [hidden] = "closeVisits">
+  <ion-list style="max-height: 9cm; overflow-y: scroll;" [hidden] = "closeVisits">
       <ion-item *ngFor="let item of visitDetails">
-        <ion-label text-wrap>
-          <h3 class="project-text">{{ item.name }}</h3>
+        <ion-label class="ion-text-wrap">
+          <h1 class="project-text">{{ item.name }}</h1>
+          <p>{{ item.startDate }}</p>
         </ion-label>
       </ion-item>
   </ion-list>
 
   
-  <ion-list [hidden] = "closeAwards">
+  <ion-list style="max-height: 9cm; overflow-y: scroll;" [hidden] = "closeAwards">
       <ion-item *ngFor="let item of awardDetails">
-        <ion-label text-wrap>
-          <h3 class="project-text">{{ item.awardName }}</h3>
+        <ion-label class="ion-text-wrap">
+          <h1 class="project-text">{{ item.awardName }}</h1>
         </ion-label>
       </ion-item>
   </ion-list>
 
 
-  <ion-list [hidden] = "closeProjects">
+  <ion-list style="max-height: 9cm; overflow-y: scroll;" [hidden] = "closeProjects">
       <ion-item *ngFor="let item of projectDetails">
-        <ion-label text-wrap>
-          <h3 class="project-text">{{ item.projectName }}</h3>
+        <ion-label class="ion-text-wrap">
+          <h1 class="project-text">{{ item.projectName }}</h1>
         </ion-label>
       </ion-item>
 </ion-list>
 
 
-<ion-list [hidden] = "closeShortCourses">
+<ion-list style="max-height: 9cm; overflow-y: scroll;" [hidden] = "closeShortCourses">
   <ion-item *ngFor="let item of shortCoursesDetails">
-    <ion-label text-wrap>
-      <h3 class="project-text">{{ item.courseName }}</h3>
+    <ion-label class="ion-text-wrap">
+      <h1 class="project-text">{{ item.courseName }}</h1>
     </ion-label>
   </ion-item>
 </ion-list>

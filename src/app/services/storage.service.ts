@@ -252,17 +252,44 @@ deleteBoxes() {
   this.storage.set(ITEMS_KEY, []);
 }
 
+retrievePresets() {
+  this.getKey();
+  return this.getAllData().presets;
+}
+
+refreshPresets(){
+  this.storage.set(PRESET_KEY, this.retrievePresets());
+}
+
 
   //Save Preset
   addPreset(preset: Preset): Promise<any> {
-    return this.storage.get(PRESET_KEY).then((presetList: Preset[]) => {
-      if (presetList) {
-        presetList.push(preset);
-        return this.storage.set(PRESET_KEY, presetList);
-      } else {
-        return this.storage.set(PRESET_KEY, [preset]);
-      }
-    });
+    this.getKey();
+    console.log("Create preset Key: " + config.headers.Key);
+    console.log("Preset Insert:" + JSON.stringify(preset));
+    this.http.post(`${this.presetListUrl}`, preset, config).subscribe(Response => {
+      console.log(Response);
+      console.log(preset);
+    })
+      return this.storage.get(PRESET_KEY).then((presetList: Preset[]) => {
+        if (presetList) {
+          presetList.push(preset);
+          return this.storage.set(PRESET_KEY, presetList);
+        } else {
+          return this.storage.set(PRESET_KEY, [preset]);
+        }
+      });
+    
+  }
+
+  createPreset(preset: Preset) {
+    this.getKey();
+    console.log("Create preset Key: " + config.headers.Key);
+    
+    this.http.post(`${this.presetListUrl}`, preset, config).subscribe(Response => {
+      console.log(Response);
+      console.log("CREATED PRESET: " + preset.presetName);
+    })
   }
 
   selectPreset(boxList) {
@@ -366,16 +393,6 @@ deleteBoxes() {
     //   console.log(error.error); // error message as string
     //  console.log(error.headers);
     // });
-  }
-
-  createPreset(preset: Preset) {
-    this.getKey();
-    console.log("Create preset Key: " + config.headers.Key);
-    
-    this.http.post(`${this.presetListUrl}`, preset, config).subscribe(Response => {
-      console.log(Response);
-      console.log(preset);
-    })
   }
 
 }

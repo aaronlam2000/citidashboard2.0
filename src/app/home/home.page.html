@@ -9,124 +9,27 @@
         <ion-button [hidden]="exitViewMode" slot="end" (click)="exitView()">
           <ion-icon name="close"></ion-icon>
         </ion-button>
-        <ion-button slot="end" (click)="refreshAllData()">
+        <ion-button [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']" slot="end" (click)="refreshAllData()">
           <ion-icon name="refresh"></ion-icon>
         </ion-button>
-        <ion-button slot="end" (click)="presentSavePresetPopover(boxList)">
+        <ion-button [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']" slot="end" (click)="presentSavePresetPopover(boxList)">
           Save Preset
         </ion-button>
 
       </ion-buttons>
-      <h1 class="dashboard-title">CITI DASHBOARD 2.0</h1>
+      <h1 class="dashboard-title">Welcome to SIT </h1>
+      <div *ngFor="let visit of checkVisitDetails">
+        <div class="dashboard-title" *ngIf="visit.startDate == '01 Oct 2019,10:00'">  
+          {{ visit.name }} !
+        </div>
+      </div>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content style="border:solid 3px yellowgreen;" forceOverscroll="false" [color]="primary">
+<ion-content forceOverscroll="false" [color]="primary">
     
-    
-      
-
-    <!-- <ion-grid>
-  <ion-row class="matrix">
-    <ion-col *ngFor="let item of cardItems" col-12 col-md-4 col-lg-4 col-xl-4>
-
-      <div dragula="bag" [(dragulaModel)]="cardItems" lines="none">
-        <ion-card class="stat-card">
-          <ion-card-header>
-              <ion-buttons>
-                  <ion-button>
-                      <ion-icon name="close"></ion-icon>
-                  </ion-button>
-                </ion-buttons>
-            <ion-card-title class="text-no-wrap">{{ item.title }}</ion-card-title>             
-          </ion-card-header>
-          <ion-card-content class="text-no-wrap stat-card">
-            <ion-textarea value="{{ item.text }}"></ion-textarea>
-          </ion-card-content>
-        </ion-card>
-      </div>
-        
-
-    </ion-col>
-  </ion-row>
-
-  <ion-row class="matrix">
-    <ion-col *ngFor="let item of bigCards" col-12 col-md-5 col-lg-4 col-xl-2>
-
-      <ion-list dragula="bag" [(dragulaModel)]="bigCards">
-        <ion-card class="bigCard">
-          <ion-card-header>
-              <ion-buttons>
-                  <ion-button>
-                      <ion-icon name="close"></ion-icon>
-                  </ion-button>
-                </ion-buttons>
-            <ion-card-title class="text-no-wrap">{{ item.title }}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            Insert chart here
-          </ion-card-content>
-        </ion-card>
-      </ion-list>
-        
-    </ion-col>
-  </ion-row>
-  
-</ion-grid> -->
-
-<!-- ................................................................................................................................ -->
-<!-- Drag and Drop TEST -->
-<!-- <ion-grid>
-
-    <ion-row no-padding class="matrix">
-  
-      <ion-col col-12 col-md-6 col-lg-4 col-xl-3>
-        <div class="q-header">Cards</div>
-        <ion-list dragula="bag" [(dragulaModel)]="cardItems">
-          <ion-item *ngFor="let item of cardItems" expand="block">
-            <ion-card>
-              <ion-card-header>
-                  <ion-buttons>
-                      <ion-button>
-                          <ion-icon name="close"></ion-icon>
-                      </ion-button>
-                    </ion-buttons>
-                <ion-card-title class="text-no-wrap">{{ item.title }}</ion-card-title>             
-              </ion-card-header>
-              <ion-card-content class="text-no-wrap stat-card">
-                <ion-textarea value="{{ item.text }}"></ion-textarea>
-              </ion-card-content>
-            </ion-card>
-          </ion-item>       
-        </ion-list>
-      </ion-col>
-   
-      <ion-col col-12 col-md-6 col-lg-4 col-xl-3>
-        <div class="q-header">Charts</div>
-        <ion-list dragula="bag" [(dragulaModel)]="bigCards">
-          <ion-item *ngFor="let item of bigCards" expand="block" text-wrap>
-              <ion-card>
-                  <ion-card-header>
-                      <ion-buttons>
-                          <ion-button>
-                              <ion-icon name="close"></ion-icon>
-                          </ion-button>
-                        </ion-buttons>
-                    <ion-card-title class="text-no-wrap">{{ item.title }}</ion-card-title>
-                  </ion-card-header>
-                  <ion-card-content class="text-no-wrap">
-                      <ion-textarea value="{{ item.text }}"></ion-textarea>
-                  </ion-card-content>
-                </ion-card>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-      
-    </ion-row>
-  
-  </ion-grid> -->
-  <ion-grid style="border:solid 3px black;">
+  <ion-grid>
     <ion-split-pane [hidden]="enterViewMode">
         <ion-list *ngFor="let p of presetList">          
             <ion-row>
@@ -149,7 +52,7 @@
             <ion-button (click)="changeTheme('day')">Day</ion-button>
           </ion-row>
 
-        <ion-col size="12">
+        <!-- <ion-col size="12">
             <ion-item class="welcome-banner">
                 <ion-card>
                     <ion-card-content class="welcome-banner-content">
@@ -162,7 +65,7 @@
                     </ion-card-content>
                   </ion-card>
             </ion-item>
-        </ion-col>
+        </ion-col> -->
             
       <ion-row *ngFor="let b of boxList">
 <!-- 
@@ -217,7 +120,7 @@
 
     </ion-row>
 
-    <ion-row [hidden]="enterViewMode" align-items-center>
+    <ion-row [hidden]="enterViewMode" class="ion-align-items-center">
       <ion-col size="12">
         <ion-row *appHasRole="['edit-dashboard', 'admin']"> 
           <!-- <ion-col size="4">
@@ -268,17 +171,16 @@
         </ion-item>
         
         <ion-button expand="block" fill="outline" (click)="savePreset(boxList)" *appHasRole="['dashboard-content','edit-dashboard', 'admin']">Save Preset</ion-button> -->
-        <ion-button expand="block" (click)="addAward()" *appHasRole="['dashboard-content','edit-dashboard', 'admin']">Add New Award</ion-button>
     
         <ion-button expand="block" fill="outline" (click)="clearBoxes()" *appHasRole="['edit-dashboard', 'admin']">Clear Board</ion-button>
 
         <ion-list *ngIf="!authenticated">
-          <ion-item class="white-font">
+          <ion-item>
             <ion-label>Username</ion-label>
             <ion-input type="text" [(ngModel)]="user.name"></ion-input>
           </ion-item>
 
-          <ion-item class="white-font">
+          <ion-item>
               <ion-label>Password</ion-label>
             <ion-input type="Password" [(ngModel)]="user.pw"></ion-input>
           </ion-item>
@@ -293,7 +195,7 @@
     </ion-row>
   </ion-grid>
   
-  <!-- <ion-row class="delete-area" align-items-center justify-content-center>
+  <!-- <ion-row class="delete-area" class="ion-align-items-center" justify-content-center>
     <ion-icon name="trash" color="medium"></ion-icon>
   </ion-row> -->
 

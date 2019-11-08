@@ -1,7 +1,17 @@
-<ion-content padding>
+<ion-content class="ion-padding">
   <ion-item> 
     <ion-input placeholder="Enter preset name here..." [(ngModel)]="savePresetName"></ion-input>
   </ion-item>
+
+  <!-- Visit Selection -->
+  <!-- <ion-col>
+    <ion-item>
+        <ion-label>Choose a visit</ion-label>
+        <ion-select *ngFor="let visit of visitOptions">
+          <ion-select-option value="{{ visit.visitId }}">{{ visit.name }}</ion-select-option>
+        </ion-select>
+    </ion-item>
+  </ion-col>  -->
 
   <ion-col size="12">
       <ion-button expand="block" fill="outline" color="dark" (click)=" savePreset()">

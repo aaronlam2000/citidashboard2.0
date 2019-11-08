@@ -13,6 +13,7 @@ export class SavePresetPopoverComponent implements OnInit {
 
   savePresetName: string;
   passedBoxList = null;
+  visitOptions: [Visits];
 
   constructor(public popoverController: PopoverController, 
     private storageService: StorageService, 

@@ -233,6 +233,7 @@ export class HomePage implements OnInit {
     // this.storageService.getAllData()
     //   .subscribe(allData => this.allData = allData.sum);
     //   console.log("Sums: " + this.logger);
+    this.storageService.refreshPresets();
 
     this.allData = this.storageService.getAllData();
     // console.log("Refreshed Sums: " + JSON.stringify(this.allData.sum));
@@ -326,7 +327,7 @@ export class HomePage implements OnInit {
     this.newPreset.themeId = 1;
     this.newPreset.visitId = 2;
 
-    this.storageService.createPreset(this.newPreset);
+    // this.storageService.createPreset(this.newPreset);
     
     this.storageService.addPreset(this.newPreset).then(box => {
       this.newPreset = <Preset>{}; //clear newPreset
@@ -347,7 +348,7 @@ export class HomePage implements OnInit {
 
 
   addNewBox() {
-    this.newBox.boxId = Date.now();
+    // this.newBox.boxId = Date.now();
 
     this.newBox.cardList = [ this.newCard ];
 
@@ -364,7 +365,7 @@ export class HomePage implements OnInit {
   }
 
   addNewCard(box: Box) {
-    this.newCard.cardId = Date.now();
+    // this.newCard.cardId = Date.now();
 
     box.cardList.push(this.newCard);  
     
@@ -523,9 +524,8 @@ export class HomePage implements OnInit {
       component: SavePresetPopoverComponent,
       componentProps: {
         homeref:this,
-        currentBoxList: boxList
+        currentBoxList: boxList,
       }
-      
     });
     return await popover.present();
   }
