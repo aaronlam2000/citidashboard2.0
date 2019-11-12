@@ -1,202 +1,159 @@
+<!-- START HEADER -->
 <ion-header>
+
   <ion-toolbar>
     <ion-title class="welcome-toolbar">
       <ion-buttons>
-        <ion-button [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']" slot="end" (click)="presentOptions()">
-          <ion-icon name="add"></ion-icon>       
-        </ion-button>
+          <ion-button [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']" slot="end" (click)="presentOptions()">
+            <ion-icon name="add"></ion-icon>       
+          </ion-button>
 
-        <ion-button [hidden]="exitViewMode" slot="end" (click)="exitView()">
-          <ion-icon name="close"></ion-icon>
-        </ion-button>
-        <ion-button [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']" slot="end" (click)="refreshAllData()">
-          <ion-icon name="refresh"></ion-icon>
-        </ion-button>
-        <ion-button [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']" slot="end" (click)="presentSavePresetPopover(boxList)">
-          Save Preset
-        </ion-button>
+          <ion-button [hidden]="exitViewMode" slot="end" (click)="exitView()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
 
+          <ion-button [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']" slot="end" (click)="refreshAllData()">
+            <ion-icon name="refresh"></ion-icon>
+          </ion-button>
+
+          <ion-button [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']" slot="end" (click)="presentSavePresetPopover(boxList)">
+            Save Preset
+          </ion-button>
       </ion-buttons>
-      <h1 class="dashboard-title">Welcome to SIT </h1>
-      <div *ngFor="let visit of checkVisitDetails">
-        <div class="dashboard-title" *ngIf="visit.startDate == '01 Oct 2019,10:00'">  
-          {{ visit.name }} !
-        </div>
-      </div>
+
+      <h1 class="dashboard-title">Welcome to SIT {{ currentVisit }}</h1>
+      <p style="font-size: 15px; text-align: center;">{{ dateToday }}</p>   
     </ion-title>
+
   </ion-toolbar>
 </ion-header>
+<!-- END HEADER -->
 
+<!-- ION-CONTENT -->
 <ion-content forceOverscroll="false" [color]="primary">
-    
+  
+  <!-- ION-GRID -->
   <ion-grid>
+    <!-- PRESET MENU -->
     <ion-split-pane [hidden]="enterViewMode">
         <ion-list *ngFor="let p of presetList">          
             <ion-row>
                 <ion-col>
-                  <ion-item (click)="loadSelectedPreset(p.presetBoxList)" *appHasRole="['edit-dashboard', 'admin']">
+                  <ion-item (click)="loadSelectedPreset(p.presetBoxList)" *appHasRole="['dashboard-content']">
                       {{ p.presetName }}
                   </ion-item>
                 </ion-col>
             </ion-row>            
           </ion-list>
     </ion-split-pane>
+    <!-- END PRESET MENU -->
 
-
+    <!-- DASHBOARD CONTENT -->
     <ion-row class="matrix" *appHasRole="['dashboard-content']">
+    
+        <!-- THEME SELECTION -->
         <ion-row *appHasRole="['edit-dashboard', 'admin']" [hidden]="enterViewMode">
             <ion-button (click)="changeTheme('default')">Default</ion-button>
             <ion-button (click)="changeTheme('autumn')">Autumn</ion-button>
             <ion-button (click)="changeTheme('night')">Dark</ion-button>
             <ion-button (click)="changeTheme('neon')">Neon</ion-button>
             <ion-button (click)="changeTheme('day')">Day</ion-button>
-          </ion-row>
-
-        <!-- <ion-col size="12">
-            <ion-item class="welcome-banner">
-                <ion-card>
-                    <ion-card-content class="welcome-banner-content">
-                      Welcome to the School of IT
-                      <div *ngFor="let visit of checkVisitDetails">
-                        <div *ngIf="visit.startDate == '01 Oct 2019,10:00'">
-                          {{ visit.name }} !
-                        </div>
-                      </div>
-                    </ion-card-content>
-                  </ion-card>
-            </ion-item>
-        </ion-col> -->
+        </ion-row>
             
-      <ion-row *ngFor="let b of boxList">
-<!-- 
-              <div class="q-header" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
-                   
-                  <ion-button sort="end" (click)="deleteItem(b)"><ion-icon name="trash"></ion-icon></ion-button>
-                  <ion-button (click)="addNewCard(b)"><ion-icon name="add"></ion-icon></ion-button>
-              </div> -->
-              <!-- <p>{{ lists.indexOf(q) }}</p> -->
+        <!-- LIST OF BOXES -->
+        <ion-row *ngFor="let b of boxList">
+
               <div [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
                   <ion-icon class="dd-icons" (click)="presentCardOptions(b)" name="add"></ion-icon> 
                   <ion-icon class="dd-icons" (click)="deleteItem(b)" name="trash"></ion-icon>
               </div>
-               
-                  <ion-row class="row-flex" dragula="bag" [(dragulaModel)]="b.cardList">
-                    
                 
-                      <ion-col style="border:solid 3px white;" *ngFor="let card of b.cardList">
-                          <ion-item class="ion-text-wrap">
-                              <ion-card [color]="card.color" (click)="presentPopover(card)" class="stat-card">   
-                                  <span class="handle" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
-                                      +
-                                  </span>  
-                                  <ion-card-subtitle *appHasRole="['edit-dashboard', 'admin']">
-                                      <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteCard(b, card)" name="trash"></ion-icon>
-                                      <!-- <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="updateSumData(b, card)" name="refresh-circle"></ion-icon> -->
-                                  </ion-card-subtitle>
-                                <ion-card-header>
-                                  
-                                </ion-card-header>
+              <!-- LIST OF CARDS -->
+              <ion-row class="row-flex" dragula="bag" [(dragulaModel)]="b.cardList">
+                      
+                <ion-col style="border:solid 3px white;" *ngFor="let card of b.cardList">
+                  <ion-item class="ion-text-wrap">
+                      <ion-card [color]="card.color" (click)="presentPopover(card)" class="stat-card">   
+                          <span class="handle" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
+                              +
+                          </span>  
+                          <ion-card-subtitle *appHasRole="['edit-dashboard', 'admin']">
+                              <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteCard(b, card)" name="trash"></ion-icon>
+                          </ion-card-subtitle>
+                        <ion-card-header>
+                          
+                        </ion-card-header>
 
-                                <ion-card-content class="card-content">
-                                  <ion-icon class="card-icon" [name]="card.icon"></ion-icon>
-                                  <p *ngIf="card.title =='Visits'" class="card-value">{{ visitsSum }}</p>
-                                  <p *ngIf="card.title =='Awards'" class="card-value">{{ awardsSum }}</p>
-                                  <p *ngIf="card.title =='Projects'" class="card-value">{{ projectsSum }}</p>
-                                  <p *ngIf="card.title =='Short Courses'" class="card-value">{{ shortCoursesSum }}</p>
-                                  </ion-card-content>
-                                  <ion-card-title class="card-title">{{ card.title }}</ion-card-title>
-                              
-      
-                                <!-- <ion-list>
-                                  <ion-item *ngFor="let v of visitDetails">
-                                    {{v.companyName}}
-                                  </ion-item>
-                                </ion-list> -->
-                              </ion-card>                           
-                          </ion-item>
-                      </ion-col>  
-                  </ion-row>     
-      </ion-row>
+                        <ion-card-content class="card-content">
+                          <ion-icon class="card-icon" [name]="card.icon"></ion-icon>
+                          <p *ngIf="card.title =='Visits'" class="card-value">{{ visitsSum }}</p>
+                          <p *ngIf="card.title =='Awards'" class="card-value">{{ awardsSum }}</p>
+                          <p *ngIf="card.title =='Projects'" class="card-value">{{ projectsSum }}</p>
+                          <p *ngIf="card.title =='Short Courses'" class="card-value">{{ shortCoursesSum }}</p>
+                          </ion-card-content>
+                          <ion-card-title class="card-title">{{ card.title }}</ion-card-title>                    
+                      </ion-card>                           
+                  </ion-item>
+                </ion-col> 
+              </ion-row>     
+              <!-- END LIST OF CARDS -->                  
+        </ion-row>
+        <!-- END LIST OF BOXES -->
+        <ion-card class="ion-card-partners">
+            <ion-card-header>
+                <div class="ion-text-wrap">
+              <ion-card-title class="project-title">Our Industry Partners</ion-card-title>  
+              </div>
+            </ion-card-header>
+            <div class="col-md-4">
+            <ion-card-content class="ion-card-images">
+                <ion-slides [options]="sliderOpts">
+                    <ion-slide *ngFor="let images of [2, 3, 4, 5, 6]">
+                      <img src="assets/images/{{ images }}.png">
+                    </ion-slide>
+                  </ion-slides>
+            </ion-card-content>
+          </div>
+          </ion-card>
 
     </ion-row>
+    <!-- END DASHBOARD CONTENT -->
 
+    <ion-card class="ion-card-color1">
+        <ion-card-header>
+          <ion-card-title class="project-title">Projects</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="project-chart">
+          <canvas class="project-chart" #doughnutChart></canvas>  
+        </ion-card-content>
+    </ion-card>
+    <!-- LOGIN/LOGOUT  -->
     <ion-row [hidden]="enterViewMode" class="ion-align-items-center">
+
       <ion-col size="12">
-        <ion-row *appHasRole="['edit-dashboard', 'admin']"> 
-          <!-- <ion-col size="4">
-              <ion-item>
-                  <ion-label position="fixed">Title:</ion-label>
-                  <ion-input placeholder="Title" [(ngModel)]="newCard.title"></ion-input>
-              </ion-item>
-          </ion-col> -->
+          <ion-button expand="block" fill="outline" (click)="clearBoxes()" *appHasRole="['edit-dashboard', 'admin']">Clear Board</ion-button>
 
-          <!-- <ion-col size="6">
-              <ion-item>
-                  <ion-label>Value</ion-label>
-                  <ion-select [(ngModel)]="cardValue">
-                    <ion-select-option value="visits">Visits</ion-select-option>
-                    <ion-select-option value="awards">Awards</ion-select-option>
-                    <ion-select-option value="projects">Projects</ion-select-option>
-                  </ion-select>
-              </ion-item>
-          </ion-col>
+          <ion-list *ngIf="!authenticated">
+            <ion-item>
+              <ion-label>Username</ion-label>
+              <ion-input type="text" [(ngModel)]="user.name"></ion-input>
+            </ion-item>
 
-          <ion-col size="6">
-              <ion-item>
-                  <ion-label>Color</ion-label>
-                  <ion-select [(ngModel)]="cardColor">
-                    <ion-select-option value="q1">Blue</ion-select-option>
-                    <ion-select-option value="q2">Yellow</ion-select-option>
-                    <ion-select-option value="q3">Red</ion-select-option>
-                    <ion-select-option value="q4">Green</ion-select-option>
-                    <ion-select-option value="q5">Black</ion-select-option>
-                  </ion-select>
-              </ion-item>
-          </ion-col>      -->
+            <ion-item>
+                <ion-label>Password</ion-label>
+              <ion-input type="Password" [(ngModel)]="user.pw"></ion-input>
+            </ion-item>
+          </ion-list>
 
-          <!-- <ion-col size="12">
-              <ion-item>
-                  
-                <ion-label position="fixed">Box Name:</ion-label>
-                <ion-input placeholder="Box Name" [(ngModel)]="newBox.boxName"></ion-input>
-                  
-              </ion-item>
-          </ion-col> -->
-                
-        </ion-row>
-
-        <!-- <ion-item *appHasRole="['edit-dashboard', 'admin']"> 
-          <ion-label position="fixed">Preset Name:</ion-label>
-          <ion-input placeholder="Enter preset name here..." [(ngModel)]="newPreset.presetName"></ion-input>
-        </ion-item>
-        
-        <ion-button expand="block" fill="outline" (click)="savePreset(boxList)" *appHasRole="['dashboard-content','edit-dashboard', 'admin']">Save Preset</ion-button> -->
-    
-        <ion-button expand="block" fill="outline" (click)="clearBoxes()" *appHasRole="['edit-dashboard', 'admin']">Clear Board</ion-button>
-
-        <ion-list *ngIf="!authenticated">
-          <ion-item>
-            <ion-label>Username</ion-label>
-            <ion-input type="text" [(ngModel)]="user.name"></ion-input>
-          </ion-item>
-
-          <ion-item>
-              <ion-label>Password</ion-label>
-            <ion-input type="Password" [(ngModel)]="user.pw"></ion-input>
-          </ion-item>
-        </ion-list>
-
-        <ion-button expand="block" (click)="loginAccount()" *ngIf="!authenticated">Login</ion-button>
-        <ion-button expand="block" (click)="logout()" *ngIf="authenticated">Logout</ion-button>
-        <ion-button [hidden]="enterViewMode" expand="block" (click)="enterView()" *ngIf="authenticated">Preview</ion-button>
-        
+          <ion-button expand="block" (click)="loginAccount()" *ngIf="!authenticated">Login</ion-button>
+          <ion-button expand="block" (click)="logout()" *ngIf="authenticated">Logout</ion-button>
+          <ion-button [hidden]="enterViewMode" expand="block" (click)="enterView()" *ngIf="authenticated">Preview</ion-button>       
       </ion-col>
 
     </ion-row>
+    <!-- END LOGIN/LOGOUT  -->
   </ion-grid>
-  
-  <!-- <ion-row class="delete-area" class="ion-align-items-center" justify-content-center>
-    <ion-icon name="trash" color="medium"></ion-icon>
-  </ion-row> -->
+  <!-- END ION-GRID -->
 
 </ion-content>
+<!-- END ION-CONTENT -->

@@ -1,20 +1,15 @@
-import { Component , ViewChild, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
-import { PopoverController, NavParams, Platform, NavController, AlertController} from '@ionic/angular';
-import { HomePopoverComponent } from '../home-popover/home-popover.component';
-import { DragulaService } from 'ng2-dragula';
-import { ToastController } from '@ionic/angular';
-import { isNgTemplate } from '@angular/compiler';
-import { SourceListMap } from 'source-list-map';
-import { Storage } from '@ionic/storage';
-import { StorageService, Item, Preset, Box, Card, VisitSum, AwardSum, ProjectSum, Visits, Awards, Projects, KeyValue, Everything} from '../services/storage.service';
-import { MenuController } from '@ionic/angular';
-import { AuthService } from '../services/auth.service';
-import { Observable } from 'rxjs';
-import { ThemeService } from '../services/theme.service';
 import { HttpClientModule } from '@angular/common/http';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { AlertController, NavController, Platform, PopoverController, ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { Chart } from 'chart.js';
+import { DragulaService } from 'ng2-dragula';
 import { AddOptionsPopoverComponent } from '../add-options-popover/add-options-popover.component';
+import { HomePopoverComponent } from '../home-popover/home-popover.component';
 import { SavePresetPopoverComponent } from '../save-preset-popover/save-preset-popover.component';
+import { AuthService } from '../services/auth.service';
+import { Awards, AwardSum, Box, Card, Everything, KeyValue, Preset, Projects, ProjectSum, StorageService, Visits, VisitSum } from '../services/storage.service';
+import { ThemeService } from '../services/theme.service';
 
 const themes = {
   default: {
@@ -73,6 +68,13 @@ declare var window;
 })
 export class HomePage implements OnInit {
 
+  sliderOpts = {
+    zoom: false,
+    slidesPerView: 9,
+    centeredSlides: true,
+    spaceBetween: 3,
+    loop: true
+  };
 
   @ViewChild('doughnutChart', { static: true }) doughnutChart;
 
@@ -102,7 +104,9 @@ export class HomePage implements OnInit {
   bars:any;
   colorArray: any;
 
-  dateToday: string;
+  dateToday: Date;
+  startDate: Date;
+  endDate: Date;
 
   allData: Everything = <Everything>{};
   visitResults: VisitSum = <VisitSum>{};
@@ -147,6 +151,7 @@ export class HomePage implements OnInit {
       this.loadItems();
       this.loadPresets();
     })
+    
 
     window.home = this;
 
@@ -189,9 +194,22 @@ export class HomePage implements OnInit {
 
       this.storageService.getKey(); 
       
-      this.dateToday = Date.now().toString();
+      // this.dateToday = Date.now().toString();
+
+      // this.startDate = new Date(Date.parse("11 Nov 2019,16:45"));
+      // this.endDate = new Date(Date.parse("11 Nov 2019,16:50"));
+      // this.dateToday = new Date();
+
+      // if(this.dateToday >= this.startDate && this.dateToday <= this.endDate) {
+      //   console.log("Date check = true");
+ 
+      // }
+      // else {
+      //   console.log("Date check = false");
+      // }
+
       
-      console.log("Today's Date - " + this.dateToday.toString());
+      // console.log("Today's Date - " + this.dateToday.toString());
 
       // var promise=this.storageService.getKeyString();
       // promise.then(function(greeting){this.storageService.getVisitsSum()
@@ -235,6 +253,8 @@ export class HomePage implements OnInit {
     //   console.log("Sums: " + this.logger);
     this.storageService.refreshPresets();
 
+    this.createDoughnutChart();
+
     this.allData = this.storageService.getAllData();
     // console.log("Refreshed Sums: " + JSON.stringify(this.allData.sum));
 
@@ -244,6 +264,27 @@ export class HomePage implements OnInit {
     this.shortCoursesSum = this.allData.sum.shortCoursesSum;
 
     this.checkVisitDetails = this.allData.visits;
+
+    for (let visit of this.checkVisitDetails) {
+
+      this.startDate = new Date(Date.parse(visit.startDate.toString()));
+      this.endDate = new Date(Date.parse(visit.endDate.toString()));
+      this.dateToday = new Date();
+
+      // console.log("Today's date: " + this.dateToday);
+      // console.log(visit.name + "start: " + this.startDate);
+      // console.log(visit.name + "end: " + this.endDate);
+      // console.log("--------------------------------------------------");
+
+      if (this.dateToday >= this.startDate && this.dateToday <= this.endDate) {
+        this.currentVisit = visit.name;
+        break;
+      }
+      else {
+        this.currentVisit = "";
+      }
+
+    }
 
     this.toastController.create({
       message: 'Data Refreshed',
@@ -270,6 +311,7 @@ export class HomePage implements OnInit {
       this.authService.loginTest(this.user.name, this.user.pw);
       this.allData = this.storageService.getAllData();
       // this.isHidden = true;
+      this.createDoughnutChart();
     }
     catch {
       console.log("Error: Login Failed");
@@ -348,7 +390,7 @@ export class HomePage implements OnInit {
 
 
   addNewBox() {
-    // this.newBox.boxId = Date.now();
+    this.newBox.localBoxId = Date.now();
 
     this.newBox.cardList = [ this.newCard ];
 
@@ -439,7 +481,7 @@ export class HomePage implements OnInit {
 
   // Delete Box
   deleteItem(box: Box) {
-    this.storageService.deleteItem(box.boxId).then(box => {
+    this.storageService.deleteItem(box.localBoxId).then(box => {
       this.toastController.create({
         message: 'Box removed!',
         duration: 2000
@@ -556,34 +598,36 @@ export class HomePage implements OnInit {
     }
   }
 
-  // createDoughnutChart() {
-  //   var colorArray = [];
-  //   for (let i = 0; i < 5; i++) {
-  //     colorArray.push('#' + Math.floor(Math.random() * 16777215).toString(16));
-  //   }
-  //   this.bars = new Chart(this.doughnutChart.nativeElement, {
-  //     type: 'doughnut',
-  //     data: {
-  //       labels: ['Retail/Shop', 'Food', 'Transport', 'Withdrawals', 'Transfers'],
-  //       datasets: [{
-  //         label: 'Money Spent ($)',
-  //         data: [100, 200, 50, 150, 65],
-  //         backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"], // array should have same number of elements as number of dataset
-  //         borderColor: '#FFFFFF',// array should have same number of elements as number of dataset
-  //         borderWidth: 1
-  //       }]
-  //     },
-  //     options: {
-  //       scales: {
-  //         yAxes: [{
-  //           ticks: {
-  //             beginAtZero: true
-  //           }
-  //         }]
-  //       }
-  //     }
-  //   });
-  // }
+  createDoughnutChart() {
+    var colorArray = [];
+    for (let i = 0; i < 5; i++) {
+      colorArray.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+    }
+    this.bars = new Chart(this.doughnutChart.nativeElement, {
+      type: 'doughnut',
+      data: {
+        labels: ['Retail/Shop', 'Food', 'Transport', 'Withdrawals', 'Transfers'],
+        datasets: [{
+          label: 'Money Spent ($)',
+          data: [100, 200, 50, 150, 65],
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"], // array should have same number of elements as number of dataset
+          borderColor: '#FFFFFF',// array should have same number of elements as number of dataset
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+    console.log("BELOW HERE");
+    console.log("NATIVE ELEMENT: " + this.doughnutChart.nativeElement);
+  }
 
   changeTheme(name) {
     this.themeService.setTheme(themes[name]);

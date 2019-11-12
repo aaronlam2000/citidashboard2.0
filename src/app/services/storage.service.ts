@@ -35,6 +35,7 @@ export interface Preset {
 
 export interface Box {
   boxId: number,
+  localBoxId: number,
   cardList: [ Card ];
 }
 
@@ -230,6 +231,7 @@ export class StorageService {
 
  // DELETE
  deleteItem(boxId: number): Promise<Box> {
+
   return this.storage.get(ITEMS_KEY).then((boxes: Box[]) => {
       if (!boxes || boxes.length === 0) {
         return null;
@@ -238,7 +240,7 @@ export class StorageService {
       let toKeep: Box[] = [];
 
       for (let i of boxes) {
-        if (i.boxId !== boxId) {
+        if (i.localBoxId !== boxId) {
           toKeep.push(i);
         }
       }

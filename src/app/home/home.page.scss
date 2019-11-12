@@ -237,13 +237,6 @@ div[scrolly=true] {
   margin: 14px;
 }
 
-.delete-area {
-  border: 2px dashed var(--ion-color-medium);
-  margin: 10px;
-  height: 100px;
-  ion-icon {
-     font-size: 64px;
-  }
 
   #sortable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
   
@@ -293,4 +286,26 @@ div[scrolly=true] {
   div[scrolly=true] {
     overflow-y: auto;
   }
-}
+
+  .ion-card-partners {
+    display: block;
+  }
+  
+  .ion-card-partners img {
+    height: 140px;
+    width: 140px;
+  }
+  
+  .ion-card-images {
+    border: solid 1px red;
+  }
+  
+  .project-title {
+    
+    font-size: 1cm;
+    font-family: humanst;
+  }
+
+  .project-chart {
+    height: 6.8cm;
+  }
