@@ -49,8 +49,8 @@
     <!-- END PRESET MENU -->
 
     <!-- DASHBOARD CONTENT -->
-    <ion-row class="matrix" *appHasRole="['dashboard-content']">
-    
+    <ion-row class="matrix" [hidden]="hideDashboard">
+        <!-- *appHasRole="['dashboard-content']" -->
         <!-- THEME SELECTION -->
         <ion-row *appHasRole="['edit-dashboard', 'admin']" [hidden]="enterViewMode">
             <ion-button (click)="changeTheme('default')">Default</ion-button>
@@ -73,16 +73,14 @@
                       
                 <ion-col style="border:solid 3px white;" *ngFor="let card of b.cardList">
                   <ion-item class="ion-text-wrap">
-                      <ion-card [color]="card.color" (click)="presentPopover(card)" class="stat-card">   
+                      <!-- SUM CARDS -->
+                      <ion-card *ngIf="card.cardType == 'sum'" [color]="card.color" (click)="presentPopover(card)" class="stat-card">   
                           <span class="handle" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
                               +
                           </span>  
                           <ion-card-subtitle *appHasRole="['edit-dashboard', 'admin']">
                               <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteCard(b, card)" name="trash"></ion-icon>
                           </ion-card-subtitle>
-                        <ion-card-header>
-                          
-                        </ion-card-header>
 
                         <ion-card-content class="card-content">
                           <ion-icon class="card-icon" [name]="card.icon"></ion-icon>
@@ -90,43 +88,76 @@
                           <p *ngIf="card.title =='Awards'" class="card-value">{{ awardsSum }}</p>
                           <p *ngIf="card.title =='Projects'" class="card-value">{{ projectsSum }}</p>
                           <p *ngIf="card.title =='Short Courses'" class="card-value">{{ shortCoursesSum }}</p>
+                          <ion-slides *ngIf="card.cardType == 'partners'" [options]="sliderOpts">
+                            <ion-slide *ngFor="let images of [2, 3, 4, 5, 6]">
+                              <img src="assets/images/{{ images }}.png">
+                            </ion-slide>
+                          </ion-slides>
                           </ion-card-content>
                           <ion-card-title class="card-title">{{ card.title }}</ion-card-title>                    
-                      </ion-card>                           
+                      </ion-card>
+                       <!-- END SUM CARDS -->   
+
+                       <!-- INDUSTRY PARTNER CARD -->
+                      <ion-card *ngIf="card.cardType == 'partners'" [color]="card.color" class="partners-card">   
+                          <span class="handle" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
+                              +
+                          </span>  
+                          <ion-card-subtitle *appHasRole="['edit-dashboard', 'admin']">
+                              <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteCard(b, card)" name="trash"></ion-icon>
+                          </ion-card-subtitle>
+
+                        <ion-card-content class="card-content">
+                          <ion-card-title class="project-title">Our Industry Partners</ion-card-title> 
+                          <ion-slides [options]="sliderOpts">
+                            <ion-slide *ngFor="let images of [2, 3, 4, 5, 6]">
+                              <img src="assets/images/{{ images }}.png">
+                            </ion-slide>
+                          </ion-slides>
+                          </ion-card-content>                  
+                      </ion-card>  
+                      <!-- END INDUSTRY PARTNER CARD -->
+
+                      <!-- DOUGHNUT CHART CARD -->
+                      <!-- <ion-card *ngIf="card.cardType == 'chart'" class="ion-card-color1">
+                          <ion-card-header>
+                            <ion-card-title class="project-title">Projects</ion-card-title>
+                          </ion-card-header>
+                          <ion-card-content class="project-chart">
+                            <canvas class="project-chart" #doughnutChart></canvas>  
+                          </ion-card-content>
+                      </ion-card> -->
+                      <!-- END DOUGHNUT CHART CARD -->
+
                   </ion-item>
                 </ion-col> 
               </ion-row>     
               <!-- END LIST OF CARDS -->                  
         </ion-row>
-        <!-- END LIST OF BOXES -->
-        <ion-card class="ion-card-partners">
+
+        <ion-card class="ion-card-color1" [hidden]="addAwardChart">
+            <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteAwardChart()" name="trash"></ion-icon>
             <ion-card-header>
-                <div class="ion-text-wrap">
-              <ion-card-title class="project-title">Our Industry Partners</ion-card-title>  
-              </div>
+              <ion-card-title class="project-title">Awards</ion-card-title>
             </ion-card-header>
-            <div class="col-md-4">
-            <ion-card-content class="ion-card-images">
-                <ion-slides [options]="sliderOpts">
-                    <ion-slide *ngFor="let images of [2, 3, 4, 5, 6]">
-                      <img src="assets/images/{{ images }}.png">
-                    </ion-slide>
-                  </ion-slides>
+            <ion-card-content class="project-chart">
+              <canvas class="project-chart" #doughnutChart></canvas>  
             </ion-card-content>
-          </div>
-          </ion-card>
+        </ion-card>
+        <!-- END LIST OF BOXES -->
 
     </ion-row>
     <!-- END DASHBOARD CONTENT -->
 
-    <ion-card class="ion-card-color1">
+    <!-- <ion-card class="ion-card-color1">
         <ion-card-header>
           <ion-card-title class="project-title">Projects</ion-card-title>
         </ion-card-header>
         <ion-card-content class="project-chart">
           <canvas class="project-chart" #doughnutChart></canvas>  
         </ion-card-content>
-    </ion-card>
+    </ion-card> -->
+
     <!-- LOGIN/LOGOUT  -->
     <ion-row [hidden]="enterViewMode" class="ion-align-items-center">
 

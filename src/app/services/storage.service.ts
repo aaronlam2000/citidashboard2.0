@@ -44,7 +44,8 @@ export interface Card {
   title: string,
   color: string,
   value: string,
-  icon: string;
+  icon: string,
+  cardType: string;
 }
 
 export interface Visits {
@@ -91,6 +92,16 @@ export interface Themes {
   fontStyle: string,
   themeName: string,
   dateCreated: string;
+  theme: [ThemeNames];
+}
+
+export interface ThemeNames {
+  primary: string,
+  secondary: string,
+  tertiary: string,
+  light: string,
+  medium: string,
+  dark: string;
 }
 
 export interface VisitSum {
