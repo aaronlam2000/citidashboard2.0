@@ -39,25 +39,21 @@ export class AddOptionsPopoverComponent implements OnInit {
         window.home.newCard.value = this.optionsAllData.sum.visitsSum;
         window.home.newCard.title = 'Visits';
         window.home.newCard.icon = 'person';
-        window.home.newCard.cardType = 'sum';
         break;
       case 'awards':
         window.home.newCard.value = this.optionsAllData.sum.awardsSum;
         window.home.newCard.title = 'Awards';
         window.home.newCard.icon = 'trophy';
-        window.home.newCard.cardType = 'sum';
         break;
       case 'projects':
         window.home.newCard.value = this.optionsAllData.sum.projectsSum;
         window.home.newCard.title = 'Projects';
         window.home.newCard.icon = 'laptop';
-        window.home.newCard.cardType = 'sum';
         break; 
       case 'shortcourses':
         window.home.newCard.value = this.optionsAllData.sum.shortCoursesSum;
         window.home.newCard.title = 'Short Courses';
         window.home.newCard.icon = 'book';
-        window.home.newCard.cardType = 'sum';
         break; 
     }
 
@@ -79,6 +75,15 @@ export class AddOptionsPopoverComponent implements OnInit {
       break;   
     }
 
+    switch (this.typeOption) {
+      case 'sum':
+        window.home.newCard.cardType = 'sum';
+        break;
+      case 'chart':
+        window.home.newCard.cardType = 'chart';
+        break;
+    }
+
     window.home.addNewBox();
   }
 
@@ -89,25 +94,21 @@ export class AddOptionsPopoverComponent implements OnInit {
         window.home.newCard.value = this.optionsAllData.sum.visitsSum;
         window.home.newCard.title = 'Visits';
         window.home.newCard.icon = 'person';
-        window.home.newCard.cardType = 'sum';
         break;
       case 'awards':
         window.home.newCard.value = this.optionsAllData.sum.awardsSum;
         window.home.newCard.title = 'Awards';
         window.home.newCard.icon = 'trophy';
-        window.home.newCard.cardType = 'sum';
         break;
       case 'projects':
         window.home.newCard.value = this.optionsAllData.sum.projectsSum;
         window.home.newCard.title = 'Projects';
         window.home.newCard.icon = 'laptop';
-        window.home.newCard.cardType = 'sum';
         break; 
       case 'shortcourses':
       window.home.newCard.value = this.optionsAllData.sum.shortCoursesSum;
       window.home.newCard.title = 'Short Courses';
       window.home.newCard.icon = 'book';
-      window.home.newCard.cardType = 'sum';
       break; 
     }
 
@@ -128,8 +129,16 @@ export class AddOptionsPopoverComponent implements OnInit {
         window.home.newCard.color = 'dark';
       break;   
     }
-    // console.log(this.passedBox)
-    // console.log(this.newCard)
+
+    switch (this.typeOption) {
+      case 'sum':
+        window.home.newCard.cardType = 'sum';
+        break;
+      case 'chart':
+        window.home.newCard.cardType = 'chart';
+        break;
+    }
+    // console.log("New Card = " + (JSON.stringify(this.newCard)));
     window.home.addNewCard(this.passedBox);
     this.popoverController.dismiss();
   }
@@ -137,23 +146,7 @@ export class AddOptionsPopoverComponent implements OnInit {
   addPartners() {
     window.home.newCard.cardType = 'partners';
 
-    switch (this.colorOption) {
-      case 'blue':
-        window.home.newCard.color = 'primary';
-        break;
-      case 'yellow':
-        window.home.newCard.color = 'warning';
-        break;
-      case 'red':
-        window.home.newCard.color = 'danger';
-        break;
-      case 'green':
-        window.home.newCard.color = 'success';
-        break;       
-      case 'black':
-        window.home.newCard.color = 'dark';
-      break;   
-    }
+    window.home.newCard.color = 'light';
     window.home.newCard.title = '';
     window.home.newCard.icon = '';
 

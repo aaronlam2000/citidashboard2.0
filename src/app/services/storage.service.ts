@@ -221,7 +221,7 @@ export class StorageService {
       let updatedBoxList: Box[] = [];
 
       for (let b of boxes) {
-        if (b.boxId === box.boxId) {
+        if (b.localBoxId === box.localBoxId) {
           updatedBoxList.push(box);
         } else {
           updatedBoxList.push(b); 

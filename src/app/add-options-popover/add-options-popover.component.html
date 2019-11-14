@@ -28,7 +28,7 @@
     </ion-col>
 
     <!-- Type Selection -->
-    <!-- <ion-col>
+    <ion-col>
       <ion-item>
           <ion-label>Type</ion-label>
           <ion-select [(ngModel)]="typeOption">
@@ -36,32 +36,33 @@
             <ion-select-option value="chart">Chart</ion-select-option>
           </ion-select>
       </ion-item>
-    </ion-col>  -->
+    </ion-col> 
+
+    <ion-col size="12">
+      <ion-button expand="block" fill="outline" color="dark" (click)="addPartners()">
+          <ion-icon name="person" slot="start"></ion-icon>
+          Add Partners
+      </ion-button>
+    </ion-col>
 
     <ion-col size="12" [hidden]="hideAddBox">
-        <ion-button expand="block" fill="outline" color="dark" (click)=" addBox()">
+        <ion-button expand="block" fill="outline" color="dark" (click)="addBox()">
             <ion-icon name="add" slot="start"></ion-icon>
             Add Box
         </ion-button>
     </ion-col>
     <ion-col size="12" [hidden]="hideAddCard">
-        <ion-button expand="block" fill="outline" color="dark" (click)=" addCard()">
+        <ion-button expand="block" fill="outline" color="dark" (click)="addCard()">
             <ion-icon name="add" slot="start"></ion-icon>
             Add Card
         </ion-button>
     </ion-col>
-    <ion-col size="12">
-        <ion-button expand="block" fill="outline" color="dark" (click)=" addPartners()">
-            <ion-icon name="person" slot="start"></ion-icon>
-            Add Partners
-        </ion-button>
-    </ion-col>
-    <ion-col size="12">
-        <ion-button expand="block" fill="outline" color="dark" (click)="addAwardChart()">
+    <!-- <ion-col size="12">
+        <ion-button expand="block" fill="outline" color="dark" (click)="addChart()">
             <ion-icon name="add" slot="start"></ion-icon>
             Add Chart
         </ion-button>
-    </ion-col>
+    </ion-col> -->
 
     <ion-col>
       <ion-button color="danger" (click)="closePopover()">Close</ion-button>

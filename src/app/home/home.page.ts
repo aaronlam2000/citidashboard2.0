@@ -234,12 +234,11 @@ export class HomePage implements OnInit {
 
   showChart = true;
 
-  @ViewChild('doughnutChart', { static: true }) doughnutChart;
+  // @ViewChild('doughnutChart', { static: true }) doughnutChart;
 
   authenticated = false;
   enterViewMode = false;
   exitViewMode = true;
-  hideDashboard = true;
 
   hideVisits = true;
   hideAwards = true;
@@ -502,7 +501,6 @@ export class HomePage implements OnInit {
       this.authService.loginTest(this.user.name, this.user.pw);
       this.allData = this.storageService.getAllData();
 
-      this.hideDashboard = false;
       // this.isHidden = true;
       // this.createDoughnutChart();
     }
@@ -518,7 +516,6 @@ export class HomePage implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.hideDashboard = true;
   }
 
   enterView() {
@@ -602,6 +599,7 @@ export class HomePage implements OnInit {
 
   addNewCard(box: Box) {
     // this.newCard.cardId = Date.now();
+    console.log(box.localBoxId);
 
     box.cardList.push(this.newCard);  
     // this.createDoughnutChart();
@@ -802,8 +800,8 @@ export class HomePage implements OnInit {
     for (let i = 0; i < 5; i++) {
       colorArray.push('#' + Math.floor(Math.random() * 16777215).toString(16));
     }
-    console.log("Award Type Sum = " + this.awardTypeSum);
-    this.bars = new Chart(this.doughnutChart.nativeElement, {
+    var ctx = (<any>document.getElementById('awardtype-chart'));
+    var chart = new Chart(ctx, {
       type: 'doughnut',
       data: {
         labels: ['Academic', 'Non-academic', 'Character'],
@@ -825,8 +823,8 @@ export class HomePage implements OnInit {
         }
       }
     });
-    console.log("BELOW HERE");
-    console.log("NATIVE ELEMENT: " + this.doughnutChart.nativeElement);
+    // console.log("BELOW HERE");
+    // console.log("NATIVE ELEMENT: " + this.doughnutChart.nativeElement);
   }
 
   changeTheme(name) {

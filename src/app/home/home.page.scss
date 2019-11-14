@@ -11,7 +11,7 @@ ion-content {
 }
 
 ion-grid {
-  padding: 20px 20px 20px 20px;
+  padding: 5px 5px 5px 5px;
 }
 
 .width-height-responsive {
@@ -56,7 +56,7 @@ ion-list {
   display: flex;
   flex-direction: row;
   width: 100%;
-  width: 93.5vw;
+  width: 98vw;
 }
 
 .height-flex {
@@ -133,7 +133,7 @@ div[scrolly=true] {
   color: black;
   // height: 100%;
   // height: 30vh;
-  padding: 15px;
+  padding: 3px 3px 10px 3px;
   margin: 0!important;
   width: 100%;
   align-items: center;
@@ -153,18 +153,25 @@ div[scrolly=true] {
 .card-value {
   color: #03F6FF;
   font-weight: bold;
-  font-size: 7vmax;
+  font-size: 4vw;
+  padding: 0!important;
+  margin: 0!important;
 }
 
 .card-title {
-  font-size: 2.5vmax;
-  font-style: normal;
+  font-size: 2vmax;
+  font-family: Montserrat;
+  font-weight: bold;
   color: white!important;
+  padding: 0!important;
+  margin: 0!important;
 }
 
 .card-icon {
-  font-size: 10vmax;
+  font-size: 6vmax;
   color: white;
+  padding: 0!important;
+  margin: 0!important;
 }
 
 .welcome-banner {
@@ -221,7 +228,7 @@ div[scrolly=true] {
 }
 
 .matrix {
-  margin-top: 30px;
+  // margin-top: 30px;
 
   ion-col {
       --ion-grid-column-padding: 0px;
@@ -309,14 +316,15 @@ div[scrolly=true] {
   }
 
   .project-chart {
-    height: 6.8cm;
+    
   }
 
   .partners-card {
     color: black;
-    padding: 15px;
+    padding: 3px;
     margin: 0!important;
     width: 100%;
     text-align: center;
     white-space: nowrap;
+    background-color: white;
   }
