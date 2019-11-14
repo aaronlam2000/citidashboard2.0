@@ -70,7 +70,7 @@ ion-list {
 .handle {
   padding: 0 5px;
   margin: 8px;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: white;
   cursor: grab;
   text-align: left;
   font-size: 2vmax;
@@ -89,7 +89,7 @@ ion-item:hover {
 
 .delete-icon-btn {
   font-size: 3vmax;
-  color: black;
+  color: white;
 }
 
 .dd-icons {
@@ -133,7 +133,7 @@ div[scrolly=true] {
   color: black;
   // height: 100%;
   // height: 30vh;
-  padding: 3px 3px 10px 3px;
+  padding: 3px 15px 10px 15px;
   margin: 0!important;
   width: 100%;
   align-items: center;
@@ -146,7 +146,7 @@ div[scrolly=true] {
 }
 
 .card-content {
-  color: #03F6FF!important;
+  // color: #03F6FF!important;
   
 }
 
@@ -159,17 +159,19 @@ div[scrolly=true] {
 }
 
 .card-title {
-  font-size: 2vmax;
+  font-size:3.5vmax;
   font-family: Montserrat;
   font-weight: bold;
-  color: white!important;
+  // color: white!important;
+  // color: white!important;
   padding: 0!important;
   margin: 0!important;
 }
 
 .card-icon {
   font-size: 6vmax;
-  color: white;
+  // color: white;
+  color: #03F6FF!important;
   padding: 0!important;
   margin: 0!important;
 }

@@ -13,7 +13,7 @@ export class AddOptionsPopoverComponent implements OnInit {
 
   newCard: Card = <Card>{}
   valueOption = "visits";
-  colorOption = "blue";
+  colorOption = "black";
   typeOption = "sum";
 
   passedBox = null;
@@ -57,23 +57,27 @@ export class AddOptionsPopoverComponent implements OnInit {
         break; 
     }
 
-    switch (this.colorOption) {
-      case 'blue':
-        window.home.newCard.color = 'primary';
-        break;
-      case 'yellow':
-        window.home.newCard.color = 'warning';
-        break;
-      case 'red':
-        window.home.newCard.color = 'danger';
-        break;
-      case 'green':
-        window.home.newCard.color = 'success';
-        break;       
-      case 'black':
-        window.home.newCard.color = 'dark';
-      break;   
-    }
+    window.home.newCard.color = 'light';
+    // switch (this.colorOption) {
+    //   case 'blue':
+    //     window.home.newCard.color = 'primary';
+    //     break;
+    //   case 'yellow':
+    //     window.home.newCard.color = 'warning';
+    //     break;
+    //   case 'red':
+    //     window.home.newCard.color = 'danger';
+    //     break;
+    //   case 'green':
+    //     window.home.newCard.color = 'success';
+    //     break;       
+    //   case 'black':
+    //     window.home.newCard.color = 'dark';
+    //   break;
+    //   case 'white':
+    //     window.home.newCard.color = 'light';
+    //   break;
+    // }
 
     switch (this.typeOption) {
       case 'sum':
