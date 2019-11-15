@@ -8,11 +8,17 @@ ion-content {
   // --overflow: hidden;
   // max-height: max-content;
   // --ion-background-color:#091935!important;
+  --ion-background-color: lightgrey;
 }
 
 ion-grid {
   padding: 5px 5px 5px 5px;
 }
+
+// ion-header {
+//   padding: 0;
+//   margin: 0;
+// }
 
 .width-height-responsive {
   width: 100vw;
@@ -48,7 +54,7 @@ ion-list {
 .dashboard-title {
   text-align: center;
   font-size: 3.5vw;
-  padding: 5px 5px 2px 5px;
+  // padding: 5px 5px 2px 5px;
   margin: 0;
 }
 
@@ -56,7 +62,7 @@ ion-list {
   display: flex;
   flex-direction: row;
   width: 100%;
-  width: 98vw;
+  width: 98.3vw;
 }
 
 .height-flex {
@@ -70,7 +76,8 @@ ion-list {
 .handle {
   padding: 0 5px;
   margin: 8px;
-  background-color: white;
+  background-color: black;
+  color: white;
   cursor: grab;
   text-align: left;
   font-size: 2vmax;
@@ -89,7 +96,7 @@ ion-item:hover {
 
 .delete-icon-btn {
   font-size: 3vmax;
-  color: white;
+  color: black;
 }
 
 .dd-icons {
@@ -128,30 +135,26 @@ div[scrolly=true] {
 }
 
 .stat-card {
-  // font-size: 10vmax!important;
-  // font-style: normal;
   color: black;
-  // height: 100%;
-  // height: 30vh;
   padding: 3px 15px 10px 15px;
-  margin: 0!important;
+  margin: 0;
   width: 100%;
   align-items: center;
   text-align: center;
   white-space: nowrap;
   display: flex;
-  // flex-direction: row;
   flex-direction: column;
-  font-size: 15vmax!important;
+  // font-size: 15vmax!important;
+  border: solid 4px black;
 }
 
 .card-content {
   // color: #03F6FF!important;
-  
 }
 
 .card-value {
-  color: #03F6FF;
+  color: black;
+  // color: #03F6FF;
   font-weight: bold;
   font-size: 4vw;
   padding: 0!important;
@@ -159,7 +162,7 @@ div[scrolly=true] {
 }
 
 .card-title {
-  font-size:3.5vmax;
+  font-size: 2vmax;
   font-family: Montserrat;
   font-weight: bold;
   // color: white!important;
@@ -170,8 +173,8 @@ div[scrolly=true] {
 
 .card-icon {
   font-size: 6vmax;
-  // color: white;
-  color: #03F6FF!important;
+  color: black;
+  // color: #03F6FF!important;
   padding: 0!important;
   margin: 0!important;
 }
@@ -209,11 +212,11 @@ div[scrolly=true] {
 }
 
 
-.addBtn {
-  position: absolute;
-  left: 85%;
-  font-size: 30px;
-}
+// .addBtn {
+//   position: absolute;
+//   top: 20%;
+//   font-size: 30px;
+// }
 
 .addBigBtn {
   position: absolute;
@@ -243,7 +246,9 @@ div[scrolly=true] {
   }
 
   ion-item {
-      margin-bottom: 15px;
+      margin: 0;
+      padding: 0;
+      --ion-background-color: transparent;
   }
 }
 
@@ -314,11 +319,17 @@ div[scrolly=true] {
     
     font-size: 3vmax!important;
     font-family: humanst;
-    padding-bottom: 30px;
+    padding-bottom: 10px;
   }
 
-  .project-chart {
-    
+  .awards-chart {
+    // height: 20vw;
+
+  }
+
+  .partners-content {
+    // height: 15vh;
+    // border: solid 5px black;
   }
 
   .partners-card {
@@ -328,5 +339,6 @@ div[scrolly=true] {
     width: 100%;
     text-align: center;
     white-space: nowrap;
-    background-color: white;
+    border: solid 4px black;
+    // background-color: white;
   }

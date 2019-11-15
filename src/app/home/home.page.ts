@@ -233,6 +233,7 @@ export class HomePage implements OnInit {
   // }
 
   showChart = true;
+  curlSpan = false;
 
   // @ViewChild('doughnutChart', { static: true }) doughnutChart;
 
@@ -429,6 +430,8 @@ export class HomePage implements OnInit {
     this.shortCoursesSum = this.allData.sum.shortCoursesSum;
 
     this.checkVisitDetails = this.allData.visits;
+
+    this.curlSpan = true;
 
     for (let visit of this.checkVisitDetails) {
       

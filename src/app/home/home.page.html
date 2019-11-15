@@ -22,7 +22,7 @@
       </ion-buttons>
 
       <h1 class="dashboard-title">Welcome to SIT {{ currentVisit }}</h1>
-      <p style="font-size: 15px; text-align: center;">{{ dateToday }}</p>   
+      <!-- <p style="font-size: 15px; text-align: center;">{{ dateToday }}</p>    -->
     </ion-title>
 
   </ion-toolbar>
@@ -71,8 +71,8 @@
               <!-- LIST OF CARDS -->
               <ion-row class="row-flex" dragula="bag" [(dragulaModel)]="b.cardList">
                       
-                <ion-col style="border:solid 3px black; padding-top: 2%;" *ngFor="let card of b.cardList">
-                  <ion-item class="ion-text-wrap">
+                <ion-col *ngFor="let card of b.cardList">
+                  
                       <!-- SUM CARDS -->
                       <ion-card *ngIf="card.cardType == 'sum'" [color]="card.color" (click)="presentPopover(card)" class="stat-card">   
                           <span class="handle" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
@@ -89,18 +89,15 @@
                           <span *ngIf="card.title =='Projects'" class="card-value">{{ projectsSum }}</span>
                           <span *ngIf="card.title =='Short Courses'" class="card-value">{{ shortCoursesSum }}</span>
                           <!-- <p class="card-value">88</p> -->
-                          <ion-slides *ngIf="card.cardType == 'partners'" [options]="sliderOpts">
-                            <ion-slide *ngFor="let images of [2, 3, 4, 5, 6]">
-                              <img src="assets/images/{{ images }}.png">
-                            </ion-slide>
-                          </ion-slides>
+                          
                           </ion-card-content>
-                          <ion-card-title class="card-title">{{ card.title }}</ion-card-title>                    
+                          <ion-card-title class="card-title">{{ card.title }}</ion-card-title>      
+                          <span [hidden]="curlSpan" class="card-value">~</span>              
                       </ion-card>
                        <!-- END SUM CARDS -->   
 
                        <!-- INDUSTRY PARTNER CARD -->
-                      <ion-card *ngIf="card.cardType == 'partners'" class="partners-card">   
+                      <ion-card *ngIf="card.cardType == 'partners'" class="partners-card" [color]="card.color">   
                           <span class="handle" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
                               +
                           </span>  
@@ -108,9 +105,9 @@
                               <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteCard(b, card)" name="trash"></ion-icon>
                           </ion-card-subtitle>
 
-                        <ion-card-content class="card-content">
+                        <ion-card-content class="partners-content">
                           <ion-card-title class="project-title">Our Industry Partners</ion-card-title> 
-                          <ion-slides [options]="sliderOpts">
+                          <ion-slides style="height: 12vh;" [options]="sliderOpts">
                             <ion-slide *ngFor="let images of [2, 3, 4, 5, 6]">
                               <img src="assets/images/{{ images }}.png">
                             </ion-slide>
@@ -128,40 +125,22 @@
                               <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteCard(b, card)" name="trash"></ion-icon>
                           </ion-card-subtitle>
                           <ion-card-content class="card-content">
-                            <canvas id="awardtype-chart" class="project-chart"></canvas>  
+                            <canvas id="awardtype-chart" class="awards-chart"></canvas>  
+                            <!-- <ion-icon class="card-icon" [name]="card.icon"></ion-icon><br/>
+                            <span class="card-value">88</span> -->
                           </ion-card-content>
                           <ion-card-title class="card-title">Awards</ion-card-title>
                       </ion-card>
                       <!-- END DOUGHNUT CHART CARD -->
 
-                  </ion-item>
+                  
                 </ion-col> 
               </ion-row>     
               <!-- END LIST OF CARDS -->                  
         </ion-row>
 
-        <!-- <ion-card class="ion-card-color1" [hidden]="addAwardChart">
-            <ion-icon [hidden]="enterViewMode" class="delete-icon-btn" (click)="deleteAwardChart()" name="trash"></ion-icon>
-            <ion-card-header>
-              <ion-card-title class="project-title">Awards</ion-card-title>
-            </ion-card-header>
-            <ion-card-content class="project-chart">
-              <canvas id="awardtype-chart" class="project-chart"></canvas>  
-            </ion-card-content>
-        </ion-card> -->
-        <!-- END LIST OF BOXES -->
-
     </ion-row>
     <!-- END DASHBOARD CONTENT -->
-
-    <!-- <ion-card class="ion-card-color1">
-        <ion-card-header>
-          <ion-card-title class="project-title">Projects</ion-card-title>
-        </ion-card-header>
-        <ion-card-content class="project-chart">
-          <canvas class="project-chart" #doughnutChart></canvas>  
-        </ion-card-content>
-    </ion-card> -->
 
     <!-- LOGIN/LOGOUT  -->
     <ion-row [hidden]="enterViewMode" class="ion-align-items-center">
