@@ -52,13 +52,13 @@
     <ion-row class="matrix" *appHasRole="['dashboard-content']">
         <!-- *appHasRole="['dashboard-content']" -->
         <!-- THEME SELECTION -->
-        <ion-row *appHasRole="['edit-dashboard', 'admin']" [hidden]="enterViewMode">
+        <!-- <ion-row *appHasRole="['edit-dashboard', 'admin']" [hidden]="enterViewMode">
             <ion-button (click)="changeTheme('default')">Default</ion-button>
             <ion-button (click)="changeTheme('autumn')">Autumn</ion-button>
             <ion-button (click)="changeTheme('night')">Dark</ion-button>
             <ion-button (click)="changeTheme('neon')">Neon</ion-button>
             <ion-button (click)="changeTheme('day')">Day</ion-button>
-        </ion-row>
+        </ion-row> -->
             
         <!-- LIST OF BOXES -->
         <ion-row *ngFor="let b of boxList">
@@ -92,7 +92,7 @@
                           
                           </ion-card-content>
                           <ion-card-title class="card-title">{{ card.title }}</ion-card-title>      
-                          <span [hidden]="curlSpan" class="card-value">~</span>              
+                          <!-- <span [hidden]="curlSpan" class="card-value">~</span>               -->
                       </ion-card>
                        <!-- END SUM CARDS -->   
 
@@ -117,7 +117,7 @@
                       <!-- END INDUSTRY PARTNER CARD -->
 
                       <!-- DOUGHNUT CHART CARD -->
-                      <ion-card *ngIf="card.cardType == 'chart'" class="stat-card" style="background-color: white;">
+                      <ion-card *ngIf="card.cardType == 'chart'" class="stat-card" [color]="card.color">
                           <span class="handle" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
                               +
                           </span>  

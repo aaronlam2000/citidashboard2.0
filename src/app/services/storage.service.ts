@@ -35,7 +35,7 @@ export interface Preset {
 
 export interface Box {
   boxId: number,
-  localBoxId: number,
+  localBoxId: string,
   cardList: [ Card ];
 }
 
@@ -156,6 +156,17 @@ export class StorageService {
 
   constructor(private storage: Storage, private http: HttpClient) { }
 
+  getAllUrl = 'http://172.20.129.215:8088/api/GetAll';
+
+  visitListUrl = 'http://172.20.129.215:8088/api/Visits';
+  awardListUrl = 'http://172.20.129.215:8088/api/Awards';
+  projectListUrl = 'http://172.20.129.215:8088/api/Projects';
+  presetListUrl = 'http://172.20.129.215:8088/api/Presets/';
+
+  visitSumUrl = 'http://172.20.129.215:8088/api/GetSum/VisitsSum';
+  awardSumUrl = 'http://172.20.129.215:8088/api/GetSum/AwardsSum';
+  projectSumUrl = 'http://172.20.129.215:8088/api/GetSum/ProjectsSum';
+
   //GET KEY
   getKeyUrl = "http://172.20.129.215:8088/api/GetKey";
   getKeyValue: Observable<any>;
@@ -241,7 +252,7 @@ export class StorageService {
   }
 
  // DELETE
- deleteItem(boxId: number): Promise<Box> {
+ deleteItem(boxId: string): Promise<Box> {
 
   return this.storage.get(ITEMS_KEY).then((boxes: Box[]) => {
       if (!boxes || boxes.length === 0) {
@@ -270,8 +281,8 @@ retrievePresets() {
   return this.getAllData().presets;
 }
 
-refreshPresets(){
-  this.storage.set(PRESET_KEY, this.retrievePresets());
+refreshPresets(presetList){
+  this.storage.set(PRESET_KEY, presetList);
 }
 
 
@@ -295,6 +306,35 @@ refreshPresets(){
     
   }
 
+   //Update Preset
+   updatePreset(preset: Preset): Promise<any> {
+    this.getKey();
+
+    this.http.put(`${this.presetListUrl + preset.presetId}`, preset, config).subscribe(Response => {
+      console.log(Response);
+      console.log(preset);
+    })
+
+    return this.storage.get(PRESET_KEY).then((presets: Preset[]) => {
+      if (!presets || presets.length === 0) {
+        return null;
+      }
+
+      let updatedPresetList: Preset[] = [];
+
+      for (let p of presets) {
+        if (p.presetId === preset.presetId) {
+          updatedPresetList.push(preset);
+        } else {
+          updatedPresetList.push(p); 
+        }
+      }
+
+      return this.storage.set(PRESET_KEY, updatedPresetList);
+    });
+    
+  }
+
   createPreset(preset: Preset) {
     this.getKey();
     console.log("Create preset Key: " + config.headers.Key);
@@ -310,9 +350,6 @@ refreshPresets(){
   }
 
   // GET SUM
-  visitSumUrl = 'http://172.20.129.215:8088/api/GetSum/VisitsSum';
-  awardSumUrl = 'http://172.20.129.215:8088/api/GetSum/AwardsSum';
-  projectSumUrl = 'http://172.20.129.215:8088/api/GetSum/ProjectsSum';
 
   visitSum: Observable<any>;
   awardSum: Observable<any>;
@@ -340,12 +377,6 @@ refreshPresets(){
   }
 
   // GET LIST
-  getAllUrl = 'http://172.20.129.215:8088/api/GetAll';
-
-  visitListUrl = 'http://172.20.129.215:8088/api/Visits';
-  awardListUrl = 'http://172.20.129.215:8088/api/Awards';
-  projectListUrl = 'http://172.20.129.215:8088/api/Projects';
-  presetListUrl = 'http://172.20.129.215:8088/api/Presets';
 
   allDataStorage: Everything = <Everything>{};
   visitList: Observable<any>;
@@ -382,30 +413,6 @@ refreshPresets(){
     this.projectList = this.http.get(`${this.projectListUrl}`, config);
     
     return this.projectList;
-  }
-
-  createAward(award: Awards) {
-    this.getKey();
-    console.log("Create award Key: " + config.headers.Key);
-    
-    this.http.post(`${this.awardListUrl}`, award, config).subscribe(Response => {
-      console.log(Response);
-      console.log(award);
-    })
-    
-    // this.nativeHttp.post(this.awardListUrl, award, {})
-    // .then
-    // (data => {
-    //   console.log(data.status);
-    //   console.log(data.data); // data received by server
-    //   console.log(data.headers);
-
-    // })
-    // .catch(error => {
-    //   console.log(error.status);
-    //   console.log(error.error); // error message as string
-    //  console.log(error.headers);
-    // });
   }
 
 }

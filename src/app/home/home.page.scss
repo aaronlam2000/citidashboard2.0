@@ -138,6 +138,7 @@ div[scrolly=true] {
   color: black;
   padding: 3px 15px 10px 15px;
   margin: 0;
+  height: 100%;
   width: 100%;
   align-items: center;
   text-align: center;
@@ -150,6 +151,11 @@ div[scrolly=true] {
 
 .card-content {
   // color: #03F6FF!important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100%;
 }
 
 .card-value {
@@ -233,7 +239,7 @@ div[scrolly=true] {
 }
 
 .matrix {
-  // margin-top: 30px;
+  margin-top: 45px;
 
   ion-col {
       --ion-grid-column-padding: 0px;
@@ -323,12 +329,11 @@ div[scrolly=true] {
   }
 
   .awards-chart {
-    // height: 20vw;
-
+    height: 100%;
   }
 
   .partners-content {
-    // height: 15vh;
+    height: 100%;
     // border: solid 5px black;
   }
 
@@ -336,9 +341,17 @@ div[scrolly=true] {
     color: black;
     padding: 3px;
     margin: 0!important;
+    height: 100%;
     width: 100%;
     text-align: center;
     white-space: nowrap;
     border: solid 4px black;
     // background-color: white;
+  }
+
+  .Absolute-Center {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100%;
   }
