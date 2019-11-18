@@ -263,7 +263,7 @@ export class HomePage implements OnInit {
     //   .subscribe(allData => this.allData = allData.sum);
     //   console.log("Sums: " + this.logger);
     // this.storageService.refreshPresets();
-
+    this.storageService.getKey();
 
     this.allData = this.storageService.getAllData();
     // console.log("Refreshed Sums: " + JSON.stringify(this.allData.sum));
@@ -413,12 +413,15 @@ export class HomePage implements OnInit {
     // this.storageService.createPreset(this.newPreset);
     
     this.storageService.addPreset(this.newPreset).then(box => {
+      this.storageService.getKey();
+      this.storageService.retrievePresets();
       this.newPreset = <Preset>{}; //clear newPreset
       this.toastController.create({
         message: 'Preset Saved',
         duration: 2000
       }).then(toast => toast.present());
       this.loadPresets();
+      this.storageService.getKey();
       
     });
   }

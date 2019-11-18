@@ -276,9 +276,14 @@ deleteBoxes() {
   this.storage.set(ITEMS_KEY, []);
 }
 
-retrievePresets() {
+retrievePresets(){
   this.getKey();
-  return this.getAllData().presets;
+  this.presetList = this.http.get(`${this.presetListUrl}`, config);
+    
+  console.log(JSON.stringify(this.presetsStorage)); // To test
+  this.presetList.subscribe(presets => this.presetsStorage = presets);
+
+  return this.storage.set(PRESET_KEY, this.presetsStorage);
 }
 
 refreshPresets(presetList){
@@ -294,6 +299,7 @@ refreshPresets(presetList){
     this.http.post(`${this.presetListUrl}`, preset, config).subscribe(Response => {
       console.log(Response);
       console.log(preset);
+      this.getKey();
     })
       return this.storage.get(PRESET_KEY).then((presetList: Preset[]) => {
         if (presetList) {
@@ -379,10 +385,12 @@ refreshPresets(presetList){
   // GET LIST
 
   allDataStorage: Everything = <Everything>{};
+  presetsStorage: Preset = <Preset>{};
   visitList: Observable<any>;
   awardList: Observable<any>;
   projectList: Observable<any>;
   allDataList: Observable<any>;
+  presetList: Observable<any>;
   test: string;
 
   getAllData(){
