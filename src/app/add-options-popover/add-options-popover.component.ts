@@ -29,29 +29,24 @@ export class AddOptionsPopoverComponent implements OnInit {
     this.passedBox = this.navParams.get('selectedBox');
     this.hideAddCard = this.navParams.get('hiddenAddCard');
     this.hideAddBox = this.navParams.get('hiddenAddBox');
-    this.optionsAllData = this.storageService.getAllData();
   }
 
   addBox() {
-    this.optionsAllData = this.storageService.getAllData();
+    
     switch (this.valueOption) {
       case 'visits':
-        window.home.newCard.value = this.optionsAllData.sum.visitsSum;
         window.home.newCard.title = 'Visits';
         window.home.newCard.icon = 'person';
         break;
       case 'awards':
-        window.home.newCard.value = this.optionsAllData.sum.awardsSum;
         window.home.newCard.title = 'Awards';
         window.home.newCard.icon = 'trophy';
         break;
       case 'projects':
-        window.home.newCard.value = this.optionsAllData.sum.projectsSum;
         window.home.newCard.title = 'Projects';
         window.home.newCard.icon = 'laptop';
         break; 
       case 'shortcourses':
-        window.home.newCard.value = this.optionsAllData.sum.shortCoursesSum;
         window.home.newCard.title = 'Short Courses';
         window.home.newCard.icon = 'book';
         break; 
@@ -92,25 +87,20 @@ export class AddOptionsPopoverComponent implements OnInit {
   }
 
   addCard() {
-    this.optionsAllData = this.storageService.getAllData();
     switch (this.valueOption) {
       case 'visits':
-        window.home.newCard.value = this.optionsAllData.sum.visitsSum;
         window.home.newCard.title = 'Visits';
         window.home.newCard.icon = 'person';
         break;
       case 'awards':
-        window.home.newCard.value = this.optionsAllData.sum.awardsSum;
         window.home.newCard.title = 'Awards';
         window.home.newCard.icon = 'trophy';
         break;
       case 'projects':
-        window.home.newCard.value = this.optionsAllData.sum.projectsSum;
         window.home.newCard.title = 'Projects';
         window.home.newCard.icon = 'laptop';
         break; 
       case 'shortcourses':
-      window.home.newCard.value = this.optionsAllData.sum.shortCoursesSum;
       window.home.newCard.title = 'Short Courses';
       window.home.newCard.icon = 'book';
       break; 

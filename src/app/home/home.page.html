@@ -39,11 +39,17 @@
         <ion-list *ngFor="let p of presetList">          
             <ion-row>
                 <ion-col>
-                  <ion-item (click)="loadSelectedPreset(p.presetBoxList)" *appHasRole="['dashboard-content']">
+                  <ion-item (click)="loadSelectedPreset(p.presetBoxList, p.presetId)" *appHasRole="['dashboard-content']">
                       {{ p.presetName }}
+                      <!-- <ion-button *ngIf="p.presetId == selectedPresetId" style="width: 40%;" slot="end" (click)="presetUpdate(p)">
+                        Save
+                      </ion-button>   -->
+                      <ion-button *ngIf="p.presetId == selectedPresetId" style="width: 40%;" slot="end" (click)="presentUpdatePresetPopover(p, $event)">
+                        Save
+                      </ion-button>  
                   </ion-item>
                 </ion-col>
-            </ion-row>            
+            </ion-row>          
         </ion-list>
     </ion-split-pane>
     <!-- END PRESET MENU -->

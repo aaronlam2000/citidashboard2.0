@@ -317,10 +317,14 @@ refreshPresets(presetList){
    //Update Preset
    updatePreset(preset: Preset): Promise<any> {
     this.getKey();
-
-    this.http.put(`${this.presetListUrl + preset.presetId}`, preset, config).subscribe(Response => {
-      console.log(Response);
-      console.log(preset);
+    // Get current box-list
+    this.storage.get(ITEMS_KEY).then((boxList) => {
+      preset.presetBoxList = boxList;
+      console.log("Updated boxList: " + preset.presetBoxList);
+      this.http.put(`${this.presetListUrl + preset.presetId}`, preset, config).subscribe(Response => {
+        console.log(Response);
+        console.log("Updated preset: " + JSON.stringify(preset));
+      });
     })
 
     return this.storage.get(PRESET_KEY).then((presets: Preset[]) => {

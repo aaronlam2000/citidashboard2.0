@@ -7,6 +7,7 @@ import { DragulaService } from 'ng2-dragula';
 import { AddOptionsPopoverComponent } from '../add-options-popover/add-options-popover.component';
 import { HomePopoverComponent } from '../home-popover/home-popover.component';
 import { SavePresetPopoverComponent } from '../save-preset-popover/save-preset-popover.component';
+import { UpdatePresetPopoverComponent } from '../update-preset-popover/update-preset-popover.component'
 import { AuthService } from '../services/auth.service';
 import { Awards, AwardSum, Box, Card, Everything, KeyValue, Preset, Projects, ProjectSum, StorageService, Visits, VisitSum } from '../services/storage.service';
 import { ThemeService } from '../services/theme.service';
@@ -90,6 +91,9 @@ export class HomePage implements OnInit {
   hideProjects = true;
   hiddenShortCourses = true;
   addAwardChart = true;
+
+  updateButton = true;
+  selectedPresetId = null;
 
   presetList: Preset[] = [];
   newPreset: Preset = <Preset>{};
@@ -268,14 +272,14 @@ export class HomePage implements OnInit {
     // this.allData = this.storageService.getAllData();
     this.storageService.getAllData().subscribe(alldata => {
       this.allData = alldata;
-      console.log("All Data Refreshed: " +JSON.stringify(this.allData));
+      // console.log("All Data Refreshed: " +JSON.stringify(this.allData));
 
       this.visitsSum = this.allData.sum.visitsSum;
       this.awardsSum = this.allData.sum.awardsSum;
       this.projectsSum = this.allData.sum.projectsSum;
       this.shortCoursesSum = this.allData.sum.shortCoursesSum;
 
-    this.checkVisitDetails = this.allData.visits;
+      this.checkVisitDetails = this.allData.visits;
 
     // this.presetList = this.allData.presets;
     // this.storageService.refreshPresets(this.allData.presets);
@@ -404,7 +408,9 @@ export class HomePage implements OnInit {
     });
   }
 
-  loadSelectedPreset(boxList) {
+  loadSelectedPreset(boxList, presetId) {
+    this.selectedPresetId = presetId;
+
     this.boxList = boxList;
     this.storageService.selectPreset(boxList);
   }
@@ -473,8 +479,16 @@ export class HomePage implements OnInit {
     });
   }
 
-  editPreset(preset: Preset) {
-    this.storageService.updatePreset(preset)
+  presetUpdate(preset: Preset) {
+    this.storageService.getKey();
+
+    this.storageService.updatePreset(preset).then(result => {
+      this.toastController.create({
+        message: 'Preset updated',
+        duration: 2000
+      }).then(toast => toast.present());
+      // this.loadItems();
+    });
   }
 
   updateSumData(box: Box, card:Card) {
@@ -615,6 +629,21 @@ export class HomePage implements OnInit {
     return await popover.present();
   }
 
+  async presentCardOptions(box: Box) {
+    
+    const popover = await this.popoverController.create({
+      component: AddOptionsPopoverComponent,
+      componentProps: {
+        homeref:this,
+        selectedBox: box,
+        hiddenAddCard: false,
+        hiddenAddBox: true
+      }
+      
+    });
+    return await popover.present();
+  }
+
   async presentSavePresetPopover(boxList) {
 
     this.storageService.getKey();  
@@ -629,17 +658,17 @@ export class HomePage implements OnInit {
     return await popover.present();
   }
 
-  async presentCardOptions(box: Box) {
+  async presentUpdatePresetPopover(preset: Preset, $event) {
+
+    $event.stopPropagation();
+    this.storageService.getKey();  
     
     const popover = await this.popoverController.create({
-      component: AddOptionsPopoverComponent,
+      component: UpdatePresetPopoverComponent,
       componentProps: {
         homeref:this,
-        selectedBox: box,
-        hiddenAddCard: false,
-        hiddenAddBox: true
+        currentPreset: preset
       }
-      
     });
     return await popover.present();
   }
