@@ -4,6 +4,8 @@
   <ion-toolbar>
     <ion-title class="welcome-toolbar">
       <ion-buttons>
+          <ion-menu-button [hidden]="enterViewMode" *appHasRole="['dashboard-content']"></ion-menu-button>
+
           <ion-button [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']" slot="end" (click)="presentOptions()">
             <ion-icon name="add"></ion-icon>       
           </ion-button>
@@ -31,28 +33,35 @@
 
 <!-- ION-CONTENT -->
 <ion-content forceOverscroll="false" [color]="primary">
+   <!-- PRESET MENU -->
+   <ion-menu content-id="menu" type="overlay">
+      <ion-header>
+          <ion-toolbar>
+            <ion-title>Choose Presets</ion-title>
+          </ion-toolbar>
+      </ion-header>
+
+      <ion-list *ngFor="let p of presetList">          
+          <ion-row>
+              <ion-col>
+                <ion-item (click)="loadSelectedPreset(p.presetBoxList, p.presetId)" *appHasRole="['dashboard-content']">
+                    {{ p.presetName }}
+                    <!-- <ion-button *ngIf="p.presetId == selectedPresetId" style="width: 40%;" slot="end" (click)="presetUpdate(p)">
+                      Save
+                    </ion-button>   -->
+                    <ion-button *ngIf="p.presetId == selectedPresetId" style="width: 40%;" slot="end" (click)="presentUpdatePresetPopover(p, $event)">
+                      Save
+                    </ion-button>  
+                </ion-item>
+              </ion-col>
+          </ion-row>          
+      </ion-list>
+
+  </ion-menu>
+    <!-- END PRESET MENU -->
   
   <!-- ION-GRID -->
   <ion-grid>
-    <!-- PRESET MENU -->
-    <ion-split-pane [hidden]="enterViewMode">
-        <ion-list *ngFor="let p of presetList">          
-            <ion-row>
-                <ion-col>
-                  <ion-item (click)="loadSelectedPreset(p.presetBoxList, p.presetId)" *appHasRole="['dashboard-content']">
-                      {{ p.presetName }}
-                      <!-- <ion-button *ngIf="p.presetId == selectedPresetId" style="width: 40%;" slot="end" (click)="presetUpdate(p)">
-                        Save
-                      </ion-button>   -->
-                      <ion-button *ngIf="p.presetId == selectedPresetId" style="width: 40%;" slot="end" (click)="presentUpdatePresetPopover(p, $event)">
-                        Save
-                      </ion-button>  
-                  </ion-item>
-                </ion-col>
-            </ion-row>          
-        </ion-list>
-    </ion-split-pane>
-    <!-- END PRESET MENU -->
 
     <!-- DASHBOARD CONTENT -->
     <ion-row class="matrix" *appHasRole="['dashboard-content']">

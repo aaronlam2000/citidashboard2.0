@@ -44,21 +44,34 @@ export class HomePopoverComponent implements OnInit {
       // this.storageService.getProjectsList()
       // .subscribe(projectdetails => this.projectDetails = projectdetails);
 
-      this.storageService.getAllData().subscribe(alldata => {
-        this.popoverAllData = alldata;
+      // this.storageService.getAllData().subscribe(alldata => {
+      //   this.popoverAllData = alldata;
 
-        this.visitDetails = this.popoverAllData.visits;
-        this.awardDetails = this.popoverAllData.awards;
-        this.projectDetails = this.popoverAllData.projects;
-        this.shortCoursesDetails = this.popoverAllData.shortCourses;
-        // console.log("POPOVER DATA HERE: " + JSON.stringify(this.popoverAllData.visits));
+      //   this.visitDetails = this.popoverAllData.visits;
+      //   this.awardDetails = this.popoverAllData.awards;
+      //   this.projectDetails = this.popoverAllData.projects;
+      //   this.shortCoursesDetails = this.popoverAllData.shortCourses;
+      //   // console.log("POPOVER DATA HERE: " + JSON.stringify(this.popoverAllData.visits));
 
+      //   this.passedCardTitle = this.navParams.get('card_title')
+      //   this.closeVisits = this.navParams.get('hiddenVisits')
+      //   this.closeAwards = this.navParams.get('hiddenAwards')
+      //   this.closeProjects = this.navParams.get('hiddenProjects')
+      //   this.closeShortCourses = this.navParams.get('hiddenShortCourses')
+      //   this.visitDetails = this.navParams.get('visits');
+      //   this.awardDetails = this.navParams.get('awards');
+      //   this.projectDetails = this.navParams.get('projects');
+      //   this.shortCoursesDetails = this.navParams.get('shortcourses');
+      // });
         this.passedCardTitle = this.navParams.get('card_title')
         this.closeVisits = this.navParams.get('hiddenVisits')
         this.closeAwards = this.navParams.get('hiddenAwards')
         this.closeProjects = this.navParams.get('hiddenProjects')
         this.closeShortCourses = this.navParams.get('hiddenShortCourses')
-      });
+        this.visitDetails = this.navParams.get('visits');
+        this.awardDetails = this.navParams.get('awards');
+        this.projectDetails = this.navParams.get('projects');
+        this.shortCoursesDetails = this.navParams.get('shortcourses');
 
   }
 

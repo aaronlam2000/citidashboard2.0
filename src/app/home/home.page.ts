@@ -608,7 +608,11 @@ export class HomePage implements OnInit {
         hiddenVisits: this.hideVisits,
         hiddenAwards: this.hideAwards,
         hiddenProjects: this.hideProjects,
-        hiddenShortCourses: this.hiddenShortCourses
+        hiddenShortCourses: this.hiddenShortCourses,
+        visits: this.allData.visits,
+        awards: this.allData.awards,
+        projects: this.allData.projects,
+        shortcourses: this.allData.shortCourses
       }
       
     });
