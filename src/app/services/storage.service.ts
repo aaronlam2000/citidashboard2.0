@@ -182,7 +182,7 @@ export class StorageService {
     this.getKeyValue = this.http.post(`${this.getKeyUrl}`, this.credentials , get_key_config);
     if(this.getKeyValue!=null){
       this.getKeyValue.subscribe(key => config.headers.Key = key.key);
-      console.log("KEY: " + config.headers.Key);
+      console.log("Get Key: " + config.headers.Key);
     } else {
 
       console.log("ERROR: No Key" );
@@ -278,10 +278,12 @@ deleteBoxes() {
 
 retrievePresets(){
   this.getKey();
+  console.log("retrieve presets key = " + config.headers.Key);
   this.presetList = this.http.get(`${this.presetListUrl}`, config);
+  console.log("Start retrieve presets");
     
-  console.log(JSON.stringify(this.presetsStorage)); // To test
   this.presetList.subscribe(presets => this.presetsStorage = presets);
+  console.log(JSON.stringify(this.presetsStorage)); // To test
 
   return this.storage.set(PRESET_KEY, this.presetsStorage);
 }
@@ -393,13 +395,19 @@ refreshPresets(presetList){
   presetList: Observable<any>;
   test: string;
 
-  getAllData(){
-    this.allDataList = this.http.get(`${this.getAllUrl}`, config);
+  // getAllData(){
+  //   this.allDataList = this.http.get(`${this.getAllUrl}`, config);
     
-    this.allDataList.subscribe(allData => this.allDataStorage = allData);
-    // console.log("getAllDataStorage: " +JSON.stringify(this.allDataStorage));
+  //   this.allDataList.subscribe(allData => this.allDataStorage = allData);
+  //   // console.log("getAllDataStorage: " +JSON.stringify(this.allDataStorage));
 
-    return this.allDataStorage;
+  //   return this.allDataStorage;
+  // }
+
+  getAllData(): Observable<any> {
+
+    return this.http.get(`${this.getAllUrl}`, config);
+
   }
 
   getVisitsList(): Observable<any> {

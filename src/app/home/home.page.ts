@@ -265,17 +265,21 @@ export class HomePage implements OnInit {
     // this.storageService.refreshPresets();
     this.storageService.getKey();
 
-    this.allData = this.storageService.getAllData();
-    // console.log("Refreshed Sums: " + JSON.stringify(this.allData.sum));
+    // this.allData = this.storageService.getAllData();
+    this.storageService.getAllData().subscribe(alldata => {
+      this.allData = alldata;
+      console.log("All Data Refreshed: " +JSON.stringify(this.allData));
 
-    this.visitsSum = this.allData.sum.visitsSum;
-    this.awardsSum = this.allData.sum.awardsSum;
-    this.projectsSum = this.allData.sum.projectsSum;
-    this.shortCoursesSum = this.allData.sum.shortCoursesSum;
+      this.visitsSum = this.allData.sum.visitsSum;
+      this.awardsSum = this.allData.sum.awardsSum;
+      this.projectsSum = this.allData.sum.projectsSum;
+      this.shortCoursesSum = this.allData.sum.shortCoursesSum;
 
     this.checkVisitDetails = this.allData.visits;
 
     // this.presetList = this.allData.presets;
+    // this.storageService.refreshPresets(this.allData.presets);
+
     this.storageService.refreshPresets(this.allData.presets);
 
     this.curlSpan = true;
@@ -330,6 +334,9 @@ export class HomePage implements OnInit {
       message: 'Data Refreshed',
       duration: 3000
     }).then(toast => toast.present());
+    });
+    // console.log("Refreshed Sums: " + JSON.stringify(this.allData.sum));
+ 
   }
 
   displayVisitSum() {
@@ -349,7 +356,7 @@ export class HomePage implements OnInit {
   loginAccount() {
     try {
       this.authService.loginTest(this.user.name, this.user.pw);
-      this.allData = this.storageService.getAllData();
+      // this.allData = this.storageService.getAllData();
 
       // this.isHidden = true;
       // this.createDoughnutChart();
