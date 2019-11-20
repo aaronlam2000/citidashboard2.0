@@ -289,9 +289,23 @@ export class HomePage implements OnInit {
     this.curlSpan = true;
 
     for (let visit of this.checkVisitDetails) {
+
+      let tempEndDate: Date = null;
       
       this.startDate = new Date(Date.parse(visit.startDate.toString()));
-      this.endDate = new Date(Date.parse('09 Oct 2020,14:08')); //visit.endDate.toString()
+
+      // Check if end date is null
+      if (visit.endDate == null) {
+
+        // Add one hour to start date
+        tempEndDate = new Date(Date.parse(visit.startDate.toString()));
+        tempEndDate.setHours(tempEndDate.getHours() + 1);
+        this.endDate = tempEndDate;
+      }
+      else {
+        this.endDate = new Date(Date.parse(visit.endDate.toString()));
+      }
+
       this.dateToday = new Date();
 
       // console.log("Today's date: " + this.dateToday);
