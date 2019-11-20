@@ -31,33 +31,36 @@
 </ion-header>
 <!-- END HEADER -->
 
+<ion-menu content-id="menu" type="overlay">
+  <ion-header>
+      <ion-toolbar>
+        <ion-title>Choose Presets</ion-title>
+      </ion-toolbar>
+  </ion-header>
+
+  <ion-list style="max-height: 9cm; overflow-y: scroll;" *ngFor="let p of presetList">          
+
+            <ion-item (click)="loadSelectedPreset(p.presetBoxList, p.presetId)" *appHasRole="['dashboard-content']">
+              <ion-label class="ion-text-wrap">
+                  {{ p.presetName }}
+              </ion-label>
+                
+                <!-- <ion-button *ngIf="p.presetId == selectedPresetId" style="width: 40%;" slot="end" (click)="presetUpdate(p)">
+                  Save
+                </ion-button>   -->
+                <ion-button *ngIf="p.presetId == selectedPresetId" slot="end" (click)="presentUpdatePresetPopover(p, $event)" fill="outline" color="dark">
+                  Save
+                </ion-button>  
+                <ion-icon name="close" *ngIf="p.presetId == selectedPresetId" slot="end" (click)="presentDeletePresetPopover(p, $event)"></ion-icon>
+            </ion-item>
+     
+  </ion-list>
+
+</ion-menu>
+
 <!-- ION-CONTENT -->
 <ion-content forceOverscroll="false" [color]="primary">
    <!-- PRESET MENU -->
-   <ion-menu content-id="menu" type="overlay">
-      <ion-header>
-          <ion-toolbar>
-            <ion-title>Choose Presets</ion-title>
-          </ion-toolbar>
-      </ion-header>
-
-      <ion-list *ngFor="let p of presetList">          
-          <ion-row>
-              <ion-col>
-                <ion-item (click)="loadSelectedPreset(p.presetBoxList, p.presetId)" *appHasRole="['dashboard-content']">
-                    {{ p.presetName }}
-                    <!-- <ion-button *ngIf="p.presetId == selectedPresetId" style="width: 40%;" slot="end" (click)="presetUpdate(p)">
-                      Save
-                    </ion-button>   -->
-                    <ion-button *ngIf="p.presetId == selectedPresetId" style="width: 40%;" slot="end" (click)="presentUpdatePresetPopover(p, $event)">
-                      Save
-                    </ion-button>  
-                </ion-item>
-              </ion-col>
-          </ion-row>          
-      </ion-list>
-
-  </ion-menu>
     <!-- END PRESET MENU -->
   
   <!-- ION-GRID -->

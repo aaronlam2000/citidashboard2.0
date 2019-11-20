@@ -11,6 +11,7 @@ import { SharedDirectivesModule } from '../directives/shared-directives.module';
 import { AddOptionsPopoverComponent } from '../add-options-popover/add-options-popover.component';
 import { SavePresetPopoverComponent } from '../save-preset-popover/save-preset-popover.component';
 import { UpdatePresetPopoverComponent } from '../update-preset-popover/update-preset-popover.component';
+import { DeletePresetPopoverComponent } from '../delete-preset-popover/delete-preset-popover.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import { UpdatePresetPopoverComponent } from '../update-preset-popover/update-pr
     ]),
     DragulaModule
   ],
-  entryComponents: [HomePopoverComponent, AddOptionsPopoverComponent, SavePresetPopoverComponent, UpdatePresetPopoverComponent],
-  declarations: [HomePage, HomePopoverComponent, AddOptionsPopoverComponent, SavePresetPopoverComponent, UpdatePresetPopoverComponent]
+  entryComponents: [HomePopoverComponent, AddOptionsPopoverComponent, SavePresetPopoverComponent, UpdatePresetPopoverComponent, DeletePresetPopoverComponent],
+  declarations: [HomePage, HomePopoverComponent, AddOptionsPopoverComponent, SavePresetPopoverComponent, UpdatePresetPopoverComponent, DeletePresetPopoverComponent]
 })
 export class HomePageModule {}

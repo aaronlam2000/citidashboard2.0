@@ -347,6 +347,31 @@ refreshPresets(presetList){
     
   }
 
+  deletePreset(preset: Preset): Promise<any> {
+
+    this.getKey();
+
+    this.http.delete(`${this.presetListUrl + preset.presetId}`, config).subscribe(Response => {
+      console.log(Response);
+      console.log(preset.presetName + " deleted");
+    });
+
+    return this.storage.get(PRESET_KEY).then((presets: Preset[]) => {
+      if (!presets || presets.length === 0) {
+        return null;
+      }
+
+      let toKeep: Preset[] = [];
+
+      for (let p of presets) {
+        if (p.presetId !== preset.presetId) {
+          toKeep.push(p);
+        }
+      }
+      return this.storage.set(PRESET_KEY, toKeep);
+    });
+  }
+
   createPreset(preset: Preset) {
     this.getKey();
     console.log("Create preset Key: " + config.headers.Key);

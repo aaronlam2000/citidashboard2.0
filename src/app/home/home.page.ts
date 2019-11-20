@@ -11,6 +11,7 @@ import { UpdatePresetPopoverComponent } from '../update-preset-popover/update-pr
 import { AuthService } from '../services/auth.service';
 import { Awards, AwardSum, Box, Card, Everything, KeyValue, Preset, Projects, ProjectSum, StorageService, Visits, VisitSum } from '../services/storage.service';
 import { ThemeService } from '../services/theme.service';
+import { DeletePresetPopoverComponent } from '../delete-preset-popover/delete-preset-popover.component';
 
 const themes = {
   default: {
@@ -208,6 +209,8 @@ export class HomePage implements OnInit {
 
 
       this.storageService.getKey(); 
+
+      this.loadPresets();
       
       // this.dateToday = Date.now().toString();
 
@@ -283,6 +286,7 @@ export class HomePage implements OnInit {
 
     // this.presetList = this.allData.presets;
     // this.storageService.refreshPresets(this.allData.presets);
+    
 
     this.storageService.refreshPresets(this.allData.presets);
 
@@ -348,6 +352,8 @@ export class HomePage implements OnInit {
 
         this.createDoughnutChart();
 
+        this.loadPresets();
+
     this.toastController.create({
       message: 'Data Refreshed',
       duration: 3000
@@ -374,6 +380,7 @@ export class HomePage implements OnInit {
   loginAccount() {
     try {
       this.authService.loginTest(this.user.name, this.user.pw);
+      this.loadPresets();
       // this.allData = this.storageService.getAllData();
 
       // this.isHidden = true;
@@ -441,7 +448,7 @@ export class HomePage implements OnInit {
     
     this.storageService.addPreset(this.newPreset).then(box => {
       this.storageService.getKey();
-      this.storageService.retrievePresets();
+      this.storageService.retrievePresets(); //DEBUG
       this.newPreset = <Preset>{}; //clear newPreset
       this.toastController.create({
         message: 'Preset Saved',
@@ -484,7 +491,7 @@ export class HomePage implements OnInit {
     box.cardList.push(this.newCard);  
     // this.createDoughnutChart();
     
-    this.storageService.updateBox(box).then(box => {
+    this.storageService.updateBox(box).then(box => { 
       this.toastController.create({
         message: 'Card Added!',
         duration: 2000
@@ -496,12 +503,25 @@ export class HomePage implements OnInit {
   presetUpdate(preset: Preset) {
     this.storageService.getKey();
 
+    //DEBUG
     this.storageService.updatePreset(preset).then(result => {
       this.toastController.create({
         message: 'Preset updated',
         duration: 2000
       }).then(toast => toast.present());
-      // this.loadItems();
+      this.loadPresets();
+    });
+  }
+
+  presetDelete(preset: Preset) {
+    this.storageService.getKey();
+
+    this.storageService.deletePreset(preset).then(result => {
+      this.toastController.create({
+        message: 'Preset deleted',
+        duration: 2000
+      }).then(toast => toast.present());
+      this.loadPresets();
     });
   }
 
@@ -683,6 +703,21 @@ export class HomePage implements OnInit {
     
     const popover = await this.popoverController.create({
       component: UpdatePresetPopoverComponent,
+      componentProps: {
+        homeref:this,
+        currentPreset: preset
+      }
+    });
+    return await popover.present();
+  }
+
+  async presentDeletePresetPopover(preset: Preset, $event) {
+
+    $event.stopPropagation();
+    this.storageService.getKey();  
+    
+    const popover = await this.popoverController.create({
+      component: DeletePresetPopoverComponent,
       componentProps: {
         homeref:this,
         currentPreset: preset
