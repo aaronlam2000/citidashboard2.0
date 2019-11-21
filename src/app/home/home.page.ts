@@ -26,21 +26,13 @@ const themes = {
     dark: '#B89876'
    },
    night: {
-    // primary: '#8CBA80',
-    // secondary: '#FCFF6C',
-    // tertiary: '#FE5F55',
-    // medium: '#BCC2C7',
-    // dark: '#F7F7FF',
-    // light: '#495867'
-    primary: '#091935',
-    secondary: '#091935',
-    tertiary: '#091935',
-    success: '#091935',
-    warning: '#091935',
-    danger: '#091935',
-    dark: '#091935',
-    medium: '#091935',
-    light: '#091935'
+    primary: '#8CBA80',
+    secondary: '#FCFF6C',
+    tertiary: '#FE5F55',
+    light: '#495867',
+    medium: '#BCC2C7',
+    dark: '#F7F7FF',
+
    },
    neon: {
     primary: '#39BFBD',
@@ -211,6 +203,8 @@ export class HomePage implements OnInit {
       this.storageService.getKey(); 
 
       this.loadPresets();
+
+      this.changeTheme1('light');
       
       // this.dateToday = Date.now().toString();
 
@@ -749,25 +743,33 @@ export class HomePage implements OnInit {
     }
     var ctx = (<any>document.getElementById('awardtype-chart'));
     var chart = new Chart(ctx, {
-      type: 'doughnut',
+      type: 'pie',
       data: {
         labels: ['Academic', 'Non-academic', 'Character'],
         datasets: [{
           label: 'Award types',
           data: this.awardTypeSum,
           backgroundColor: colorArray, // array should have same number of elements as number of dataset
-          borderColor: '#FFFFFF',// array should have same number of elements as number of dataset
-          borderWidth: 1
+          borderColor: 'white',// array should have same number of elements as number of dataset
+          borderWidth: 2
         }]
       },
       options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: true,
+          labels: {
+            fontColor: "gray",
         }
+       }
+        // scales: {
+        //   yAxes: [{
+        //     ticks: {
+        //       beginAtZero: true
+        //     }
+        //   }]
+        // }
       }
     });
     // console.log("BELOW HERE");
@@ -776,6 +778,35 @@ export class HomePage implements OnInit {
 
   changeTheme(name) {
     this.themeService.setTheme(themes[name]);
+  }
+
+  theme = {
+    mycolor: 'white',
+    mytextcolor: 'black',
+    mybordercolor: 'black',
+    valuecolor: 'black',
+    backgroundcolor: '#d3d3d3',
+    myfont: 'Arial'
+  };
+
+  changeTheme1(userTheme: string) {
+    if (userTheme === 'dark') {
+      this.theme.mycolor = '#091935';
+      this.theme.mytextcolor = 'white';
+      this.theme.mybordercolor = 'white';
+      this.theme.valuecolor = '#03F6FF';
+      this.theme.backgroundcolor = '#091935';
+    } else {
+      this.theme.mycolor = 'white';
+      this.theme.mytextcolor = 'black';
+      this.theme.mybordercolor = 'black';
+      this.theme.valuecolor = 'black';
+      this.theme.backgroundcolor = '#d3d3d3';
+    }
+
+    Object.keys(this.theme).forEach(k =>
+      document.documentElement.style.setProperty(`--${k}`, this.theme[k])
+    );
   }
 
 }

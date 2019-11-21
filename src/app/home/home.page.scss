@@ -8,7 +8,7 @@ ion-content {
   // --overflow: hidden;
   // max-height: max-content;
   // --ion-background-color:#091935!important;
-  --ion-background-color: lightgrey;
+  --ion-background-color: var(--backgroundcolor);
 }
 
 ion-grid {
@@ -47,7 +47,7 @@ ion-list {
 }
 
 .welcome-toolbar{
-  background-color: #0E4193;
+  --ion-background-color: #0E4193;
   color: white;
 }
 
@@ -76,8 +76,8 @@ ion-list {
 .handle {
   padding: 0 5px;
   margin: 8px;
-  background-color: black;
-  color: white;
+  background-color: var(--mytextcolor);
+  color: var(--mycolor);
   cursor: grab;
   text-align: left;
   font-size: 2vmax;
@@ -96,7 +96,7 @@ ion-item:hover {
 
 .delete-icon-btn {
   font-size: 3vmax;
-  color: black;
+  color: var(--mytextcolor);
 }
 
 .dd-icons {
@@ -135,7 +135,9 @@ div[scrolly=true] {
 }
 
 .stat-card {
-  color: black;
+  --color: var(--mytextcolor);
+  border: solid 4px var(--mybordercolor);
+  --background: var(--mycolor);
   padding: 3px 15px 10px 15px;
   margin: 0;
   height: 100%;
@@ -146,7 +148,6 @@ div[scrolly=true] {
   display: flex;
   flex-direction: column;
   // font-size: 15vmax!important;
-  border: solid 4px black;
 }
 
 .card-content {
@@ -159,7 +160,7 @@ div[scrolly=true] {
 }
 
 .card-value {
-  color: black;
+  color: var(--valuecolor);
   // color: #03F6FF;
   font-weight: bold;
   font-size: 4vw;
@@ -168,6 +169,7 @@ div[scrolly=true] {
 }
 
 .card-title {
+  color: var(--mytextcolor);
   font-size: 2vmax;
   font-family: Montserrat;
   font-weight: bold;
@@ -179,7 +181,7 @@ div[scrolly=true] {
 
 .card-icon {
   font-size: 6vmax;
-  color: black;
+  color: var(--mytextcolor);
   // color: #03F6FF!important;
   padding: 0!important;
   margin: 0!important;
@@ -321,15 +323,17 @@ div[scrolly=true] {
     display: block!important;
   }
   
-  .project-title {
+  .partners-title {
     
     font-size: 3vmax!important;
     font-family: humanst;
     padding-bottom: 10px;
+    color: black;
   }
 
   .awards-chart {
     height: 100%;
+    width: fit-content;
   }
 
   .partners-content {
@@ -338,20 +342,49 @@ div[scrolly=true] {
   }
 
   .partners-card {
+    --background: white;
     color: black;
+    border: solid 4px black;
     padding: 3px;
     margin: 0!important;
     height: 100%;
     width: 100%;
     text-align: center;
     white-space: nowrap;
-    border: solid 4px black;
     // background-color: white;
   }
 
-  .Absolute-Center {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    height: 100%;
-  }
+  .project-content p {
+  font-size: 1cm;
+  font-family: humanst;
+  font-style: normal;
+}
+
+.project-content ion-icon {
+  font-size: 3.5cm;
+}
+
+.project-content h3 {
+  font-family: humanst;
+  font-size: 5cm;
+  color: darkblue;
+}
+
+.ion-card1 {
+  --background: var(--mycolor);
+  --color: var(--mytextcolor);
+  border: solid 4px var(--mybordercolor);
+  
+}
+
+.Absolute-Center {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 100%;
+}
+
+canvas {
+  width:400px !important;
+  height:240px !important;
+}
