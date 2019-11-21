@@ -37,14 +37,29 @@
         </ion-label>
       </ion-button>
 
+      <!-- <ion-button [hidden]="enterViewMode" (click)="changeVisitTheme('dark')">
+        <ion-label text-wrap>
+          <h3 class="project-text">Visit Dark</h3>
+        </ion-label>
+      </ion-button>
+      <ion-button [hidden]="enterViewMode" (click)="changeVisitTheme('light')">
+        <ion-label text-wrap>
+          <h3 class="project-text">Visit Light</h3>
+        </ion-label>
+      </ion-button> -->
+
       <!-- style="vertical-align:middle" -->
     </ion-buttons>
 
-    <div style="float: left;">
+    <div *appHasRole="['dashboard-content']" style="float: left;">
         <img src="assets/images/nyp.PNG">
     </div>
-    
-  <h1 style="width: 100%; text-align: center; font-size: 3.5vw;">Welcome to the School of IT {{ currentVisit }}</h1>
+  <h1 *appHasRole="['dashboard-content']" style="width: 100%; text-align: center; font-size: 3.5vw;">Welcome to the School of IT {{ currentVisit }}</h1>
+  
+  <div *ngIf="!authenticated" style="float: left;">
+    <img width="160px;"src="assets/images/citilogo.jpg">
+  </div>
+  <h1 *ngIf="!authenticated" style="width: 100%; text-align: center; font-size: 3.5vw;">CITI DASHBOARD 2.0</h1>
   </ion-toolbar>
 </ion-header>
 <!-- END HEADER -->
@@ -184,7 +199,7 @@
       <ion-col>
           <ion-button expand="block" fill="outline" (click)="clearBoxes()" *appHasRole="['edit-dashboard', 'admin']">Clear Board</ion-button>
 
-          <ion-list style="max-width: 400px; width:100%; margin: auto; text-align: center;" *ngIf="!authenticated">
+          <ion-list style="max-width: 100%; width:100%; margin: auto; text-align: center;" *ngIf="!authenticated">
             <ion-item>
               <ion-label>Username</ion-label>
               <ion-input type="text" [(ngModel)]="user.name"></ion-input>

@@ -187,6 +187,49 @@ div[scrolly=true] {
   margin: 0!important;
 }
 
+.visit-card {
+  --color: var(--visittextcolor);
+  border: solid 4px var(--visitbordercolor);
+  --background: var(--visitcolor);
+  padding: 3px 15px 10px 15px;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+}
+
+.visit-card-value {
+  color: var(--visitvaluecolor);
+  // color: #03F6FF;
+  font-weight: bold;
+  font-size: 4vw;
+  padding: 0!important;
+  margin: 0!important;
+}
+
+.visit-card-title {
+  color: var(--visittextcolor);
+  font-size: 2vmax;
+  font-family: Montserrat;
+  font-weight: bold;
+  // color: white!important;
+  // color: white!important;
+  padding: 0!important;
+  margin: 0!important;
+}
+
+.visit-card-icon {
+  font-size: 6vmax;
+  color: var(--visittextcolor);
+  // color: #03F6FF!important;
+  padding: 0!important;
+  margin: 0!important;
+}
+
 .welcome-banner {
   --ion-background-color:#0E4193!important;
 }

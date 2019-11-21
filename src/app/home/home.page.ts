@@ -789,6 +789,13 @@ export class HomePage implements OnInit {
     myfont: 'Arial'
   };
 
+  visitTheme = {
+    visitcolor: 'white',
+    visittextcolor: 'black',
+    visitbordercolor: 'black',
+    visitvaluecolor: 'black',
+  };
+
   changeTheme1(userTheme: string) {
     if (userTheme === 'dark') {
       this.theme.mycolor = '#091935';
@@ -806,6 +813,24 @@ export class HomePage implements OnInit {
 
     Object.keys(this.theme).forEach(k =>
       document.documentElement.style.setProperty(`--${k}`, this.theme[k])
+    );
+  }
+
+  changeVisitTheme(userTheme: string) {
+    if (userTheme === 'dark') {
+      this.visitTheme.visitcolor = '#091935';
+      this.visitTheme.visittextcolor = 'white';
+      this.visitTheme.visitbordercolor = 'white';
+      this.visitTheme.visitvaluecolor = '#03F6FF';
+    } else {
+      this.visitTheme.visitcolor = 'white';
+      this.visitTheme.visittextcolor = 'black';
+      this.visitTheme.visitbordercolor = 'black';
+      this.visitTheme.visitvaluecolor = 'black';
+    }
+
+    Object.keys(this.visitTheme).forEach(k =>
+      document.documentElement.style.setProperty(`--${k}`, this.visitTheme[k])
     );
   }
 
