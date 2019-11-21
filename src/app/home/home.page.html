@@ -13,15 +13,19 @@
 
         <ion-menu-button [hidden]="enterViewMode"></ion-menu-button>
 
-        <ion-button [hidden]="enterViewMode" slot="end" (click)="presentOptions()">
+        <ion-button [hidden]="enterViewMode" (click)="presentOptions()">
           <ion-icon name="add"></ion-icon>       
         </ion-button>
 
-        <ion-button [hidden]="enterViewMode" slot="end" (click)="refreshAllData()">
+        <ion-button [hidden]="enterViewMode" (click)="refreshAllData()">
           <ion-icon name="refresh"></ion-icon>
         </ion-button>
 
-        <ion-button [hidden]="enterViewMode" slot="end" (click)="presentSavePresetPopover(boxList)">
+        <ion-button [hidden]="enterViewMode" (click)="enterView()" *ngIf="authenticated">
+            Preview
+        </ion-button>
+
+        <ion-button [hidden]="enterViewMode" (click)="presentSavePresetPopover(boxList)">
           Save Preset
         </ion-button>
 
@@ -56,10 +60,17 @@
     </div>
   <h1 *appHasRole="['dashboard-content']" style="width: 100%; text-align: center; font-size: 3.5vw;">Welcome to the School of IT {{ currentVisit }}</h1>
   
-  <div *ngIf="!authenticated" style="float: left;">
-    <img width="160px;"src="assets/images/citilogo.jpg">
-  </div>
-  <h1 *ngIf="!authenticated" style="width: 100%; text-align: center; font-size: 3.5vw;">CITI DASHBOARD 2.0</h1>
+  <h1 *ngIf="!authenticated" style="width: 100%; text-align: center; font-size: 3vw;">CITI DASHBOARD 2.0</h1>
+
+  <ion-buttons style="margin-bottom: 70px;" slot="end" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
+      <ion-button [hidden]="enterViewMode" (click)="clearBoxes()">
+          Clear Board
+      </ion-button>
+      <ion-button [hidden]="enterViewMode" (click)="logout()" *ngIf="authenticated">
+          Logout
+      </ion-button>
+  </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 <!-- END HEADER -->
@@ -194,30 +205,27 @@
     <!-- END DASHBOARD CONTENT -->
 
     <!-- LOGIN/LOGOUT  -->
-    <ion-row [hidden]="enterViewMode" class="ion-align-items-center">
-
-      <ion-col>
-          <ion-button expand="block" fill="outline" (click)="clearBoxes()" *appHasRole="['edit-dashboard', 'admin']">Clear Board</ion-button>
-
-          <ion-list style="max-width: 100%; width:100%; margin: auto; text-align: center;" *ngIf="!authenticated">
-            <ion-item>
-              <ion-label>Username</ion-label>
-              <ion-input type="text" [(ngModel)]="user.name"></ion-input>
+    <ion-row [hidden]="enterViewMode" *ngIf="!authenticated" justify-content-center>
+        <ion-col style="border:solid 4px black; background-color: white; border-radius: 25px;" align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div text-center>
+            <img height="125px" src="assets/images/citilogo.jpg">
+            <h4>Login</h4>
+          </div>
+          <div padding>
+            <ion-item style="border: solid 1px black; border-radius: 10px;">
+              <ion-input type="text" placeholder="Username" [(ngModel)]="user.name"></ion-input>
+            </ion-item><br/>
+    
+            <ion-item style="border: solid 1px black; border-radius: 10px;">
+              <ion-input type="Password" placeholder="Password" [(ngModel)]="user.pw"></ion-input>
             </ion-item>
-
-            <ion-item>
-                <ion-label>Password</ion-label>
-              <ion-input type="Password" [(ngModel)]="user.pw"></ion-input>
-            </ion-item>
-
-            <ion-button expand="block" (click)="loginAccount()" *ngIf="!authenticated">Login</ion-button>
-          </ion-list>
-
-          <ion-button expand="block" (click)="logout()" *ngIf="authenticated">Logout</ion-button>
-          <ion-button [hidden]="enterViewMode" expand="block" (click)="enterView()" *ngIf="authenticated">Preview</ion-button>       
-      </ion-col>
-
-    </ion-row>
+          </div>
+    
+          <div padding>
+            <ion-button size="large" (click)="loginAccount()" *ngIf="!authenticated" expand="block">Login</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
     <!-- END LOGIN/LOGOUT  -->
   </ion-grid>
   <!-- END ION-GRID -->
