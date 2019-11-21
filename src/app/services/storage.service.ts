@@ -279,13 +279,16 @@ deleteBoxes() {
 retrievePresets(){
   this.getKey();
   console.log("retrieve presets key = " + config.headers.Key);
-  this.presetList = this.http.get(`${this.presetListUrl}`, config);
+  // this.presetList = this.http.get(`${this.presetListUrl}`, config);
   console.log("Start retrieve presets");
     
-  this.presetList.subscribe(presets => this.presetsStorage = presets);
-  console.log(JSON.stringify(this.presetsStorage)); // To test
+  // this.presetList.subscribe(presets => this.presetsStorage = presets);
+  this.http.get(`${this.presetListUrl}`, config).subscribe(presets => {
+    return this.storage.set(PRESET_KEY, presets);
+  })
+  this.getKey();
 
-  return this.storage.set(PRESET_KEY, this.presetsStorage);
+  // return this.storage.set(PRESET_KEY, this.presetsStorage);
 }
 
 refreshPresets(presetList){
@@ -321,6 +324,7 @@ refreshPresets(presetList){
     this.storage.get(ITEMS_KEY).then((boxList) => {
       preset.presetBoxList = boxList;
       console.log("Updated boxList: " + preset.presetBoxList);
+      console.log("UPDATE PRESET KEY: " + config.headers.Key);
       this.http.put(`${this.presetListUrl + preset.presetId}`, preset, config).subscribe(Response => {
         console.log(Response);
         console.log("Updated preset: " + JSON.stringify(preset));

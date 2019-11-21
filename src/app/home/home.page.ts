@@ -381,6 +381,7 @@ export class HomePage implements OnInit {
     try {
       this.authService.loginTest(this.user.name, this.user.pw);
       this.loadPresets();
+      this.storageService.getKey();
       // this.allData = this.storageService.getAllData();
 
       // this.isHidden = true;
