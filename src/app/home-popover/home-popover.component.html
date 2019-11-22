@@ -1,7 +1,9 @@
 <ion-content>
   <ion-header>
-      <ion-toolbar color="primary">
-        <ion-title>{{ passedCardTitle }}</ion-title>
+      <ion-toolbar class="display-header">
+        <ion-title>
+            <h1>{{ passedCardTitle }}</h1>
+        </ion-title>
       </ion-toolbar>
   </ion-header>
 
@@ -9,8 +11,8 @@
   <ion-list style="max-height: 9cm; overflow-y: scroll;" [hidden] = "closeVisits">
       <ion-item *ngFor="let item of visitDetails">
         <ion-label class="ion-text-wrap">
-          <h1 class="project-text">{{ item.name }}</h1>
-          <p>{{ item.startDate }}</p>
+          <h1 class="display-title">{{ item.name }}</h1>
+          <p class="display-title">{{ item.startDate }}</p>
         </ion-label>
       </ion-item>
   </ion-list>
@@ -19,7 +21,8 @@
   <ion-list style="max-height: 9cm; overflow-y: scroll;" [hidden] = "closeAwards">
       <ion-item *ngFor="let item of awardDetails">
         <ion-label class="ion-text-wrap">
-          <h1 class="project-text">{{ item.awardName }}</h1>
+          <h1 class="display-title">{{ item.awardName }}</h1>
+          <p class="display-title">{{ item.awardLevel }}</p>
         </ion-label>
       </ion-item>
   </ion-list>
@@ -28,7 +31,8 @@
   <ion-list style="max-height: 9cm; overflow-y: scroll;" [hidden] = "closeProjects">
       <ion-item *ngFor="let item of projectDetails">
         <ion-label class="ion-text-wrap">
-          <h1 class="project-text">{{ item.projectName }}</h1>
+          <h1 class="display-title">{{ item.projectName }}</h1>
+          <p class="display-title">{{ item.projectState }}</p>
         </ion-label>
       </ion-item>
 </ion-list>
@@ -37,7 +41,8 @@
 <ion-list style="max-height: 9cm; overflow-y: scroll;" [hidden] = "closeShortCourses">
   <ion-item *ngFor="let item of shortCoursesDetails">
     <ion-label class="ion-text-wrap">
-      <h1 class="project-text">{{ item.courseName }}</h1>
+      <h1 class="display-title">{{ item.courseName }}</h1>
+      <p class="display-title">{{ item.courseVenue }}</p>
     </ion-label>
   </ion-item>
 </ion-list>

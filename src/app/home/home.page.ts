@@ -133,7 +133,7 @@ export class HomePage implements OnInit {
 
   academicAwardSum = 0;
   nonAcademicAwardSum = 0;
-  characterAwardSum = 0;
+  competitionAwardSum = 0;
 
   awardTypeSum: number[] = [];
 
@@ -323,7 +323,7 @@ export class HomePage implements OnInit {
     this.checkAwardDetails = this.allData.awards;
       this.academicAwardSum = 0;
       this.nonAcademicAwardSum = 0;
-      this.characterAwardSum = 0;
+      this.competitionAwardSum = 0;
       this.awardTypeSum = [];
       
       for (let award of this.checkAwardDetails) {
@@ -335,14 +335,14 @@ export class HomePage implements OnInit {
           case 'Non-Academic':
             this.nonAcademicAwardSum += 1;
             break;
-          case 'Character':
-            this.characterAwardSum += 1;
+          case 'Competition':
+            this.competitionAwardSum += 1;
             break;   
         }
       }
         this.awardTypeSum.push(this.academicAwardSum);
         this.awardTypeSum.push(this.nonAcademicAwardSum);
-        this.awardTypeSum.push(this.characterAwardSum);
+        this.awardTypeSum.push(this.competitionAwardSum);
 
         this.createDoughnutChart();
 
@@ -745,7 +745,7 @@ export class HomePage implements OnInit {
     var chart = new Chart(ctx, {
       type: 'pie',
       data: {
-        labels: ['Academic', 'Non-academic', 'Character'],
+        labels: ['Academic', 'Non-academic', 'Competition'],
         datasets: [{
           label: 'Award types',
           data: this.awardTypeSum,
@@ -786,6 +786,8 @@ export class HomePage implements OnInit {
     mybordercolor: 'black',
     valuecolor: 'black',
     backgroundcolor: '#d3d3d3',
+    popovertitlecolor: '#0E4193',
+    popovertitletextcolor: 'white',
     myfont: 'Arial'
   };
 
@@ -803,12 +805,16 @@ export class HomePage implements OnInit {
       this.theme.mybordercolor = 'white';
       this.theme.valuecolor = '#03F6FF';
       this.theme.backgroundcolor = '#091935';
+      this.theme.popovertitlecolor = '#0E4193';
+      this.theme.popovertitletextcolor = 'white';
     } else {
       this.theme.mycolor = 'white';
       this.theme.mytextcolor = 'black';
       this.theme.mybordercolor = 'black';
       this.theme.valuecolor = 'black';
       this.theme.backgroundcolor = '#d3d3d3';
+      this.theme.popovertitlecolor = '#0E4193';
+      this.theme.popovertitletextcolor = 'white';
     }
 
     Object.keys(this.theme).forEach(k =>

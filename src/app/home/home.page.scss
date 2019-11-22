@@ -42,6 +42,18 @@ ion-list {
   height:100%;
 }
 
+.preset-menu-list {
+  --ion-background-color: var(--backgroundcolor);
+}
+
+.preset-menu-header {
+  --ion-background-color: #0E4193;
+}
+
+.preset-menu-text {
+  color: var(--mytextcolor);
+}
+
 .white-font {
   color: white;
 }
