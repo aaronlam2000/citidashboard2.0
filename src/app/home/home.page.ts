@@ -7,8 +7,9 @@ import { DragulaService } from 'ng2-dragula';
 import { AddOptionsPopoverComponent } from '../add-options-popover/add-options-popover.component';
 import { HomePopoverComponent } from '../home-popover/home-popover.component';
 import { SavePresetPopoverComponent } from '../save-preset-popover/save-preset-popover.component';
-import { UpdatePresetPopoverComponent } from '../update-preset-popover/update-preset-popover.component'
+import { UpdatePresetPopoverComponent } from '../update-preset-popover/update-preset-popover.component';
 import { AuthService } from '../services/auth.service';
+// tslint:disable-next-line: max-line-length
 import { Awards, AwardSum, Box, Card, Everything, KeyValue, Preset, Projects, ProjectSum, StorageService, Visits, VisitSum } from '../services/storage.service';
 import { ThemeService } from '../services/theme.service';
 import { DeletePresetPopoverComponent } from '../delete-preset-popover/delete-preset-popover.component';
@@ -16,7 +17,7 @@ import { DeletePresetPopoverComponent } from '../delete-preset-popover/delete-pr
 const themes = {
   default: {
   },
-  
+
   autumn: {
     primary: '#F78154',
     secondary: '#4D9078',
@@ -71,9 +72,6 @@ export class HomePage implements OnInit {
   };
 
   showChart = true;
-  curlSpan = false;
-
-  // @ViewChild('doughnutChart', { static: true }) doughnutChart;
 
   authenticated = false;
   enterViewMode = false;
@@ -89,34 +87,34 @@ export class HomePage implements OnInit {
   selectedPresetId = null;
 
   presetList: Preset[] = [];
-  newPreset: Preset = <Preset>{};
+  newPreset: Preset = {} as Preset;
 
   boxList: Box[] = [];
-  newBox: Box = <Box>{};
+  newBox: Box = {} as Box;
 
   cardList: Card[] = [];
-  newCard: Card = <Card>{}
-  cardColor = "q1";
-  cardValue = "awards";
-  cardSize = "small";
+  newCard: Card = {} as Card;
+  cardColor = 'q1';
+  cardValue = 'awards';
+  cardSize = 'small';
 
-  valueType = "sum";
+  valueType = 'sum';
 
-  bars:any;
+  bars: any;
   colorArray: any;
 
   dateToday: Date;
   startDate: Date;
   endDate: Date;
 
-  allData: Everything = <Everything>{};
-  visitResults: VisitSum = <VisitSum>{};
-  awardResults: AwardSum = <AwardSum>{};
-  projectResults: ProjectSum = <ProjectSum>{};
+  allData: Everything = {} as Everything;
+  visitResults: VisitSum = {} as VisitSum;
+  awardResults: AwardSum = {} as AwardSum;
+  projectResults: ProjectSum = {} as ProjectSum;
 
-  visitDetails: Visits = <Visits>{};
-  awardDetails: Awards = <Awards>{};
-  projectDetails: Projects = <Projects>{};
+  visitDetails: Visits = {} as Visits;
+  awardDetails: Awards = {} as Awards;
+  projectDetails: Projects = {} as Projects;
 
   visitsSum: string;
   awardsSum: string;
@@ -137,36 +135,36 @@ export class HomePage implements OnInit {
 
   awardTypeSum: number[] = [];
 
-  newAward: Awards = <Awards>{}
-  keyValue: KeyValue = <KeyValue>{};
+  newAward: Awards = {} as Awards;
+  keyValue: KeyValue = {} as KeyValue;
 
   user = {
     name: 'admin',
     pw: 'admin'
   };
 
-  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public popoverController: PopoverController, 
-    private dragulaService: DragulaService, 
-    private toastController: ToastController, 
-    private storage: Storage, 
-    private storageService: StorageService, 
-    private plt: Platform, 
-    private authService: AuthService, 
-    private themeService: ThemeService,
-    private httpClientModule: HttpClientModule) {
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public popoverController: PopoverController,
+              private dragulaService: DragulaService,
+              private toastController: ToastController,
+              private storage: Storage,
+              private storageService: StorageService,
+              private plt: Platform,
+              private authService: AuthService,
+              private themeService: ThemeService,
+              private httpClientModule: HttpClientModule) {
 
     this.plt.ready().then(() => {
       this.loadItems();
       this.loadPresets();
-    })
-    
+    });
+
 
     window.home = this;
 
-    //Drag
+    // Drag
     this.dragulaService.drag('bag')
     .subscribe(({ name, el, source }) => {
-      
+
     });
 
     // Remove Model
@@ -178,7 +176,7 @@ export class HomePage implements OnInit {
       }).then(toast => toast.present());
     });
 
-    //Drop Model
+    // Drop Model
     this.dragulaService.dropModel('bag')
       .subscribe(({ item }) => {
       });
@@ -186,9 +184,9 @@ export class HomePage implements OnInit {
     // Create Group
     // this.dragulaService.createGroup('bag', {
     //   removeOnSpill: false
-    // });  
+    // });
 
-    this.dragulaService.createGroup("bag", {
+    this.dragulaService.createGroup('bag', {
       moves: (el, container, handle) => {
         return handle.className === 'handle';
       }
@@ -199,60 +197,11 @@ export class HomePage implements OnInit {
     this.authService.getUserSubject().subscribe(authState => {
       this.authenticated = authState ? true : false;
 
-
-      this.storageService.getKey(); 
+      this.storageService.getKey();
 
       this.loadPresets();
 
       this.changeTheme1('light');
-      
-      // this.dateToday = Date.now().toString();
-
-      // this.startDate = new Date(Date.parse("11 Nov 2019,16:45"));
-      // this.endDate = new Date(Date.parse("11 Nov 2019,16:50"));
-      // this.dateToday = new Date();
-
-      // if(this.dateToday >= this.startDate && this.dateToday <= this.endDate) {
-      //   console.log("Date check = true");
- 
-      // }
-      // else {
-      //   console.log("Date check = false");
-      // }
-
-      
-      // console.log("Today's Date - " + this.dateToday.toString());
-
-      // var promise=this.storageService.getKeyString();
-      // promise.then(function(greeting){this.storageService.getVisitsSum()
-      //   .subscribe(visits => this.visitResults = visits);},function(resson){this.storageService.getVisitsSum()
-      //     .subscribe(visits => this.visitResults = visits);},function(update){this.storageService.getVisitsSum()
-      //       .subscribe(visits => this.visitResults = visits);})
-
-      // this.storageService.getKey();
-      // this.storageService.getVisitsSum()
-      // .subscribe(visits => this.visitResults = visits);
-
-      // this.storageService.getKey();
-      // this.storageService.getAwardsSum()
-      // .subscribe(awards => this.awardResults = awards);
-
-      // this.storageService.getKey();
-      // this.storageService.getProjectsSum()
-      // .subscribe(projects => this.projectResults = projects);
-
-
-      // this.storageService.getKey();
-      // this.storageService.getVisitsList()
-      // .subscribe(visitdetails => this.visitDetails = visitdetails);
-
-      // this.storageService.getKey();
-      // this.storageService.getAwardsList()
-      // .subscribe(awarddetails => this.awardDetails = awarddetails);
-
-      // this.storageService.getKey();
-      // this.storageService.getProjectsList()
-      // .subscribe(projectdetails => this.projectDetails = projectdetails);
 
     });
   }
@@ -260,16 +209,10 @@ export class HomePage implements OnInit {
   logger: string;
 
   refreshAllData() {
-    // this.storageService.getAllData()
-    //   .subscribe(allData => this.allData = allData.sum);
-    //   console.log("Sums: " + this.logger);
-    // this.storageService.refreshPresets();
     this.storageService.getKey();
 
-    // this.allData = this.storageService.getAllData();
     this.storageService.getAllData().subscribe(alldata => {
       this.allData = alldata;
-      // console.log("All Data Refreshed: " +JSON.stringify(this.allData));
 
       this.visitsSum = this.allData.sum.visitsSum;
       this.awardsSum = this.allData.sum.awardsSum;
@@ -278,55 +221,42 @@ export class HomePage implements OnInit {
 
       this.checkVisitDetails = this.allData.visits;
 
-    // this.presetList = this.allData.presets;
-    // this.storageService.refreshPresets(this.allData.presets);
-    
 
-    this.storageService.refreshPresets(this.allData.presets);
+      this.storageService.refreshPresets(this.allData.presets);
 
-    this.curlSpan = true;
+      for (const visit of this.checkVisitDetails) {
 
-    for (let visit of this.checkVisitDetails) {
+        let tempEndDate: Date = null;
+        this.startDate = new Date(Date.parse(visit.startDate.toString()));
 
-      let tempEndDate: Date = null;
-      
-      this.startDate = new Date(Date.parse(visit.startDate.toString()));
+        // Check if end date is null
+        if (visit.endDate == null) {
 
-      // Check if end date is null
-      if (visit.endDate == null) {
+          // Add one hour to start date
+          tempEndDate = new Date(Date.parse(visit.startDate.toString()));
+          tempEndDate.setHours(tempEndDate.getHours() + 1);
+          this.endDate = tempEndDate;
+        } else {
+          this.endDate = new Date(Date.parse(visit.endDate.toString()));
+        }
 
-        // Add one hour to start date
-        tempEndDate = new Date(Date.parse(visit.startDate.toString()));
-        tempEndDate.setHours(tempEndDate.getHours() + 1);
-        this.endDate = tempEndDate;
+        this.dateToday = new Date();
+
+        if (this.dateToday >= this.startDate && this.dateToday <= this.endDate) {
+          this.currentVisit = visit.name;
+          break;
+        } else {
+          this.currentVisit = '';
+        }
       }
-      else {
-        this.endDate = new Date(Date.parse(visit.endDate.toString()));
-      }
 
-      this.dateToday = new Date();
-
-      // console.log("Today's date: " + this.dateToday);
-      // console.log(visit.name + "start: " + this.startDate);
-      // console.log(visit.name + "end: " + this.endDate);
-      // console.log("--------------------------------------------------");
-
-      if (this.dateToday >= this.startDate && this.dateToday <= this.endDate) {
-        this.currentVisit = visit.name;
-        break;
-      }
-      else {
-        this.currentVisit = "";
-      }
-    }
-
-    this.checkAwardDetails = this.allData.awards;
+      this.checkAwardDetails = this.allData.awards;
       this.academicAwardSum = 0;
       this.nonAcademicAwardSum = 0;
       this.characterAwardSum = 0;
       this.awardTypeSum = [];
-      
-      for (let award of this.checkAwardDetails) {
+
+      for (const award of this.checkAwardDetails) {
 
         switch (award.awardType) {
           case 'Academic':
@@ -337,58 +267,34 @@ export class HomePage implements OnInit {
             break;
           case 'Character':
             this.characterAwardSum += 1;
-            break;   
+            break;
         }
       }
-        this.awardTypeSum.push(this.academicAwardSum);
-        this.awardTypeSum.push(this.nonAcademicAwardSum);
-        this.awardTypeSum.push(this.characterAwardSum);
+      this.awardTypeSum.push(this.academicAwardSum);
+      this.awardTypeSum.push(this.nonAcademicAwardSum);
+      this.awardTypeSum.push(this.characterAwardSum);
 
-        this.createDoughnutChart();
+      this.createDoughnutChart();
 
-        this.loadPresets();
+      this.loadPresets();
 
-    this.toastController.create({
+      this.toastController.create({
       message: 'Data Refreshed',
       duration: 3000
     }).then(toast => toast.present());
     });
-    // console.log("Refreshed Sums: " + JSON.stringify(this.allData.sum));
- 
-  }
 
-  displayVisitSum() {
-    this.storageService.getVisitsSum()
-      .subscribe(visits => this.visitResults = visits);  
-  }
-
-
-  // loginAdmin(name, pw) {
-  //   this.authService.login(name, pw);
-  // }
-
-  loginAdmin(name) {
-    this.authService.loginTest('admin', 'admin');
   }
 
   loginAccount() {
     try {
-      this.authService.loginTest(this.user.name, this.user.pw);
+      this.authService.login(this.user.name, this.user.pw);
       this.loadPresets();
       this.storageService.getKey();
-      // this.allData = this.storageService.getAllData();
-
-      // this.isHidden = true;
-      // this.createDoughnutChart();
+    } catch {
+      console.log('Error: Login Failed');
     }
-    catch {
-      console.log("Error: Login Failed");
-    }
-    
-  }
 
-  loginUser() {
-    this.authService.login('user');
   }
 
   logout() {
@@ -434,24 +340,21 @@ export class HomePage implements OnInit {
 
 
   savePreset(boxList) {
-    this.storageService.getKey();  
+    this.storageService.getKey();
     this.newPreset.presetBoxList = boxList;
     this.newPreset.themeId = 1;
     this.newPreset.visitId = 2;
 
-    // this.storageService.createPreset(this.newPreset);
-    
     this.storageService.addPreset(this.newPreset).then(box => {
       this.storageService.getKey();
-      this.storageService.retrievePresets(); //DEBUG
-      this.newPreset = <Preset>{}; //clear newPreset
+      this.storageService.retrievePresets();
+      this.newPreset = {} as Preset; // clear newPreset
       this.toastController.create({
         message: 'Preset Saved',
         duration: 2000
       }).then(toast => toast.present());
       this.loadPresets();
       this.storageService.getKey();
-      
     });
   }
 
@@ -468,14 +371,14 @@ export class HomePage implements OnInit {
     this.newBox.cardList = [ this.newCard ];
 
     this.storageService.addBox(this.newBox).then(box => {
-      this.newBox = <Box>{}; //clear newBox
-      this.newCard = <Card>{};
+      this.newBox = {} as Box; // clear newBox
+      this.newCard = {} as Card;
       this.toastController.create({
         message: 'Box Added!',
         duration: 2000
       }).then(toast => toast.present());
       this.loadItems(); // Or add it to the array directly
-      
+
     });
   }
 
@@ -483,10 +386,10 @@ export class HomePage implements OnInit {
     // this.newCard.cardId = Date.now();
     console.log(box.localBoxId);
 
-    box.cardList.push(this.newCard);  
+    box.cardList.push(this.newCard);
     // this.createDoughnutChart();
-    
-    this.storageService.updateBox(box).then(box => { 
+
+    this.storageService.updateBox(box).then(box => {
       this.toastController.create({
         message: 'Card Added!',
         duration: 2000
@@ -498,7 +401,6 @@ export class HomePage implements OnInit {
   presetUpdate(preset: Preset) {
     this.storageService.getKey();
 
-    //DEBUG
     this.storageService.updatePreset(preset).then(result => {
       this.toastController.create({
         message: 'Preset updated',
@@ -520,29 +422,27 @@ export class HomePage implements OnInit {
     });
   }
 
-  updateSumData(box: Box, card:Card) {
+  updateSumData(box: Box, card: Card) {
     const index = box.cardList.indexOf(card);
 
-    if (index != -1) {
-      if (card.title == 'Awards') {
+    if (index !== -1) {
+      if (card.title === 'Awards') {
         card.value = this.awardResults.awardsSum;
         this.hideVisits = true;
         this.hideAwards = false;
         this.hideProjects = true;
-      }
-      else if (card.title == 'Visits') {
+      } else if (card.title === 'Visits') {
         card.value = this.visitResults.visitsSum;
         this.hideVisits = false;
         this.hideAwards = true;
         this.hideProjects = true;
-      }
-      else if (card.title == 'Projects') {
+      } else if (card.title === 'Projects') {
         card.value = this.projectResults.projectsSum;
         this.hideVisits = true;
         this.hideAwards = true;
         this.hideProjects = false;
       }
-      
+
       this.storageService.updateBox(box).then(box => {
         this.toastController.create({
           message: card.title + ' Refreshed!',
@@ -551,16 +451,16 @@ export class HomePage implements OnInit {
         this.loadItems();
       });
 
-      
+
     }
-    
+
   }
 
   deleteCard(box: Box, card: Card) {
     const index = box.cardList.indexOf(card);
 
-    if (index != -1) {
-      box.cardList.splice(index, 1)
+    if (index !== -1) {
+      box.cardList.splice(index, 1);
 
       this.storageService.updateBox(box).then(box => {
         this.toastController.create({
@@ -569,14 +469,13 @@ export class HomePage implements OnInit {
         }).then(toast => toast.present());
         this.loadItems();
       });
-    }
-    else {
+    } else {
       this.toastController.create({
         message: card.title + ' could not be deleted Index: ' + index.toString(),
         duration: 5000
       }).then(toast => toast.present());
     }
-    
+
   }
 
   // Delete Box
@@ -597,42 +496,42 @@ export class HomePage implements OnInit {
 
   async presentPopover(card) {
 
-    this.storageService.getKey();  
+    this.storageService.getKey();
 
     switch (card.title) {
       case 'Visits':
         this.hideVisits = false;
         this.hideAwards = true;
-        this.hideProjects = true;    
+        this.hideProjects = true;
         this.hiddenShortCourses = true;
         break;
 
       case 'Awards':
         this.hideVisits = true;
         this.hideAwards = false;
-        this.hideProjects = true;    
-        this.hiddenShortCourses = true;    
+        this.hideProjects = true;
+        this.hiddenShortCourses = true;
         break;
 
       case 'Projects':
       this.hideVisits = true;
       this.hideAwards = true;
-      this.hideProjects = false;   
-      this.hiddenShortCourses = true;     
+      this.hideProjects = false;
+      this.hiddenShortCourses = true;
       break;
 
       case 'Short Courses':
       this.hideVisits = true;
       this.hideAwards = true;
-      this.hideProjects = true;     
-      this.hiddenShortCourses = false;   
+      this.hideProjects = true;
+      this.hiddenShortCourses = false;
       break;
     }
 
     const popover = await this.popoverController.create({
       component: HomePopoverComponent,
       componentProps: {
-        homeref:this,
+        homeref: this,
         card_title: card.title,
         hiddenVisits: this.hideVisits,
         hiddenAwards: this.hideAwards,
@@ -643,48 +542,48 @@ export class HomePage implements OnInit {
         projects: this.allData.projects,
         shortcourses: this.allData.shortCourses
       }
-      
+
     });
     return await popover.present();
   }
 
   async presentOptions() {
-    
+
     const popover = await this.popoverController.create({
       component: AddOptionsPopoverComponent,
       componentProps: {
-        homeref:this,
+        homeref: this,
         hiddenAddCard: true,
         hiddenAddBox: false
       }
-      
+
     });
     return await popover.present();
   }
 
   async presentCardOptions(box: Box) {
-    
+
     const popover = await this.popoverController.create({
       component: AddOptionsPopoverComponent,
       componentProps: {
-        homeref:this,
+        homeref: this,
         selectedBox: box,
         hiddenAddCard: false,
         hiddenAddBox: true
       }
-      
+
     });
     return await popover.present();
   }
 
   async presentSavePresetPopover(boxList) {
 
-    this.storageService.getKey();  
-    
+    this.storageService.getKey();
+
     const popover = await this.popoverController.create({
       component: SavePresetPopoverComponent,
       componentProps: {
-        homeref:this,
+        homeref: this,
         currentBoxList: boxList,
       }
     });
@@ -694,12 +593,12 @@ export class HomePage implements OnInit {
   async presentUpdatePresetPopover(preset: Preset, $event) {
 
     $event.stopPropagation();
-    this.storageService.getKey();  
-    
+    this.storageService.getKey();
+
     const popover = await this.popoverController.create({
       component: UpdatePresetPopoverComponent,
       componentProps: {
-        homeref:this,
+        homeref: this,
         currentPreset: preset
       }
     });
@@ -709,12 +608,12 @@ export class HomePage implements OnInit {
   async presentDeletePresetPopover(preset: Preset, $event) {
 
     $event.stopPropagation();
-    this.storageService.getKey();  
-    
+    this.storageService.getKey();
+
     const popover = await this.popoverController.create({
       component: DeletePresetPopoverComponent,
       componentProps: {
-        homeref:this,
+        homeref: this,
         currentPreset: preset
       }
     });
@@ -724,7 +623,7 @@ export class HomePage implements OnInit {
   // ionViewDidEnter() {
   //   this.createDoughnutChart();
   // }
-  
+
   generateColorArray(num) {
     this.colorArray = [];
     for (let i = 0; i < num; i++) {
@@ -741,7 +640,7 @@ export class HomePage implements OnInit {
     for (let i = 0; i < 5; i++) {
       colorArray.push('#' + Math.floor(Math.random() * 16777215).toString(16));
     }
-    var ctx = (<any>document.getElementById('awardtype-chart'));
+    var ctx = (document.getElementById('awardtype-chart') as any);
     var chart = new Chart(ctx, {
       type: 'pie',
       data: {
@@ -750,7 +649,7 @@ export class HomePage implements OnInit {
           label: 'Award types',
           data: this.awardTypeSum,
           backgroundColor: colorArray, // array should have same number of elements as number of dataset
-          borderColor: 'white',// array should have same number of elements as number of dataset
+          borderColor: 'white', // array should have same number of elements as number of dataset
           borderWidth: 2
         }]
       },
@@ -760,20 +659,11 @@ export class HomePage implements OnInit {
         legend: {
           display: true,
           labels: {
-            fontColor: "gray",
+            fontColor: 'gray',
         }
        }
-        // scales: {
-        //   yAxes: [{
-        //     ticks: {
-        //       beginAtZero: true
-        //     }
-        //   }]
-        // }
       }
     });
-    // console.log("BELOW HERE");
-    // console.log("NATIVE ELEMENT: " + this.doughnutChart.nativeElement);
   }
 
   changeTheme(name) {

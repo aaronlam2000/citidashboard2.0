@@ -9,98 +9,98 @@ import { headersToString } from 'selenium-webdriver/http';
 
 
 export interface Item {
-  id: number,
-  title: [ [{ value: string, color: string }] ],
-  date: string,
+  id: number;
+  title: [ [{ value: string, color: string }] ];
+  date: string;
   modified: number;
 }
 
 export interface Everything {
-  awards: [ Awards ], 
-  visits: [ Visits ],
-  projects: [ Projects ],
-  shortCourses: [ ShortCourses ],
-  sum: AllSum,
+  awards: [ Awards ];
+  visits: [ Visits ];
+  projects: [ Projects ];
+  shortCourses: [ ShortCourses ];
+  sum: AllSum;
   presets: [ Preset ];
 }
 
 export interface Preset {
-  presetId: number,
-  themeId: number,
-  visitId: number,
-  presetName: string,
-  presetBoxList: [ Box ],
+  presetId: number;
+  themeId: number;
+  visitId: number;
+  presetName: string;
+  presetBoxList: [ Box ];
   dateCreated: Date;
 }
 
 export interface Box {
-  boxId: number,
-  localBoxId: string,
+  boxId: number;
+  localBoxId: string;
   cardList: [ Card ];
 }
 
 export interface Card {
-  cardId: number,
-  title: string,
-  color: string,
-  value: string,
-  icon: string,
+  cardId: number;
+  title: string;
+  color: string;
+  value: string;
+  icon: string;
   cardType: string;
 }
 
 export interface Visits {
-  visitId: number,
-  startDate: Date,
-  endDate: Date,
-  name: string,
-  pax: number,
-  sic: string,
-  host: string,
-  foreignVisit: Boolean,
+  visitId: number;
+  startDate: Date;
+  endDate: Date;
+  name: string;
+  pax: number;
+  sic: string;
+  host: string;
+  foreignVisit: boolean;
   dateCreated: Date;
 }
 
 export interface Awards {
-  awardId: number,
-  awardName: string,
-  awardLevel: string,
-  noOfRecipients: number,
-  awardType: string,
+  awardId: number;
+  awardName: string;
+  awardLevel: string;
+  noOfRecipients: number;
+  awardType: string;
   dateCreated: string;
 }
 
 export interface Projects {
-  projectId: number,
-  projectName: string,
-  projectState: string,
-  noOfStudents: number,
+  projectId: number;
+  projectName: string;
+  projectState: string;
+  noOfStudents: number;
   dateCreated: Date;
 }
 
 export interface ShortCourses {
-  courseId: number,
-  courseName: string,
-  courseSubject: string,
-  courseInstructor: string,
-  courseVenue: string,
+  courseId: number;
+  courseName: string;
+  courseSubject: string;
+  courseInstructor: string;
+  courseVenue: string;
   dataCreated: Date;
 }
 
 export interface Themes {
-  themeId: number,
-  backgroundColor: string,
-  fontStyle: string,
-  themeName: string,
+  themeId: number;
+  backgroundColor: string;
+  fontStyle: string;
+  themeName: string;
   dateCreated: string;
   theme: [ThemeNames];
 }
 
 export interface ThemeNames {
-  primary: string,
-  secondary: string,
-  tertiary: string,
-  light: string,
-  medium: string,
+  primary: string;
+  secondary: string;
+  tertiary: string;
+  light: string;
+  medium: string;
   dark: string;
 }
 
@@ -115,19 +115,19 @@ export interface ProjectSum {
 }
 
 export interface AllSum {
-  visitsSum: string,
-  projectsSum: string,
-  shortCoursesSum: string,
+  visitsSum: string;
+  projectsSum: string;
+  shortCoursesSum: string;
   awardsSum: string;
 }
 
 export interface KeyCredentials {
-  username: string,
+  username: string;
   password: string;
 }
 
 export interface KeyValue {
-  key: string; 
+  key: string;
 }
 
 const CARDS_KEY = 'card-list';
@@ -136,19 +136,19 @@ const PRESET_KEY = 'preset-list';
 
 let get_key_config = {
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    "action": "GetKey"
+    action: 'GetKey'
     }
-  }
-let config = {
+  };
+const config = {
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    "Key": ''
+    Key: ''
     }
-  }
-  
+  };
+
 @Injectable({
   providedIn: 'root'
 })
@@ -167,35 +167,26 @@ export class StorageService {
   awardSumUrl = 'http://172.20.129.215:8088/api/GetSum/AwardsSum';
   projectSumUrl = 'http://172.20.129.215:8088/api/GetSum/ProjectsSum';
 
-  //GET KEY
-  getKeyUrl = "http://172.20.129.215:8088/api/GetKey";
+  // GET KEY
+  getKeyUrl = 'http://172.20.129.215:8088/api/GetKey';
   getKeyValue: Observable<any>;
-  keyValue: KeyValue = <KeyValue>{};
+  keyValue: KeyValue = <KeyValue> {};
 
   credentials: KeyCredentials = {
-    username: "admin",
-    password: "Sun123!"
-  }
+    username: 'admin',
+    password: 'Sun123!'
+  };
 
-  getKey(){
+  getKey() {
 
     this.getKeyValue = this.http.post(`${this.getKeyUrl}`, this.credentials , get_key_config);
-    if(this.getKeyValue!=null){
+    if (this.getKeyValue != null){
       this.getKeyValue.subscribe(key => config.headers.Key = key.key);
-      console.log("Get Key: " + config.headers.Key);
+      console.log('Get Key: ' + config.headers.Key);
     } else {
-
-      console.log("ERROR: No Key" );
+      console.log('ERROR: No Key');
     }
-    
-    
- 
   }
-
-  //  getKeyString(){
-  //   this.getKey().subscribe(key => this.keyValue = key);
-  //   config.headers.Key = this.keyValue.key;
-  // }
 
   // READ
   getItems(): Promise<Box[]> {
@@ -229,13 +220,13 @@ export class StorageService {
         return null;
       }
 
-      let updatedBoxList: Box[] = [];
+      const updatedBoxList: Box[] = [];
 
-      for (let b of boxes) {
+      for (const b of boxes) {
         if (b.localBoxId === box.localBoxId) {
           updatedBoxList.push(box);
         } else {
-          updatedBoxList.push(b); 
+          updatedBoxList.push(b);
         }
       }
 
@@ -247,7 +238,7 @@ export class StorageService {
     return this.storage.get(CARDS_KEY).then((cardList: Card[]) => {
       if (cardList) {
         return this.storage.set(CARDS_KEY, updatedCardList);
-      } 
+      }
     });
   }
 
@@ -259,9 +250,9 @@ export class StorageService {
         return null;
       }
 
-      let toKeep: Box[] = [];
+      const toKeep: Box[] = [];
 
-      for (let i of boxes) {
+      for (const i of boxes) {
         if (i.localBoxId !== boxId) {
           toKeep.push(i);
         }
@@ -276,19 +267,14 @@ deleteBoxes() {
   this.storage.set(ITEMS_KEY, []);
 }
 
-retrievePresets(){
+retrievePresets() {
   this.getKey();
-  console.log("retrieve presets key = " + config.headers.Key);
-  // this.presetList = this.http.get(`${this.presetListUrl}`, config);
-  console.log("Start retrieve presets");
-    
-  // this.presetList.subscribe(presets => this.presetsStorage = presets);
+  console.log('retrieve presets key = ' + config.headers.Key);
+
   this.http.get(`${this.presetListUrl}`, config).subscribe(presets => {
     return this.storage.set(PRESET_KEY, presets);
-  })
+  });
   this.getKey();
-
-  // return this.storage.set(PRESET_KEY, this.presetsStorage);
 }
 
 refreshPresets(presetList){
@@ -296,59 +282,61 @@ refreshPresets(presetList){
 }
 
 
-  //Save Preset
+  // Save Preset
   addPreset(preset: Preset): Promise<any> {
     this.getKey();
-    console.log("Create preset Key: " + config.headers.Key);
-    console.log("Preset Insert:" + JSON.stringify(preset));
+    console.log('Create preset Key: ' + config.headers.Key);
+    console.log('Preset Insert:' + JSON.stringify(preset));
+
+    // Web service post
     this.http.post(`${this.presetListUrl}`, preset, config).subscribe(Response => {
       console.log(Response);
       console.log(preset);
       this.getKey();
-    })
-      return this.storage.get(PRESET_KEY).then((presetList: Preset[]) => {
-        if (presetList) {
-          presetList.push(preset);
-          return this.storage.set(PRESET_KEY, presetList);
-        } else {
-          return this.storage.set(PRESET_KEY, [preset]);
-        }
-      });
-    
+    });
+
+    // Insert to local storage
+    return this.storage.get(PRESET_KEY).then((presetList: Preset[]) => {
+      if (presetList) {
+        presetList.push(preset);
+        return this.storage.set(PRESET_KEY, presetList);
+      } else {
+        return this.storage.set(PRESET_KEY, [preset]);
+      }
+    });
   }
 
-   //Update Preset
+   // Update Preset
    updatePreset(preset: Preset): Promise<any> {
     this.getKey();
     // Get current box-list
     this.storage.get(ITEMS_KEY).then((boxList) => {
       preset.presetBoxList = boxList;
-      console.log("Updated boxList: " + preset.presetBoxList);
-      console.log("UPDATE PRESET KEY: " + config.headers.Key);
+      console.log('Updated boxList: ' + preset.presetBoxList);
+      console.log('UPDATE PRESET KEY: ' + config.headers.Key);
       this.http.put(`${this.presetListUrl + preset.presetId}`, preset, config).subscribe(Response => {
         console.log(Response);
-        console.log("Updated preset: " + JSON.stringify(preset));
+        console.log('Updated preset: ' + JSON.stringify(preset));
       });
-    })
+    });
 
     return this.storage.get(PRESET_KEY).then((presets: Preset[]) => {
       if (!presets || presets.length === 0) {
         return null;
       }
 
-      let updatedPresetList: Preset[] = [];
+      const updatedPresetList: Preset[] = [];
 
-      for (let p of presets) {
+      for (const p of presets) {
         if (p.presetId === preset.presetId) {
           updatedPresetList.push(preset);
         } else {
-          updatedPresetList.push(p); 
+          updatedPresetList.push(p);
         }
       }
 
       return this.storage.set(PRESET_KEY, updatedPresetList);
     });
-    
   }
 
   deletePreset(preset: Preset): Promise<any> {
@@ -357,7 +345,7 @@ refreshPresets(presetList){
 
     this.http.delete(`${this.presetListUrl + preset.presetId}`, config).subscribe(Response => {
       console.log(Response);
-      console.log(preset.presetName + " deleted");
+      console.log(preset.presetName + ' deleted');
     });
 
     return this.storage.get(PRESET_KEY).then((presets: Preset[]) => {
@@ -365,9 +353,9 @@ refreshPresets(presetList){
         return null;
       }
 
-      let toKeep: Preset[] = [];
+      const toKeep: Preset[] = [];
 
-      for (let p of presets) {
+      for (const p of presets) {
         if (p.presetId !== preset.presetId) {
           toKeep.push(p);
         }
@@ -376,18 +364,8 @@ refreshPresets(presetList){
     });
   }
 
-  createPreset(preset: Preset) {
-    this.getKey();
-    console.log("Create preset Key: " + config.headers.Key);
-    
-    this.http.post(`${this.presetListUrl}`, preset, config).subscribe(Response => {
-      console.log(Response);
-      console.log("CREATED PRESET: " + preset.presetName);
-    })
-  }
-
   selectPreset(boxList) {
-    this.storage.set(ITEMS_KEY, boxList)
+    this.storage.set(ITEMS_KEY, boxList);
   }
 
   // GET SUM
@@ -396,29 +374,7 @@ refreshPresets(presetList){
   awardSum: Observable<any>;
   projectSum: Observable<any>;
 
-  getVisitsSum(): Observable<any> {
-
-    this.visitSum = this.http.get(`${this.visitSumUrl}`, config);
-    
-    return this.visitSum;
-  }
-
-  getAwardsSum(): Observable<any> {
-
-    this.awardSum = this.http.get(`${this.awardSumUrl}`, config);
-    
-    return this.awardSum;
-  }
-
-  getProjectsSum(): Observable<any> {
-
-    this.projectSum = this.http.get(`${this.projectSumUrl}`, config);
-    
-    return this.projectSum;
-  }
-
   // GET LIST
-
   allDataStorage: Everything = <Everything>{};
   presetsStorage: Preset = <Preset>{};
   visitList: Observable<any>;
@@ -427,15 +383,6 @@ refreshPresets(presetList){
   allDataList: Observable<any>;
   presetList: Observable<any>;
   test: string;
-
-  // getAllData(){
-  //   this.allDataList = this.http.get(`${this.getAllUrl}`, config);
-    
-  //   this.allDataList.subscribe(allData => this.allDataStorage = allData);
-  //   // console.log("getAllDataStorage: " +JSON.stringify(this.allDataStorage));
-
-  //   return this.allDataStorage;
-  // }
 
   getAllData(): Observable<any> {
 
@@ -446,22 +393,21 @@ refreshPresets(presetList){
   getVisitsList(): Observable<any> {
 
     this.visitList = this.http.get(`${this.visitListUrl}`, config);
-    
+
     return this.visitList;
   }
 
   getAwardsList(): Observable<any> {
 
     this.awardList = this.http.get(`${this.awardListUrl}`, config);
-    
+
     return this.awardList;
   }
 
   getProjectsList(): Observable<any> {
 
     this.projectList = this.http.get(`${this.projectListUrl}`, config);
-    
+
     return this.projectList;
   }
-
 }

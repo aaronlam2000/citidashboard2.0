@@ -41,18 +41,6 @@
         </ion-label>
       </ion-button>
 
-      <!-- <ion-button [hidden]="enterViewMode" (click)="changeVisitTheme('dark')">
-        <ion-label text-wrap>
-          <h3 class="project-text">Visit Dark</h3>
-        </ion-label>
-      </ion-button>
-      <ion-button [hidden]="enterViewMode" (click)="changeVisitTheme('light')">
-        <ion-label text-wrap>
-          <h3 class="project-text">Visit Light</h3>
-        </ion-label>
-      </ion-button> -->
-
-      <!-- style="vertical-align:middle" -->
     </ion-buttons>
 
     <div *appHasRole="['dashboard-content']" style="float: left;">
@@ -62,7 +50,7 @@
   
   <h1 *ngIf="!authenticated" style="width: 100%; text-align: center; font-size: 3vw;">CITI DASHBOARD 2.0</h1>
 
-  <ion-buttons style="margin-bottom: 70px;" slot="end" [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
+  <ion-buttons style="margin-bottom: 70px;" slot="end" [hidden]="enterViewMode" *appHasRole="['dashboard-content']">
       <ion-button [hidden]="enterViewMode" (click)="clearBoxes()">
           Clear Board
       </ion-button>
@@ -89,9 +77,6 @@
                   {{ p.presetName }}
               </ion-label>
                 
-                <!-- <ion-button *ngIf="p.presetId == selectedPresetId" style="width: 40%;" slot="end" (click)="presetUpdate(p)">
-                  Save
-                </ion-button>   -->
                 <ion-button *ngIf="p.presetId == selectedPresetId" slot="end" (click)="presentUpdatePresetPopover(p, $event)" fill="outline" color="dark">
                   Save
                 </ion-button>  

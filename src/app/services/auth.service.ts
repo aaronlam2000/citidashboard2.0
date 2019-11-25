@@ -16,32 +16,17 @@ export class AuthService {
 
   constructor() { }
 
-  login(name) {
-    if (name== 'user') {
-      this.currentUser.next({
-        name: 'Dummy User',
-        roles: ['user-view','dashboard-content']
-      });
-    }
-    else if (name=='admin') {
-      this.currentUser.next({
-        name: 'The Admin',
-        roles: ['edit-dashboard', 'admin']
-      });
-    }
-  }
 
-  loginTest(name, pw) {
-    if (name == 'user' && pw == 'user') {
+  login(name, pw) {
+    if (name === 'user' && pw === 'user') {
       this.currentUser.next({
         name: 'Dummy User',
         roles: ['user-view', 'dashboard-content']
       });
-    }
-    else if (name == 'admin' && pw == 'admin') {
+    } else if (name === 'admin' && pw === 'admin') {
       this.currentUser.next({
         name: 'The Admin',
-        roles: ['dashboard-content','edit-dashboard', 'admin']
+        roles: ['dashboard-content', 'edit-dashboard', 'admin']
       });
     }
   }
