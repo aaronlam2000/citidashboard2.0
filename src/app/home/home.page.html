@@ -3,39 +3,33 @@
 
   <ion-toolbar class="welcome-toolbar">
 
-    <ion-icon [hidden]="exitViewMode" slot="end" (click)="exitView()" name="close"></ion-icon>
-
-    <ion-buttons [hidden]="enterViewMode" *appHasRole="['user-view']">
-        <ion-menu-button [hidden]="enterViewMode"></ion-menu-button>
-    </ion-buttons>
-
-    <ion-buttons [hidden]="enterViewMode" *appHasRole="['edit-dashboard', 'admin']">
+    <ion-buttons [hidden]="enterViewMode" *ngIf="authenticated">
 
         <ion-menu-button [hidden]="enterViewMode"></ion-menu-button>
 
-        <ion-button [hidden]="enterViewMode" (click)="presentOptions()">
+        <ion-button (click)="presentOptions()" *appHasRole="['edit-dashboard', 'admin']">
           <ion-icon name="add"></ion-icon>       
         </ion-button>
 
-        <ion-button [hidden]="enterViewMode" (click)="refreshAllData()">
+        <ion-button (click)="refreshAllData()">
           <ion-icon name="refresh"></ion-icon>
         </ion-button>
 
-        <ion-button [hidden]="enterViewMode" (click)="enterView()" *ngIf="authenticated">
+        <ion-button (click)="enterView()">
             Preview
         </ion-button>
 
-        <ion-button [hidden]="enterViewMode" (click)="presentSavePresetPopover(boxList)">
+        <ion-button (click)="presentSavePresetPopover(boxList)" *appHasRole="['edit-dashboard', 'admin']">
           Save Preset
         </ion-button>
 
-        <ion-button [hidden]="enterViewMode" (click)="changeTheme1('light')">
+        <ion-button (click)="changeTheme1('light')">
           <ion-label text-wrap>
             <h3 class="project-text">Light</h3>
           </ion-label>
         </ion-button>
 
-      <ion-button [hidden]="enterViewMode" (click)="changeTheme1('dark')">
+      <ion-button (click)="changeTheme1('dark')">
         <ion-label text-wrap>
           <h3 class="project-text">Dark</h3>
         </ion-label>
@@ -54,9 +48,15 @@
       <ion-button [hidden]="enterViewMode" (click)="clearBoxes()">
           Clear Board
       </ion-button>
+
       <ion-button [hidden]="enterViewMode" (click)="logout()" *ngIf="authenticated">
           Logout
       </ion-button>
+
+      <ion-button [hidden]="exitViewMode" (click)="exitView()" *ngIf="authenticated">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+
   </ion-buttons>
 
   </ion-toolbar>
@@ -64,9 +64,9 @@
 <!-- END HEADER -->
 
 <ion-menu content-id="menu" type="overlay">
-  <ion-header>
+  <ion-header class="preset-menu-header">
       <ion-toolbar>
-        <ion-title>Choose Presets</ion-title>
+        <ion-title style="color: white;">Choose Presets</ion-title>
       </ion-toolbar>
   </ion-header>
 

@@ -1,0 +1,12 @@
+ion-content {
+    --ion-background-color: var(--mycolor);
+}
+
+.display-title {
+    color: var(--mytextcolor);
+}
+
+.display-header {
+    --ion-background-color: var(--popovertitlecolor);
+    color: var(--popovertitletextcolor);
+}
