@@ -44,7 +44,7 @@
   
   <h1 *ngIf="!authenticated" style="width: 100%; text-align: center; font-size: 3vw;">CITI DASHBOARD 2.0</h1>
 
-  <ion-buttons style="margin-bottom: 70px;" slot="end" [hidden]="enterViewMode" *appHasRole="['dashboard-content']">
+  <ion-buttons style="margin-bottom: 70px;" slot="end" *appHasRole="['dashboard-content']">
       <ion-button [hidden]="enterViewMode" (click)="clearBoxes()">
           Clear Board
       </ion-button>
