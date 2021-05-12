@@ -29,7 +29,7 @@
     "add": "^2.0.6",
     "ag-grid": "^18.1.2",
     "bootstrap": "^4.3.1",
-    "chart.js": "^2.9.2",
+    "chart.js": "^2.9.4",
     "color": "^3.1.2",
     "cordova": "^9.0.0",
     "cordova-sqlite-storage": "^3.3.0",
